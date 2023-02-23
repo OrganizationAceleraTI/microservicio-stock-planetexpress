@@ -1,4 +1,4 @@
-package co.acelerati.planetexpressstock;
+package co.acelerati.planetexpress;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

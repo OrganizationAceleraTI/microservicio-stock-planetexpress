@@ -1,4 +1,4 @@
-package co.acelerati.planetexpressstock;
+package co.acelerati.planetexpress;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

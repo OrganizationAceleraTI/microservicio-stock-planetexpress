@@ -1,11 +1,13 @@
 package co.acelerati.planetexpress.application.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-@Setter
 @Getter
-public class InventoryRequest {
+@NoArgsConstructor
+@AllArgsConstructor
+public class InventoryRequestDto {
 
     private Integer limit;
     private String userId;

@@ -1,6 +1,5 @@
 package co.acelerati.planetexpress.infraestructure.input.rest;
 
-import co.acelerati.planetexpress.application.dto.response.InventoryResponse;
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import lombok.RequiredArgsConstructor;

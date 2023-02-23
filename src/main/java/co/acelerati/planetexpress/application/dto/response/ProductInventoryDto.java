@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Setter
 @Getter
 @AllArgsConstructor
-public class ProductInventory {
+public class ProductInventoryDto {
     private Long productId;
     private String productName;
     private String description;

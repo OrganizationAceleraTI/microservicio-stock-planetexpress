@@ -1,15 +1,19 @@
 package co.acelerati.planetexpress.application.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Setter
 @Getter
-public class InventoryResponse {
+@AllArgsConstructor
+@NoArgsConstructor
+public class InventoryResponseDto {
 
     private Integer currentPage;
     private Integer lastPage;
-    private List<ProductInventory> products;
+    private List<ProductInventoryDto> products;
 }

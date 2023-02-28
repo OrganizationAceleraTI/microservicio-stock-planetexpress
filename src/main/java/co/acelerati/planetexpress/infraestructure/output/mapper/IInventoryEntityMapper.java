@@ -13,4 +13,8 @@ import java.util.List;
 public interface IInventoryEntityMapper {
 
     List<Inventory> toInventoryList(List<InventoryEntity> inventoryEntityList);
+
+    Inventory toInventoryModel(InventoryEntity inventoryEntity);
+
+    InventoryEntity toInventoryEntity(Inventory inventory);
 }

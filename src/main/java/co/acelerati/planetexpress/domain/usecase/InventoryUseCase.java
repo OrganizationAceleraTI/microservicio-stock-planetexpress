@@ -18,4 +18,22 @@ public class InventoryUseCase implements IInventoryService {
     public List<Inventory> getAllInventory() {
         return inventoryPersistence.getAllInventory();
     }
+
+    @Override
+    public void inventorySupply(List<Inventory> inventoryList) {
+
+        inventoryList.stream().forEach( inventory -> {
+            Inventory inventoryExist = inventoryPersistence.getInventoryOfSupplier(inventory.getPersonSupplierId(), inventory.getProductId());
+            if(inventoryExist != null){
+                inventoryExist.setQuantity(Integer.sum(inventoryExist.getQuantity(),inventory.getQuantity()));
+                inventoryPersistence.updateInventory(inventoryExist);
+            }else{
+                inventory.setCurrentPrice(0);
+                inventoryPersistence.saveInventory(inventory);
+            }
+        });
+
+    }
+
+
 }

@@ -20,13 +20,20 @@ public class InventoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer inventoryId;
 
+    @Column(name = "personSupplierId")
+    private Integer personSupplierId;
+
     @Column(name = "productid")
     private Integer productId;
 
-    @Column(name = "warehouseid")
-    private Integer warehouseId;
+    @Column(name = "incomingPrice")
+    private Integer incomingPrice;
+
+    @Column(name = "currentPrice")
+    private Integer currentPrice;
 
     @Column(name = "quantity")
     private Integer quantity;
+
 
 }

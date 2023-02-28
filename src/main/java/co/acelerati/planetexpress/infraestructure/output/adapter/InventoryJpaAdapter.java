@@ -27,10 +27,27 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
             Inventory inventoryModel = new Inventory();
             inventoryModel.setInventoryId(inventory.getInventoryId());
             inventoryModel.setProductId(inventory.getProductId());
-            inventoryModel.setWarehouseId(inventory.getWarehouseId());
+            //inventoryModel.setWarehouseId(inventory.getWarehouseId());
             inventoryModel.setQuantity(inventory.getQuantity());
             inventoryList.add(inventoryModel);
         });
         return inventoryList;
     }
+
+    @Override
+    public Inventory saveInventory(Inventory inventory) {
+        return null;
+    }
+
+    @Override
+    public Inventory updateInventory(Inventory inventory) {
+        return null;
+    }
+
+    @Override
+    public Inventory getInventoryOfSupplier(Integer personSupplierId, Integer productID) {
+        return null;
+    }
+
+
 }

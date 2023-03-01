@@ -3,7 +3,9 @@ package co.acelerati.planetexpress.infraestructure.output.mapper;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.infraestructure.output.entity.InventoryEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
@@ -12,5 +14,10 @@ import java.util.List;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IInventoryEntityMapper {
 
+    //IInventoryEntityMapper INSTANCE = Mappers.getMapper(IInventoryEntityMapper.class);
     List<Inventory> toInventoryList(List<InventoryEntity> inventoryEntityList);
+
+    Inventory toInventoryModel(InventoryEntity inventoryEntity);
+
+    InventoryEntity toInventoryEntity(Inventory inventory);
 }

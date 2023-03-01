@@ -4,16 +4,20 @@ public class Inventory {
 
     private Integer inventoryId;
     private Integer productId;
-    private Integer warehouseId;
+    private Integer personSupplierId;
+    private Integer incomingPrice;
+    private Integer currentPrice;
     private Integer quantity;
 
     public Inventory() {
     }
 
-    public Inventory(Integer inventoryId, Integer productId, Integer warehouseId, Integer quantity) {
+    public Inventory(Integer inventoryId, Integer productId, Integer personSupplierId, Integer incomingPrice, Integer currentPrice, Integer quantity) {
         this.inventoryId = inventoryId;
         this.productId = productId;
-        this.warehouseId = warehouseId;
+        this.personSupplierId = personSupplierId;
+        this.incomingPrice = incomingPrice;
+        this.currentPrice = currentPrice;
         this.quantity = quantity;
     }
 
@@ -33,12 +37,28 @@ public class Inventory {
         this.productId = productId;
     }
 
-    public Integer getWarehouseId() {
-        return warehouseId;
+    public Integer getPersonSupplierId() {
+        return personSupplierId;
     }
 
-    public void setWarehouseId(Integer warehouseId) {
-        this.warehouseId = warehouseId;
+    public void setPersonSupplierId(Integer personSupplierId) {
+        this.personSupplierId = personSupplierId;
+    }
+
+    public Integer getIncomingPrice() {
+        return incomingPrice;
+    }
+
+    public void setIncomingPrice(Integer incomingPrice) {
+        this.incomingPrice = incomingPrice;
+    }
+
+    public Integer getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(Integer currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public Integer getQuantity() {

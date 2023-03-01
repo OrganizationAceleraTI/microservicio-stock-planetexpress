@@ -8,9 +8,9 @@ public interface IInventoryPersistence {
 
     List<Inventory> getAllInventory();
 
-    Inventory saveInventory(Inventory inventory);
+    Integer saveInventory(Inventory inventory);
 
-    Inventory updateInventory(Inventory inventory);
+    void updateInventory(Inventory inventory);
 
     Inventory getInventoryOfSupplier(Integer personSupplierId, Integer productID);
 }

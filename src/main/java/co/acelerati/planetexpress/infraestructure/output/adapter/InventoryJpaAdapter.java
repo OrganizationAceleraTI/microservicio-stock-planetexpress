@@ -27,7 +27,9 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
             Inventory inventoryModel = new Inventory();
             inventoryModel.setInventoryId(inventory.getInventoryId());
             inventoryModel.setProductId(inventory.getProductId());
-            //inventoryModel.setWarehouseId(inventory.getWarehouseId());
+            inventoryModel.setPersonSupplierId(inventory.getPersonSupplierId());
+            inventoryModel.setCurrentPrice(inventory.getCurrentPrice());
+            inventoryModel.setIncomingPrice(inventory.getIncomingPrice());
             inventoryModel.setQuantity(inventory.getQuantity());
             inventoryList.add(inventoryModel);
         });

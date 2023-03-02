@@ -1,6 +1,7 @@
 package co.acelerati.planetexpress.infraestructure.input.rest;
 
 import co.acelerati.planetexpress.application.dto.request.InventorySupplyRequestDTO;
+import co.acelerati.planetexpress.application.dto.response.ProviderResponseDTO;
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,7 @@ public class InventoryRestController {
     }
 
     @PostMapping("/supply")
-    public ResponseEntity<Void> inventorySupply(@RequestBody List<InventorySupplyRequestDTO> inventorySupplyRequestDTOList){
-        inventoryHandler.inventorySupply(inventorySupplyRequestDTOList);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<ProviderResponseDTO> inventorySupply(@RequestBody List<InventorySupplyRequestDTO> inventorySupplyRequestDTOList){
+        return ResponseEntity.status(HttpStatus.CREATED).body(inventoryHandler.inventorySupply(inventorySupplyRequestDTOList));
     }
 }

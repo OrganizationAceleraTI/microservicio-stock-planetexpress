@@ -18,11 +18,6 @@ public class InventoryRestController {
 
     private final IInventoryHandler inventoryHandler;
 
-    @GetMapping("/")
-    public ResponseEntity<List<Inventory>> getAllInventory() {
-        return ResponseEntity.ok(inventoryHandler.getAllInventory());
-    }
-
     @PostMapping("/supply")
     public ResponseEntity<ProviderResponseDTO> inventorySupply(@RequestBody List<InventorySupplyRequestDTO> inventorySupplyRequestDTOList){
         return ResponseEntity.status(HttpStatus.CREATED).body(inventoryHandler.inventorySupply(inventorySupplyRequestDTOList));

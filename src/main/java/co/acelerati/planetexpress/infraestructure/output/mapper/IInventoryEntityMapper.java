@@ -14,9 +14,6 @@ import java.util.List;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IInventoryEntityMapper {
 
-    //IInventoryEntityMapper INSTANCE = Mappers.getMapper(IInventoryEntityMapper.class);
-    List<Inventory> toInventoryList(List<InventoryEntity> inventoryEntityList);
-
     Inventory toInventoryModel(InventoryEntity inventoryEntity);
 
     InventoryEntity toInventoryEntity(Inventory inventory);

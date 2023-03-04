@@ -1,6 +1,6 @@
 package co.acelerati.planetexpress.domain.model;
 
-public class Provider {
+public class User {
 
     private String name;
     private String surname;
@@ -11,7 +11,7 @@ public class Provider {
     private String dniNumber;
     private String idPersonType;
 
-    public Provider(String name, String surname, String mail, String phone, String address, String idDniType, String dniNumber, String idPersonType) {
+    public User(String name, String surname, String mail, String phone, String address, String idDniType, String dniNumber, String idPersonType) {
         this.name = name;
         this.surname = surname;
         this.mail = mail;

@@ -7,7 +7,7 @@ import co.acelerati.planetexpress.application.mapper.InventorySupplyRequestMappe
 import co.acelerati.planetexpress.application.mapper.ProviderResponseMapper;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
 import co.acelerati.planetexpress.domain.model.Inventory;
-import co.acelerati.planetexpress.domain.model.Provider;
+import co.acelerati.planetexpress.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +22,8 @@ public class InventoryHandler implements IInventoryHandler {
     private final IInventoryService inventoryService;
 
     @Override
-    public List<Inventory> getAllInventory() {
-        return inventoryService.getAllInventory();
-    }
-
-    @Override
     public ProviderResponseDTO inventorySupply(List<InventorySupplyRequestDTO> inventorySupplyRequestDTO) {
-        Provider provider = inventoryService.inventorySupply(InventorySupplyRequestMapper.toInventoryModelList(inventorySupplyRequestDTO));
-        return ProviderResponseMapper.toProviderResponse(provider);
+        User user = inventoryService.inventorySupply(InventorySupplyRequestMapper.toInventoryModelList(inventorySupplyRequestDTO));
+        return ProviderResponseMapper.toProviderResponse(user);
     }
 }

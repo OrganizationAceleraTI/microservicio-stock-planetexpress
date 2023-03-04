@@ -8,7 +8,5 @@ import java.util.List;
 
 public interface IInventoryHandler {
 
-    List<Inventory> getAllInventory();
-
     ProviderResponseDTO inventorySupply(List<InventorySupplyRequestDTO> InventorySupplyRequestDTO);
 }

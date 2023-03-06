@@ -6,7 +6,6 @@ import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import co.acelerati.planetexpress.application.mapper.InventorySupplyRequestMapper;
 import co.acelerati.planetexpress.application.mapper.ProviderResponseMapper;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
-import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.model.Provider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,11 +19,6 @@ import java.util.List;
 public class InventoryHandler implements IInventoryHandler {
 
     private final IInventoryService inventoryService;
-
-    @Override
-    public List<Inventory> getAllInventory() {
-        return inventoryService.getAllInventory();
-    }
 
     @Override
     public ProviderResponseDTO inventorySupply(List<InventorySupplyRequestDTO> inventorySupplyRequestDTO) {

@@ -27,14 +27,16 @@ public class InventoryUseCase implements IInventoryService {
             if(inventoryExist != null){
                 inventoryExist.setQuantity(Integer.sum(inventoryExist.getQuantity(),inventory.getQuantity()));
                 inventoryExist.setCurrentPrice(inventory.getCurrentPrice());
+                inventoryExist.setIncomingPrice(inventory.getIncomingPrice());
                 inventoryPersistence.updateInventory(inventoryExist);
             }else{
                 inventory.setCurrentPrice(0);
+                inventory.setIncomingPrice(0);
                 inventoryPersistence.saveInventory(inventory);
             }
         });
 
-        return new Provider("Samuel", "Barrere","mail@domain.com","32145678","calle falsa 123","CC","34233456","10");
+        return new Provider("Samuel", "Barrera", inventoryList.get(0).getPersonSupplierId());
     }
 
 

@@ -7,10 +7,13 @@ import co.acelerati.planetexpress.domain.model.Inventory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/inventory")
 @RequiredArgsConstructor
@@ -24,7 +27,7 @@ public class InventoryRestController {
     }
 
     @PostMapping("/supply")
-    public ResponseEntity<ProviderResponseDTO> inventorySupply(@RequestBody List<InventorySupplyRequestDTO> inventorySupplyRequestDTOList){
+    public ResponseEntity<ProviderResponseDTO> inventorySupply(@RequestBody List<@Valid InventorySupplyRequestDTO> inventorySupplyRequestDTOList){
         return ResponseEntity.status(HttpStatus.CREATED).body(inventoryHandler.inventorySupply(inventorySupplyRequestDTOList));
     }
 }

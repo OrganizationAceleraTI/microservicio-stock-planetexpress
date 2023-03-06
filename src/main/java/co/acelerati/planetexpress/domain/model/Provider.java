@@ -4,22 +4,12 @@ public class Provider {
 
     private String name;
     private String surname;
-    private String mail;
-    private String phone;
-    private String address;
-    private String idDniType;
-    private String dniNumber;
-    private String idPersonType;
+    private Integer idPersonProvider;
 
-    public Provider(String name, String surname, String mail, String phone, String address, String idDniType, String dniNumber, String idPersonType) {
+    public Provider(String name, String surname, Integer idPersonProvider) {
         this.name = name;
         this.surname = surname;
-        this.mail = mail;
-        this.phone = phone;
-        this.address = address;
-        this.idDniType = idDniType;
-        this.dniNumber = dniNumber;
-        this.idPersonType = idPersonType;
+        this.idPersonProvider = idPersonProvider;
     }
 
     public String getName() {
@@ -38,51 +28,12 @@ public class Provider {
         this.surname = surname;
     }
 
-    public String getMail() {
-        return mail;
+    public Integer getIdPersonProvider() {
+        return idPersonProvider;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setIdPersonProvider(Integer idPersonProvider) {
+        this.idPersonProvider = idPersonProvider;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getIdDniType() {
-        return idDniType;
-    }
-
-    public void setIdDniType(String idDniType) {
-        this.idDniType = idDniType;
-    }
-
-    public String getDniNumber() {
-        return dniNumber;
-    }
-
-    public void setDniNumber(String dniNumber) {
-        this.dniNumber = dniNumber;
-    }
-
-    public String getIdPersonType() {
-        return idPersonType;
-    }
-
-    public void setIdPersonType(String idPersonType) {
-        this.idPersonType = idPersonType;
-    }
 }

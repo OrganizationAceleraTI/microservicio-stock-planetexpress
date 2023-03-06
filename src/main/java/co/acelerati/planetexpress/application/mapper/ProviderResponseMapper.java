@@ -11,9 +11,7 @@ import java.util.stream.Collectors;
 public class ProviderResponseMapper {
 
     public static ProviderResponseDTO toProviderResponse(Provider provider) {
-        return new ProviderResponseDTO(provider.getName(), provider.getSurname(), provider.getMail(),
-                provider.getPhone(), provider.getAddress(), provider.getIdDniType(), provider.getDniNumber(),
-                provider.getIdPersonType());
+        return new ProviderResponseDTO(provider.getName(), provider.getSurname(), provider.getIdPersonProvider());
     }
 
 }

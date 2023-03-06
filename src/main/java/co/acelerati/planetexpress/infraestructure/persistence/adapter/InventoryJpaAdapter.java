@@ -1,10 +1,10 @@
-package co.acelerati.planetexpress.infraestructure.output.adapter;
+package co.acelerati.planetexpress.infraestructure.persistence.adapter;
 
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
-import co.acelerati.planetexpress.infraestructure.output.entity.InventoryEntity;
-import co.acelerati.planetexpress.infraestructure.output.mapper.IInventoryEntityMapper;
-import co.acelerati.planetexpress.infraestructure.output.repository.IInventoryRepository;
+import co.acelerati.planetexpress.infraestructure.persistence.entity.InventoryEntity;
+import co.acelerati.planetexpress.infraestructure.persistence.mapper.IInventoryEntityMapper;
+import co.acelerati.planetexpress.infraestructure.persistence.repository.IInventoryRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

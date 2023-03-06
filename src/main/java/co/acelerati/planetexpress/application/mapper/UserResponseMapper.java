@@ -1,6 +1,6 @@
 package co.acelerati.planetexpress.application.mapper;
 
-import co.acelerati.planetexpress.application.dto.response.UserResponseDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.UserResponseDTO;
 import co.acelerati.planetexpress.domain.model.User;
 
 public class UserResponseMapper {
@@ -15,5 +15,7 @@ public class UserResponseMapper {
                                    user.getDniNumber(),
                                    user.getIdPersonType());
     }
+
+    private UserResponseMapper() { }
 
 }

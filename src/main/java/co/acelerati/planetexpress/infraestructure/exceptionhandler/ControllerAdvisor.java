@@ -20,13 +20,17 @@ public class ControllerAdvisor {
     private static final String WARNING = "warning";
 
     @ExceptionHandler(NoDataFoundException.class)
-    public ResponseEntity<Map<String, String>> handleNoDataFoundException(NoDataFoundException ignoredNoDataFoundException) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getMessage()));
+    public ResponseEntity<Map<String, String>> handleNoDataFoundException(
+      NoDataFoundException ignoredNoDataFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(MESSAGE,
+          ExceptionResponse.NO_DATA_FOUND.getMessage()));
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<Map<String, String>> handleUnauthorizedException(UnauthorizedException ignoredUnauthorizedException) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap(WARNING, ExceptionResponse.ROLE_UNAUTHORIZED.getMessage()));
+    public ResponseEntity<Map<String, String>> handleUnauthorizedException(
+      UnauthorizedException ignoredUnauthorizedException) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap(WARNING,
+          ExceptionResponse.ROLE_UNAUTHORIZED.getMessage()));
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

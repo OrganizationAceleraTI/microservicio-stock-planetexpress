@@ -1,7 +1,7 @@
-package co.acelerati.planetexpress.infraestructure.input.rest;
+package co.acelerati.planetexpress.infraestructure.http.rest.controller;
 
-import co.acelerati.planetexpress.application.dto.request.InventorySupplyRequestDTO;
-import co.acelerati.planetexpress.application.dto.response.ProviderResponseDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProviderResponseDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,9 @@ public class InventoryRestController {
     private final IInventoryHandler inventoryHandler;
 
     @PostMapping("/supply")
-    public ResponseEntity<ProviderResponseDTO> inventorySupply(@RequestBody List<@Valid InventorySupplyRequestDTO> inventorySupplyRequestDTOList){
-        return ResponseEntity.status(HttpStatus.CREATED).body(inventoryHandler.inventorySupply(inventorySupplyRequestDTOList));
+    public ResponseEntity<ProviderResponseDTO> inventorySupply(
+      @RequestBody List<@Valid InventorySupplyRequestDTO> inventorySupplyRequestDTOList){
+        return ResponseEntity.status(HttpStatus.CREATED).body(inventoryHandler
+                .inventorySupply(inventorySupplyRequestDTOList));
     }
 }

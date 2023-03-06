@@ -1,4 +1,4 @@
-package co.acelerati.planetexpress.infraestructure.output.entity;
+package co.acelerati.planetexpress.infraestructure.persistence.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

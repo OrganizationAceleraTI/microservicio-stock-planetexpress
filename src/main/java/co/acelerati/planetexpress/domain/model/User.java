@@ -1,39 +1,58 @@
 package co.acelerati.planetexpress.domain.model;
 
-public class Provider {
+public class User {
 
     private String name;
     private String surname;
-    private Integer idPersonProvider;
+    private String mail;
+    private String phone;
+    private String address;
+    private String idDniType;
+    private String dniNumber;
+    private String idPersonType;
 
-    public Provider(String name, String surname, Integer idPersonProvider) {
+    public User(String name, String surname, String mail, String phone, String address, String idDniType,
+                String dniNumber, String idPersonType) {
         this.name = name;
         this.surname = surname;
-        this.idPersonProvider = idPersonProvider;
+        this.mail = mail;
+        this.phone = phone;
+        this.address = address;
+        this.idDniType = idDniType;
+        this.dniNumber = dniNumber;
+        this.idPersonType = idPersonType;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getSurname() {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public String getMail() {
+        return mail;
     }
 
-    public Integer getIdPersonProvider() {
-        return idPersonProvider;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setIdPersonProvider(Integer idPersonProvider) {
-        this.idPersonProvider = idPersonProvider;
+    public String getAddress() {
+        return address;
+    }
+
+    public String getIdDniType() {
+        return idDniType;
+    }
+
+    public String getDniNumber() {
+        return dniNumber;
+    }
+
+    public String getIdPersonType() {
+        return idPersonType;
     }
 
 }

@@ -10,4 +10,5 @@ public interface IInventoryHandler {
     List<Inventory> getAllInventory();
 
     void inventorySupply(List<InventorySupplyRequestDTO> InventorySupplyRequestDTO);
+    List<Inventory> getInventoryByPriceIsNull(Integer currentPrice);
 }

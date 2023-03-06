@@ -27,4 +27,9 @@ public class InventoryRestController {
         inventoryHandler.inventorySupply(inventorySupplyRequestDTOList);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @PostMapping("/suplyprice")
+    public ResponseEntity<List<Inventory>> getInventoryByPriceIsNull(Integer currentPrice) {
+        return ResponseEntity.ok(inventoryHandler.getInventoryByPriceIsNull(currentPrice));
+    }
 }

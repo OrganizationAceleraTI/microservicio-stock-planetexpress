@@ -35,5 +35,12 @@ public class InventoryUseCase implements IInventoryService {
 
     }
 
+    @Override
+    public void invetoryStock(List<Inventory> inventoryList) {
+        inventoryList.stream().forEach( inventory -> {
+            Inventory inventoryExist = inventoryPersistence
+        });
+    }
+
 
 }

@@ -6,14 +6,11 @@ import co.acelerati.planetexpress.infraestructure.output.entity.InventoryEntity;
 import co.acelerati.planetexpress.infraestructure.output.mapper.IInventoryEntityMapper;
 import co.acelerati.planetexpress.infraestructure.output.repository.IInventoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 
 import javax.persistence.NoResultException;
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class InventoryJpaAdapter implements IInventoryPersistence {
@@ -21,18 +18,19 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
     private final IInventoryRepository inventoryRepository;
     private final IInventoryEntityMapper inventoryEntityMapper;
 
+    private final int SIZE_PAGE = 25;
+
     @Override
     public List<Inventory> getAllInventory() {
         List<Inventory> inventoryList = new ArrayList<>();
-        List<InventoryEntity> inventoryEntityList = inventoryRepository.findAll();
         if (inventoryEntityList.isEmpty()) throw new NoResultException();
-        inventoryEntityList.forEach(inventory -> {
-            Inventory inventoryModel = new Inventory();
-            inventoryModel.setInventoryId(inventory.getInventoryId());
-            inventoryModel.setProductId(inventory.getProductId());
-            //inventoryModel.setWarehouseId(inventory.getWarehouseId());
-            inventoryModel.setQuantity(inventory.getQuantity());
-            inventoryList.add(inventoryModel);
+            inventoryEntityList.forEach(inventory -> {
+                Inventory inventoryModel = new Inventory();
+                inventoryModel.setInventoryId(inventory.getInventoryId());
+                inventoryModel.setProductId(inventory.getProductId());
+                //inventoryModel.setWarehouseId(inventory.getWarehouseId());
+                inventoryModel.setQuantity(inventory.getQuantity());
+                inventoryList.add(inventoryModel);
         });
         return inventoryList;
     }
@@ -55,16 +53,16 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
     }
 
     @Override
-    public Inventory getByCurrentPriceIsNull(Integer currentPrice, int Page) {
-        Optional<List<Inventory>> inventories = inventoryRepository.findByCurrentPriceIsNull(currentPrice);
-        return inventories.map(listInventory -> inventoryEntityMapper.toInventoryList(listInventory));
+    public List<Inventory> getByCurrentPriceIsNull(Integer currentPrice, int page) {
+        return inventoryRepository.findByQuantityIsNull(currentPrice, PageRequest.of(page, SIZE_PAGE))
+                .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
     }
 
-    @Override
-    public Inventory getByQuantityIsNull(Integer quantity, int Page) {
-        Optional<List<Inventory>> inventories = inventoryRepository.findByQuantityIsNull(quantity);
-        return inventories.map(listInventory -> inventoryEntityMapper.toInventoryList(listInventory))
-    }
+    /*@Override
+    public Inventory getByQuantityIsNull(Integer quantity, int page) throws Exception {
+        return inventoryRepository.findByQuantityIsNull(quantity, PageRequest.of(page, SIZE_PAGE))
+                .map((Page<InventoryEntity> listInventory) -> inventoryEntityMapper.toInventoryList(listInventory)).orElseThrow();
+    }*/
 
 
 }

@@ -3,7 +3,9 @@ package co.acelerati.planetexpress.domain.usecase;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
+import org.springframework.data.domain.Page;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 public class InventoryUseCase implements IInventoryService {
@@ -36,11 +38,12 @@ public class InventoryUseCase implements IInventoryService {
     }
 
     @Override
-    public void invetoryStock(List<Inventory> inventoryList) {
-        inventoryList.stream().forEach( inventory -> {
-            Inventory inventoryExist = inventoryPersistence
-        });
+    public List<Inventory> getInventoryByPriceIsNull(int currentPrice, int page) {
+        return null;
     }
 
-
+    @Override
+    public List<Inventory> getByQuantityIsNull(int quantity, int page) {
+        return null;
+    }
 }

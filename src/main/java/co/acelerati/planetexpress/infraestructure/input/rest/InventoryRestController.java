@@ -4,6 +4,7 @@ import co.acelerati.planetexpress.application.dto.request.InventorySupplyRequest
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class InventoryRestController {
     }
 
     @PostMapping("/suplyprice")
-    public ResponseEntity<List<Inventory>> getInventoryByPriceIsNull(Integer currentPrice) {
-        return ResponseEntity.ok(inventoryHandler.getInventoryByPriceIsNull(currentPrice));
+    public ResponseEntity<List<Inventory>> getInventoryByPriceIsNull(int currentPrice, int page) {
+        return ResponseEntity.ok(inventoryHandler.getInventoryByPriceIsNull(currentPrice, page));
     }
 }

@@ -1,5 +1,6 @@
 package co.acelerati.planetexpress.infraestructure.http.rest.controller;
 
+import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProviderResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
@@ -28,5 +29,9 @@ public class InventoryRestController {
       @RequestBody List<@Valid InventorySupplyRequestDTO> inventorySupplyRequestDTOList){
         return ResponseEntity.status(HttpStatus.CREATED).body(inventoryHandler
                 .inventorySupply(inventorySupplyRequestDTOList));
+    }
+    @PostMapping("/suplyprice")
+    public ResponseEntity<List<Inventory>> getInventoryByPriceIsNull(int currentPrice, int page) {
+        return ResponseEntity.ok(inventoryHandler.getInventoryByPriceIsNull(currentPrice, page));
     }
 }

@@ -6,6 +6,9 @@ import co.acelerati.planetexpress.infraestructure.persistence.entity.InventoryEn
 import co.acelerati.planetexpress.infraestructure.persistence.mapper.IInventoryEntityMapper;
 import co.acelerati.planetexpress.infraestructure.persistence.repository.IInventoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class InventoryJpaAdapter implements IInventoryPersistence {
@@ -13,6 +16,8 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
     private final IInventoryRepository inventoryRepository;
 
     private final IInventoryEntityMapper inventoryEntityMapper;
+
+    private final int SIZE_PAGE = 25;
 
     @Override
     public Integer saveInventory(Inventory inventory) {
@@ -29,6 +34,18 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
     public Inventory getInventoryOfSupplier(Integer personSupplierId, Integer productId) {
        InventoryEntity inventoryEntity = inventoryRepository.findByPersonSupplierIdAndProductId(personSupplierId, productId);
        return inventoryEntityMapper.toInventoryModel(inventoryEntity);
+    }
+
+    @Override
+    public List<Inventory> getByCurrentPriceIsNull(Integer currentPrice, Integer page) {
+        return inventoryRepository.findByQuantityIsNull(currentPrice, PageRequest.of(page, SIZE_PAGE))
+                .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
+    }
+
+    @Override
+    public List<Inventory> getByQuantityIsnull(Integer quantity, Integer page) {
+        return inventoryRepository.findByQuantityIsNull(quantity, PageRequest.of(page, SIZE_PAGE))
+                .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
     }
 
 

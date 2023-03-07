@@ -1,15 +1,13 @@
 package co.acelerati.planetexpress.domain.api;
 
 import co.acelerati.planetexpress.domain.model.Inventory;
-import org.springframework.data.domain.Pageable;
+import co.acelerati.planetexpress.domain.model.Provider;
 
 import java.util.List;
 
 public interface IInventoryService {
 
-    List<Inventory> getAllInventory();
-
-    void inventorySupply(List<Inventory> inventoryList);
+    Provider inventorySupply(List<Inventory> inventoryList);
 
     List<Inventory> getInventoryByPriceIsNull(int currentPrice, int page);
 

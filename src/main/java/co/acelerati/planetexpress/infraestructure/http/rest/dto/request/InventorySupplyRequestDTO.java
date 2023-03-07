@@ -1,8 +1,10 @@
-package co.acelerati.planetexpress.application.dto.request;
+package co.acelerati.planetexpress.infraestructure.http.rest.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.Pattern;
 
 @Getter
 @NoArgsConstructor

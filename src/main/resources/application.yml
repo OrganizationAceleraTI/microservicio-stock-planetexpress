@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/stock
+    url: jdbc:postgresql://localhost:5432/acelerati?currentSchema=stock
     username: postgres
     password: 11Orange3526
 
@@ -12,3 +12,4 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+    database: postgresql

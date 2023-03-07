@@ -1,9 +1,9 @@
-package co.acelerati.planetexpress.infraestructure.output.repository;
+package co.acelerati.planetexpress.infraestructure.persistence.repository;
 
-import co.acelerati.planetexpress.infraestructure.output.entity.InventoryEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import co.acelerati.planetexpress.infraestructure.persistence.entity.InventoryEntity;
 
 import java.util.Optional;
 

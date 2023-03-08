@@ -40,5 +40,4 @@ public class InventoryEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
-
 }

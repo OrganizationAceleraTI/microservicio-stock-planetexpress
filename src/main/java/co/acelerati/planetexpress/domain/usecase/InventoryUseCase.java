@@ -43,7 +43,7 @@ public class InventoryUseCase implements IInventoryService {
 
     @Override
     public List<Inventory> getInventoryByPriceIsNull(int currentPrice, int page) {
-        return null;
+        return inventoryPersistence.getByCurrentPriceIsNull(currentPrice, page);
     }
 
     @Override

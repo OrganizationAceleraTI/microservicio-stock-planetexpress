@@ -7,11 +7,9 @@ import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,8 +28,22 @@ public class InventoryRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(inventoryHandler
                 .inventorySupply(inventorySupplyRequestDTOList));
     }
-    @PostMapping("/suplyprice")
-    public ResponseEntity<List<Inventory>> getInventoryByPriceIsNull(int currentPrice, int page) {
-        return ResponseEntity.ok(inventoryHandler.getInventoryByPriceIsNull(currentPrice, page));
+    @GetMapping
+    ResponseEntity<List<Inventory>> getInventoryByPriceIsNull(@RequestParam(value = "filter") String filters){
+        //System.out.println("filters = " + filters);
+        String [] filter = filters.split("_");
+        int currentPrice = Integer.parseInt(filter[0].split("-")[1]);
+        int page = Integer.parseInt(filter[1].split("-")[1]);
+            return ResponseEntity.ok(inventoryHandler.getInventoryByPriceIsNull(currentPrice, page));
+    }
+
+    @GetMapping("/filtro")
+    ResponseEntity getInventoryByPriceIsNull(@RequestParam MultiValueMap<String, String> filters){
+        System.out.println("Filters:");
+        filters.get("currentPrice");
+        System.out.println("Price: "+filters.get("currentPrice"));
+        System.out.println("Page: "+filters.get("page"));
+        return ResponseEntity.ok(HttpStatus.OK);
+        //return ResponseEntity.ok(inventoryHandler.getInventoryByPriceIsNull(currentPrice, page));
     }
 }

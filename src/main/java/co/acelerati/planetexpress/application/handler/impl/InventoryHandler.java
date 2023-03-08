@@ -1,5 +1,6 @@
 package co.acelerati.planetexpress.application.handler.impl;
 
+import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProviderResponseDTO;
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
@@ -16,7 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class InventoryHandler implements IInventoryHandler {
+public
+class InventoryHandler implements IInventoryHandler {
 
     private final IInventoryService inventoryService;
 
@@ -25,4 +27,21 @@ public class InventoryHandler implements IInventoryHandler {
         Provider provider = inventoryService.inventorySupply(InventorySupplyRequestMapper.toInventoryModelList(inventorySupplyRequestDTO));
         return ProviderResponseMapper.toProviderResponse(provider);
     }
+
+    @Override
+    public List<Inventory> getAllInventory() {
+        return null;
+    }
+
+    @Override
+    public List<Inventory> getInventoryByPriceIsNull(Integer currentPrice, int page) {
+        System.out.println("currentPrice = " + currentPrice + ", page = " + page);
+        return inventoryService.getInventoryByPriceIsNull(currentPrice, page);
+    }
+
+    @Override
+    public List<Inventory> getByQuantityIsNull(Integer quantity, int page) {
+        return null;
+    }
+
 }

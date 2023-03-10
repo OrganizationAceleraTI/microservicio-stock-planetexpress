@@ -4,12 +4,17 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/acelerati?currentSchema=stock
+    url: jdbc:postgresql://localhost:5432/xxreplacexx?currentSchema=xxreplacexx
     username: postgres
-    password: admin123
+    password: xxreplacexx
 
   jpa:
     hibernate:
       ddl-auto: validate
     show-sql: true
     database: postgresql
+
+feign-client:
+  user:
+    root:
+      url: https://6406a9c0862956433e56a64c.mockapi.io/user/v1

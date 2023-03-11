@@ -9,7 +9,7 @@ import java.util.List;
 public interface IInventoryHandler {
 
     List<Inventory> getAllInventory();
-    List<Inventory> getInventoryByPriceIsNull(Integer currentPrice, int page);
+    List<Inventory> getInventoryByPrice(Integer currentPrice, int page);
     List<Inventory> getByQuantityIsNull(Integer quantity, int page);
     ProviderResponseDTO inventorySupply(List<InventorySupplyRequestDTO> InventorySupplyRequestDTO);
 }

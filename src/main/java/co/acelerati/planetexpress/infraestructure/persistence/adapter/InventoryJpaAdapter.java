@@ -6,9 +6,11 @@ import co.acelerati.planetexpress.infraestructure.persistence.entity.InventoryEn
 import co.acelerati.planetexpress.infraestructure.persistence.mapper.IInventoryEntityMapper;
 import co.acelerati.planetexpress.infraestructure.persistence.repository.IInventoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class InventoryJpaAdapter implements IInventoryPersistence {
@@ -37,8 +39,8 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
     }
 
     @Override
-    public List<Inventory> getByCurrentPriceIsNull(Integer currentPrice, Integer page) {
-        return inventoryRepository.findByQuantityIsNull(currentPrice, PageRequest.of(page, SIZE_PAGE))
+    public List<Inventory> getByCurrentPrice(Integer currentPrice, Integer page) {
+        return inventoryRepository.findByCurrentPrice(currentPrice, PageRequest.of(page, SIZE_PAGE))
                 .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
     }
 

@@ -34,9 +34,9 @@ class InventoryHandler implements IInventoryHandler {
     }
 
     @Override
-    public List<Inventory> getInventoryByPriceIsNull(Integer currentPrice, int page) {
+    public List<Inventory> getInventoryByPrice(Integer currentPrice, int page) {
         System.out.println("currentPrice = " + currentPrice + ", page = " + page);
-        return inventoryService.getInventoryByPriceIsNull(currentPrice, page);
+        return inventoryService.getInventoryByPrice(currentPrice, page);
     }
 
     @Override

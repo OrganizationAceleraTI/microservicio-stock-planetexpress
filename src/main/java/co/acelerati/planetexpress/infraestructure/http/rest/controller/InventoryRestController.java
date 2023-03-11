@@ -28,22 +28,31 @@ public class InventoryRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(inventoryHandler
                 .inventorySupply(inventorySupplyRequestDTOList));
     }
-    @GetMapping
-    ResponseEntity<List<Inventory>> getInventoryByPriceIsNull(@RequestParam(value = "filter") String filters){
+ /*   @GetMapping
+    ResponseEntity<List<Inventory>> getInventoryByPriceIsNulla(@RequestParam(value = "filter") String filters){
         //System.out.println("filters = " + filters);
         String [] filter = filters.split("_");
         int currentPrice = Integer.parseInt(filter[0].split("-")[1]);
         int page = Integer.parseInt(filter[1].split("-")[1]);
             return ResponseEntity.ok(inventoryHandler.getInventoryByPriceIsNull(currentPrice, page));
-    }
+    }*/
 
-    @GetMapping("/filtro")
+    @GetMapping("/filter")
     ResponseEntity getInventoryByPriceIsNull(@RequestParam MultiValueMap<String, String> filters){
         System.out.println("Filters:");
         filters.get("currentPrice");
         System.out.println("Price: "+filters.get("currentPrice"));
         System.out.println("Page: "+filters.get("page"));
-        return ResponseEntity.ok(HttpStatus.OK);
-        //return ResponseEntity.ok(inventoryHandler.getInventoryByPriceIsNull(currentPrice, page));
+      //  return ResponseEntity.ok(HttpStatus.OK);
+        return ResponseEntity.ok(inventoryHandler.getInventoryByPrice(Integer.parseInt(filters.get("currentPrice").get(0)), Integer.parseInt(filters.get("page").get(0))));
+    }
+
+    @GetMapping
+    ResponseEntity<List<Inventory>> getInventoryByPriceIsNullall(){
+        System.out.println("entro = ");
+        //String [] filter = filters.split("_");
+       // int currentPrice = Integer.parseInt(filter[0].split("-")[1]);
+       // int page = Integer.parseInt(filter[1].split("-")[1]);
+        return ResponseEntity.ok(inventoryHandler.getInventoryByPrice(10000, 0));
     }
 }

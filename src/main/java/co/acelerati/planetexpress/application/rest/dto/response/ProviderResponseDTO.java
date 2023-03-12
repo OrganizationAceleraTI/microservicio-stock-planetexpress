@@ -1,4 +1,4 @@
-package co.acelerati.planetexpress.infraestructure.http.rest.dto.response;
+package co.acelerati.planetexpress.application.rest.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

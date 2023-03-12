@@ -15,5 +15,5 @@ public interface IInventoryPersistence {
 
     List<Inventory> getByQuantityIsnull( Integer quantity, Integer page);
 
-    List<Inventory> getByCurrentPriceIsNull(Integer currentPrice, Integer page);
+    List<Inventory> getByCurrentPrice(Integer currentPrice, Integer page);
 }

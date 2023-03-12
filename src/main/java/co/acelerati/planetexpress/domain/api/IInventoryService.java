@@ -9,7 +9,7 @@ public interface IInventoryService {
 
     Provider inventorySupply(List<Inventory> inventoryList);
 
-    List<Inventory> getInventoryByPriceIsNull(int currentPrice, int page);
+    List<Inventory> getInventoryByPrice(int currentPrice, int page);
 
     List<Inventory> getByQuantityIsNull(int quantity, int page);
 

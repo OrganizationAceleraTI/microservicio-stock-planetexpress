@@ -11,7 +11,7 @@ public interface IInventoryRepository extends PagingAndSortingRepository<Invento
 
     InventoryEntity findByPersonSupplierIdAndProductId(Integer personSupplierId, Integer productId);
 
-    Optional<Page<InventoryEntity>> findByCurrentPriceIsNull(int currentPrice, Pageable page);
+    Optional<Page<InventoryEntity>> findByCurrentPrice(int currentPrice, Pageable page);
 
     Optional<Page<InventoryEntity>> findByQuantityIsNull(int quantity, Pageable page);
  }

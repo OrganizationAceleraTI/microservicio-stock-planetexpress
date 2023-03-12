@@ -42,8 +42,8 @@ public class InventoryUseCase implements IInventoryService {
     }
 
     @Override
-    public List<Inventory> getInventoryByPriceIsNull(int currentPrice, int page) {
-        return inventoryPersistence.getByCurrentPriceIsNull(currentPrice, page);
+    public List<Inventory> getInventoryByPrice(int currentPrice, int page) {
+        return inventoryPersistence.getByCurrentPrice(currentPrice, page);
     }
 
     @Override

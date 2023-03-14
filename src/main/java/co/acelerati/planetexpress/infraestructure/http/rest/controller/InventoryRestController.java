@@ -7,6 +7,7 @@ import co.acelerati.planetexpress.infraestructure.http.rest.feign.service.UserSe
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,5 +44,14 @@ public class InventoryRestController {
     public ResponseEntity<ProviderResponseDTO> getProviderFeignClient(@RequestParam Integer id) {
         // LLAMA FEIGN CLIENT END POINT MOCKUP
         return ResponseEntity.ok(userService.getProvider(id));
+    }
+
+    @GetMapping("/filter")
+    ResponseEntity getInventoryByPrice(@RequestParam MultiValueMap<String, String> filters){
+        System.out.println("Filters:");
+        filters.get("currentPrice");
+        System.out.println("Price: "+filters.get("currentPrice"));
+        System.out.println("Page: "+filters.get("page"));
+        return ResponseEntity.ok(inventoryHandler.getInventoryByPrice(Integer.parseInt(filters.get("currentPrice").get(0)), Integer.parseInt(filters.get("page").get(0))));
     }
 }

@@ -28,6 +28,7 @@ public class InventoryRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(inventoryHandler
                 .inventorySupply(inventorySupplyRequestDTOList));
     }
+    
  /*   @GetMapping
     ResponseEntity<List<Inventory>> getInventoryByPriceIsNulla(@RequestParam(value = "filter") String filters){
         //System.out.println("filters = " + filters);

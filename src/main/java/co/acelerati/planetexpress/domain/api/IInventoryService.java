@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface IInventoryService {
 
-    void inventorySupply(List<Inventory> inventoryList);
-
     void updateStock(Inventory newStock);
 
 }

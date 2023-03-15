@@ -3,9 +3,8 @@ package co.acelerati.planetexpress.infraestructure.configuration;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
 import co.acelerati.planetexpress.domain.usecase.InventoryUseCase;
-import co.acelerati.planetexpress.infraestructure.output.adapter.InventoryJpaAdapter;
-import co.acelerati.planetexpress.infraestructure.output.mapper.IInventoryEntityMapper;
-import co.acelerati.planetexpress.infraestructure.output.repository.IInventoryRepository;
+import co.acelerati.planetexpress.infraestructure.persistence.adapter.InventoryJpaAdapter;
+import co.acelerati.planetexpress.infraestructure.persistence.repository.IInventoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +15,9 @@ public class BeanConfiguration {
 
     private final IInventoryRepository inventoryRepository;
 
-    private final IInventoryEntityMapper inventoryEntityMapper;
-
     @Bean
     public IInventoryPersistence inventoryPersistence() {
-        return new InventoryJpaAdapter(inventoryRepository, inventoryEntityMapper);
+        return new InventoryJpaAdapter(inventoryRepository);
     }
 
     @Bean

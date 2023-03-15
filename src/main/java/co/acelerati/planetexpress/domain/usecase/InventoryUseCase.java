@@ -18,4 +18,11 @@ public class InventoryUseCase implements IInventoryService {
     public List<Inventory> getAllInventory() {
         return inventoryPersistence.getAllInventory();
     }
+
+    @Override
+    public void updateStock(Inventory newStock) {
+        inventoryPersistence.updateStock(newStock);
+    }
+
+
 }

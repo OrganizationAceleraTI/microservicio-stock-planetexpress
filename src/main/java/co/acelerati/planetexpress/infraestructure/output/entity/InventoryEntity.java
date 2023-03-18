@@ -16,14 +16,14 @@ import javax.persistence.*;
 public class InventoryEntity {
 
     @Id
-    @Column(name = "inventoryid", nullable = false)
+    @Column(name = "inventory_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer inventoryId;
 
-    @Column(name = "productid")
+    @Column(name = "product_id")
     private Integer productId;
 
-    @Column(name = "warehouseid")
+    @Column(name = "warehouse_id")
     private Integer warehouseId;
 
     @Column(name = "quantity")

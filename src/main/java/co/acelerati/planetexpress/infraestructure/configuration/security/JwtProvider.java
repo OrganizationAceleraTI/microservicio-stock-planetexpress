@@ -1,24 +1,33 @@
 package co.acelerati.planetexpress.infraestructure.configuration.security;
+import co.acelerati.planetexpress.application.exception.ExpiredTokenException;
+import co.acelerati.planetexpress.application.exception.MalformedTokenException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+
 import java.security.Key;
 
 @Component
-@Slf4j
 public class JwtProvider {
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
+
     @Value("${jwt.secret}")
     private String secret;
     @Value("${jwt.expiration}")
     private int expiration;
 
-    public String getNombreUsuarioFromToken(String token) {
+    public String getUserNameFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(getKey()).build().parseClaimsJws(token).getBody().get("name", String.class);
     }
 
@@ -33,18 +42,23 @@ public class JwtProvider {
 
     public boolean validateToken(String token) {
         try {
-            System.out.println("init::" + token);
-            String bodyToken = Jwts.parserBuilder().setSigningKey(getKey()).build().parseClaimsJws(token).getBody().toString();
-            System.out.println("parser::" + bodyToken);
+            logger.info("Parsing token");
+            Jwts.parserBuilder().setSigningKey(getKey()).build().parseClaimsJws(token).getBody().toString();
             return true;
-        } catch (MalformedJwtException e) {
-            log.error("token mal formado");
-        } catch (UnsupportedJwtException e) {
-            log.error("token no soportado");
-        } catch (ExpiredJwtException e) {
-            log.error("token expirado");
-        } catch (IllegalArgumentException e) {
-            log.error("token vacío");
+        } catch (MalformedJwtException exception) {
+            logger.error("Malformed token");
+            throw new MalformedTokenException(exception.getMessage());
+        } catch (UnsupportedJwtException exception) {
+            logger.error("Token not supported");
+            throw new UnsupportedJwtException(exception.getMessage());
+        } catch (ExpiredJwtException exception) {
+            logger.error("The token expired");
+            throw new ExpiredTokenException(exception.getMessage());
+        } catch (IllegalArgumentException exception) {
+            logger.error("The token is empty");
+            throw new IllegalArgumentException(exception.getMessage());
+        } catch (SignatureException exception) {
+            logger.warn("We can't verify the signature");
         }
         return false;
     }

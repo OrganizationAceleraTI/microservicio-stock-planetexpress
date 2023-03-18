@@ -1,5 +1,6 @@
 package co.acelerati.planetexpress.infraestructure.configuration.security;
 
+import co.acelerati.planetexpress.application.exception.EmptyHeaderAutorizationException;
 import co.acelerati.planetexpress.infraestructure.configuration.security.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +35,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
         try {
             String token = getToken(req);
-            System.out.println("token::" + token);
-            if (token != null && jwtProvider.validateToken(token) && jwtProvider.getNombreUsuarioFromToken(token) != null) {
+            if (jwtProvider.validateToken(token) && jwtProvider.getUserNameFromToken(token) != null) {
                 UserDetails userDetails = getUserDetails(token);
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                   userDetails, null, userDetails.getAuthorities()
@@ -44,22 +44,21 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("doFilter error: " + e);
+            logger.error(String.format("doFilter error: %s", e));
             res.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
         }
         filterChain.doFilter(req, res);
     }
 
     private UserDetails getUserDetails(String token) {
-        return new User(0L, jwtProvider.getNombreUsuarioFromToken(token), jwtProvider.getRole(token));
+        return new User(0L, jwtProvider.getUserNameFromToken(token), jwtProvider.getRole(token));
     }
 
     private String getToken(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        if (header != null) {
-            return header.replace("Bearer ", "");
+        try {
+            return request.getHeader("Authorization").replace("Bearer", "");
+        } catch (NullPointerException exception) {
+            throw new EmptyHeaderAutorizationException("The Authorization header is empty");
         }
-        return null;
     }
 }

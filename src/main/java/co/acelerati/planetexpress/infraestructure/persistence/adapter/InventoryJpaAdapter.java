@@ -39,16 +39,31 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
     }
 
     @Override
+    public List<Inventory> getAllInventory(Integer page) {
+        return null;
+    }
+
+    @Override
     public List<Inventory> getByCurrentPrice(Integer currentPrice, Integer page) {
         return inventoryRepository.findByCurrentPrice(currentPrice, PageRequest.of(page, SIZE_PAGE))
                 .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
     }
 
     @Override
-    public List<Inventory> getByQuantityIsnull(Integer quantity, Integer page) {
-        return inventoryRepository.findByQuantityIsNull(quantity, PageRequest.of(page, SIZE_PAGE))
-                .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
+    public List<Inventory> getByCurrentPriceBetween(Integer minPrice, Integer maxPrice, Integer page) {
+        return inventoryRepository.findByCurrentPriceBetween(minPrice, maxPrice, PageRequest.of(page, SIZE_PAGE))
+          .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
     }
 
+    @Override
+    public List<Inventory> getByCurrentPriceGreaterThanEqual(Integer currentPrice, Integer page) {
+        return inventoryRepository.findByCurrentPriceGreaterThanEqual(currentPrice, PageRequest.of(page, SIZE_PAGE))
+          .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
+    }
 
+    @Override
+    public List<Inventory> getByCurrentPriceLessThanEqual(Integer currentPrice, Integer page) {
+        return inventoryRepository.findByCurrentPriceLessThanEqual(currentPrice, PageRequest.of(page, SIZE_PAGE))
+          .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
+    }
 }

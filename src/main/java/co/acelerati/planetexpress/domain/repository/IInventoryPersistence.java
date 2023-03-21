@@ -13,7 +13,10 @@ public interface IInventoryPersistence {
 
     Inventory getInventoryOfSupplier(Integer personSupplierId, Integer productID);
 
-    List<Inventory> getByQuantityIsnull( Integer quantity, Integer page);
+    List<Inventory> getAllInventory(Integer page);
 
     List<Inventory> getByCurrentPrice(Integer currentPrice, Integer page);
+    List<Inventory> getByCurrentPriceLessThanEqual(Integer currentPrice, Integer page);
+    List<Inventory> getByCurrentPriceGreaterThanEqual(Integer currentPrice, Integer page);
+    List<Inventory> getByCurrentPriceBetween(Integer minPrice, Integer maxPrice, Integer page);
 }

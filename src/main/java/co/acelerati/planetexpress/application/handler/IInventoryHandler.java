@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface IInventoryHandler {
 
-    List<Inventory> getAllInventory();
+    List<Inventory> getAllInventory(int page);
     List<Inventory> getInventoryByPrice(Integer currentPrice, int page);
-    List<Inventory> getByQuantityIsNull(Integer quantity, int page);
+    List<Inventory> getByCurrentPriceLessThanEqual(Integer currentPrice, int page);
+    List<Inventory> getByCurrentPriceGreaterThanEqual(Integer currentPrice, int page);
+    List<Inventory> getByCurrentPriceBetween(Integer minPrice, Integer maxPrice, int page);
     void inventorySupply(List<InventorySupplyRequestDTO> InventorySupplyRequestDTO);
 
 }

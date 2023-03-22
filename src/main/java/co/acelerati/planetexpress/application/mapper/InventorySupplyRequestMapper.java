@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class InventorySupplyRequestMapper {
 
+    private InventorySupplyRequestMapper() {  }
+
     public static Inventory toInventoryModel(InventorySupplyRequestDTO inventorySupplyRequestDTO) {
         return new Inventory(inventorySupplyRequestDTO.getProductId(),
                              inventorySupplyRequestDTO.getPersonSupplierId(),
@@ -22,5 +24,4 @@ public class InventorySupplyRequestMapper {
               .collect(Collectors.toList());
     }
 
-    private InventorySupplyRequestMapper() {  }
 }

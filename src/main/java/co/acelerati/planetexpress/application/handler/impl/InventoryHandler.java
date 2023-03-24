@@ -5,23 +5,26 @@ import co.acelerati.planetexpress.domain.api.IInventoryService;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
-@RequiredArgsConstructor
+import java.util.Optional;
+
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class InventoryHandler implements IInventoryHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(InventoryHandler.class);
 
     private final IInventoryService inventoryService;
 
     @Override
-    public void updateStock(UpdateStockRequestDTO updateStockRequest) {
-        Inventory inventory = new Inventory();
-        inventory.setInventoryId(updateStockRequest.getInventoryId());
-        inventory.setProductId(updateStockRequest.getProductId());
-        inventory.setIncomingPrice(updateStockRequest.getIncomingPrice());
-        inventory.setCurrentPrice(updateStockRequest.getSalePrice());
-        inventoryService.updateStock(inventory);
+    public Inventory updateStock(Inventory updateStock) {
+        return inventoryService.updateStock(updateStock);
     }
 }

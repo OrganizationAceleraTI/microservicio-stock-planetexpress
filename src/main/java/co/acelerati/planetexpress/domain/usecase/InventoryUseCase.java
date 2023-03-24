@@ -1,10 +1,11 @@
 package co.acelerati.planetexpress.domain.usecase;
 
+import co.acelerati.planetexpress.application.mapper.InventoryUpdateMapper;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
 
-import java.util.List;
+import java.util.Optional;
 
 public class InventoryUseCase implements IInventoryService {
 
@@ -15,9 +16,14 @@ public class InventoryUseCase implements IInventoryService {
     }
 
     @Override
-    public void updateStock(Inventory newStock) {
-        inventoryPersistence.updateStock(newStock);
+    public Inventory updateStock(Inventory newStock) {
+        Inventory currentStock = this.getStockById(newStock.getInventoryId());
+        currentStock.setCurrentPrice(newStock.getCurrentPrice());
+        return inventoryPersistence.updateStock(currentStock);
     }
 
-
+    @Override
+    public Inventory getStockById(Integer stockId) {
+        return InventoryUpdateMapper.optionalToModel(inventoryPersistence.getStockById(stockId));
+    }
 }

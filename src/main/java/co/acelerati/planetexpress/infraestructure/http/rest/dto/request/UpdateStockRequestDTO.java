@@ -15,10 +15,6 @@ public class UpdateStockRequestDTO {
     @NotNull
     private Integer inventoryId;
     @NotNull
-    private Integer productId;
-    @NotNull
-    private Integer incomingPrice;
-    @NotNull
     @Positive
     private Integer salePrice;
 }

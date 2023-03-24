@@ -39,6 +39,11 @@ public class Inventory {
         this.quantity = quantity;
     }
 
+    public Inventory(Integer inventoryId, Integer currentPrice) {
+        this.inventoryId = inventoryId;
+        this.currentPrice = currentPrice;
+    }
+
     public Integer getInventoryId() {
         return inventoryId;
     }

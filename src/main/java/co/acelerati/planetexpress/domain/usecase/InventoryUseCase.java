@@ -5,6 +5,7 @@ import co.acelerati.planetexpress.domain.api.IInventoryService;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
 
+import java.util.List;
 import java.util.Optional;
 
 public class InventoryUseCase implements IInventoryService {

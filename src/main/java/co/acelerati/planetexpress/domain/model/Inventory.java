@@ -39,23 +39,6 @@ public class Inventory {
         this.quantity = quantity;
     }
 
-    public Inventory(Integer productId, Integer personSupplierId, Integer incomingPrice, Integer currentPrice,
-                     Integer quantity) {
-        this.productId = productId;
-        this.personSupplierId = personSupplierId;
-        this.incomingPrice = incomingPrice;
-        this.currentPrice = currentPrice;
-        this.quantity = quantity;
-    }
-
-    public Inventory(Integer productId, Integer personSupplierId, Integer quantity) {
-        this.productId = productId;
-        this.personSupplierId = personSupplierId;
-        this.incomingPrice = 0;
-        this.currentPrice = 0;
-        this.quantity = quantity;
-    }
-
     public Inventory(Integer inventoryId, Integer currentPrice) {
         this.inventoryId = inventoryId;
         this.currentPrice = currentPrice;

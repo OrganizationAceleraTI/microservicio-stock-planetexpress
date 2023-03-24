@@ -16,9 +16,11 @@ public class BeanConfiguration {
 
     private final IInventoryRepository inventoryRepository;
 
+    private final IInventoryEntityMapper inventoryEntityMapper;
+
     @Bean
     public IInventoryPersistence inventoryPersistence() {
-        return new InventoryJpaAdapter(inventoryRepository);
+        return new InventoryJpaAdapter(inventoryRepository, inventoryEntityMapper);
     }
 
     @Bean

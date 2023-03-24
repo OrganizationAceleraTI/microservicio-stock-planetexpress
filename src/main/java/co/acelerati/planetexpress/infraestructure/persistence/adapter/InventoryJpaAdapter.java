@@ -40,7 +40,8 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
 
     @Override
     public List<Inventory> getAllInventory(Integer page) {
-        return null;
+        return inventoryRepository.findAll(PageRequest.of(page, SIZE_PAGE))
+          .map(inventoryEntityMapper::toInventoryModel).toList();
     }
 
     @Override

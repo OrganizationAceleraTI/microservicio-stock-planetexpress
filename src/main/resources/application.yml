@@ -10,7 +10,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     database: postgresql
 
@@ -19,3 +19,15 @@ feign-client:
   user:
     root:
       url: https://6406a9c0862956433e56a64c.mockapi.io/user/v1
+
+  brand:
+    root:
+      url: https://641b91e89b82ded29d547ed5.mockapi.io/dev
+
+  category:
+    root:
+      url: https://641b952e1f5d999a4465e1f4.mockapi.io/dev
+
+  product:
+    root:
+      url: https://6406a9c0862956433e56a64c.mockapi.io

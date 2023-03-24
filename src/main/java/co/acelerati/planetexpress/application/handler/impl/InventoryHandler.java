@@ -1,14 +1,19 @@
 package co.acelerati.planetexpress.application.handler.impl;
 
+import co.acelerati.planetexpress.domain.model.Brand;
+import co.acelerati.planetexpress.domain.model.Category;
+import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import co.acelerati.planetexpress.application.mapper.InventorySupplyRequestMapper;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
+import co.acelerati.planetexpress.domain.model.Product;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProductResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 
@@ -28,6 +33,11 @@ class InventoryHandler implements IInventoryHandler {
     @Override
     public List<Inventory> getAllInventory(int page) {
         return inventoryService.getAllInventory(page);
+    }
+
+    @Override
+    public List<DetailStock> allProducts(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brands) {
+        return inventoryService.allProducts(filters, products, categories, brands);
     }
 
     @Override

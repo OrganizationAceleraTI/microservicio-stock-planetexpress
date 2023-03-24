@@ -1,11 +1,17 @@
 package co.acelerati.planetexpress.domain.usecase;
 
+import co.acelerati.planetexpress.application.mapper.InventorySupplyRequestMapper;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
+import co.acelerati.planetexpress.domain.model.Brand;
+import co.acelerati.planetexpress.domain.model.Category;
+import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.Inventory;
+import co.acelerati.planetexpress.domain.model.Product;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
-import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 
-import java.awt.print.Pageable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryUseCase implements IInventoryService {
@@ -20,16 +26,16 @@ public class InventoryUseCase implements IInventoryService {
     public void inventorySupply(List<Inventory> inventoryList) {
         inventoryList.forEach(inventory -> {
             Inventory inventoryExist = inventoryPersistence.getInventoryOfSupplier(inventory.getPersonSupplierId(),
-                                        inventory.getProductId());
-            if(inventoryExist != null){
+              inventory.getProductId());
+            if (inventoryExist != null) {
                 Inventory inventoryUpdate = new Inventory(inventoryExist.getInventoryId(),
                   inventoryExist.getProductId(),
                   inventoryExist.getPersonSupplierId(),
                   inventory.getIncomingPrice(),
                   inventory.getCurrentPrice(),
-                  Integer.sum(inventoryExist.getQuantity(),inventory.getQuantity()));
+                  Integer.sum(inventoryExist.getQuantity(), inventory.getQuantity()));
                 inventoryPersistence.updateInventory(inventoryUpdate);
-            }else{
+            } else {
                 Inventory inventorySave = new Inventory(inventory.getProductId(),
                   inventory.getPersonSupplierId(),
                   inventory.getQuantity());
@@ -61,5 +67,43 @@ public class InventoryUseCase implements IInventoryService {
     @Override
     public List<Inventory> getAllInventory(int page) {
         return inventoryPersistence.getAllInventory(page);
+    }
+
+    @Override
+    public List<DetailStock> allProducts(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brands) {
+        List<DetailStock> detailStocks = new ArrayList<>();
+        List<Inventory> inventories = new ArrayList<>();
+        int minPrice = filters.containsKey("minPrice") ? Integer.parseInt(String.valueOf(filters.getFirst("minPrice"))) : -1;
+        int maxPrice = filters.containsKey("maxPrice") ? Integer.parseInt(filters.getFirst("maxPrice")) : -1;
+        int page = Integer.parseInt(filters.getFirst("page"));
+       if (maxPrice >= 0) {
+            inventories = inventoryPersistence.getByCurrentPriceBetween(minPrice, maxPrice, page);
+        }
+        else if (minPrice >= 0) {
+            inventories = inventoryPersistence.getByCurrentPriceLessThanEqual(minPrice, page);
+        }
+        else if (minPrice >= 0 && maxPrice >= 0) {
+            inventories = inventoryPersistence.getByCurrentPriceBetween(minPrice, maxPrice, page);
+        } else {
+            inventories = inventoryPersistence.getAllInventory(page);
+        }
+        for (Inventory inventory : inventories) {
+            Product product = products.stream().filter(prd -> inventory.getProductId().equals(prd.getId())).findFirst().get();
+            Category category = categories.stream().filter(cat -> product.getIdCategory().equals(cat.getId())).findFirst().get();
+            Brand brand = brands.stream().filter(bra -> product.getIdBrand().equals(bra.getId())).findFirst().get();
+            DetailStock detailStock = new DetailStock(
+              product.getId(),
+              product.getName(),
+              product.getDescription(),
+              product.getModel(),
+              brand.getName(),
+              category.getName(),
+              inventory.getQuantity(),
+              inventory.getIncomingPrice(),
+              inventory.getCurrentPrice()
+            );
+            detailStocks.add(detailStock);
+        }
+        return detailStocks;
     }
 }

@@ -14,6 +14,10 @@ spring:
     show-sql: true
     database: postgresql
 
+jwt:
+  secret: ${SECRET_KEY}
+  expiration: ${EXPIRE_DAYS_SECURITY}
+
 feign-client:
   user:
     root:

@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface IInventoryService {
 
-    List<Inventory> getAllInventory();
+    void inventorySupply(List<Inventory> inventoryList);
+
+
 }

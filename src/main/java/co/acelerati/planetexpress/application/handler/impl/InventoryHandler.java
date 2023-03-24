@@ -17,7 +17,7 @@ public class InventoryHandler implements IInventoryHandler {
     private final IInventoryService inventoryService;
 
     @Override
-    public List<Inventory> getAllInventory() {
-        return inventoryService.getAllInventory();
+    public void inventorySupply(List<Inventory> inventoryList) {
+        inventoryService.inventorySupply(inventoryList);
     }
 }

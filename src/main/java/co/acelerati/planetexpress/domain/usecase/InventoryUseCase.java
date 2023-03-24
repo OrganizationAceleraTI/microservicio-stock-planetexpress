@@ -26,4 +26,27 @@ public class InventoryUseCase implements IInventoryService {
     public Inventory getStockById(Integer stockId) {
         return InventoryUpdateMapper.optionalToModel(inventoryPersistence.getStockById(stockId));
     }
+    
+    public void inventorySupply(List<Inventory> inventoryList) {
+        inventoryList.forEach(inventory -> {
+            Inventory inventoryExist = inventoryPersistence.getInventoryOfSupplier(inventory.getPersonSupplierId(),
+                                        inventory.getProductId());
+            if(inventoryExist != null){
+                Inventory inventoryUpdate = new Inventory(inventoryExist.getInventoryId(),
+                  inventoryExist.getProductId(),
+                  inventoryExist.getPersonSupplierId(),
+                  inventory.getIncomingPrice(),
+                  inventory.getCurrentPrice(),
+                  Integer.sum(inventoryExist.getQuantity(),inventory.getQuantity()));
+                inventoryPersistence.updateInventory(inventoryUpdate);
+            }else{
+                Inventory inventorySave = new Inventory(inventory.getProductId(),
+                  inventory.getPersonSupplierId(),
+                  inventory.getQuantity());
+                inventoryPersistence.saveInventory(inventorySave);
+            }
+        });
+    }
+
+
 }

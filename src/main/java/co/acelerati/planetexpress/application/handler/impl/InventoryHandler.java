@@ -27,4 +27,8 @@ public class InventoryHandler implements IInventoryHandler {
     public Inventory updateStock(Inventory updateStock) {
         return inventoryService.updateStock(updateStock);
     }
+    
+    public void inventorySupply(List<Inventory> inventoryList) {
+        inventoryService.inventorySupply(inventoryList);
+    }
 }

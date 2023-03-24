@@ -4,6 +4,7 @@ import co.acelerati.planetexpress.domain.api.IInventoryService;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
 import co.acelerati.planetexpress.domain.usecase.InventoryUseCase;
 import co.acelerati.planetexpress.infraestructure.persistence.adapter.InventoryJpaAdapter;
+import co.acelerati.planetexpress.infraestructure.persistence.mapper.IInventoryEntityMapper;
 import co.acelerati.planetexpress.infraestructure.persistence.repository.IInventoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

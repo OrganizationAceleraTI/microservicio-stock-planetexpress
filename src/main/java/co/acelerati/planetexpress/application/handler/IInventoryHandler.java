@@ -7,4 +7,5 @@ import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateSt
 public interface IInventoryHandler {
 
     Inventory updateStock(Inventory updateStock);
+    void inventorySupply(List<Inventory> inventoryList);
 }

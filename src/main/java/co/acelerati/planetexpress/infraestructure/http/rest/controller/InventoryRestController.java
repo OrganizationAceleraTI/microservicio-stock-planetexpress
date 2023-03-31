@@ -2,7 +2,7 @@ package co.acelerati.planetexpress.infraestructure.http.rest.controller;
 
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import co.acelerati.planetexpress.application.mapper.InventorySupplyRequestMapper;
-import co.acelerati.planetexpress.application.mapper.InventoryUpdateMapper;
+import co.acelerati.planetexpress.infraestructure.mapper.InventoryUpdateMapper;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProviderResponseDTO;
@@ -10,11 +10,11 @@ import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.UpdateS
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IUserFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,12 +37,11 @@ public class InventoryRestController {
 
     private final IInventoryHandler inventoryHandler;
 
-    @PatchMapping("/update")
-    public ResponseEntity<UpdateStockResponseDTO> updateStock(@RequestBody @Valid UpdateStockRequestDTO updateStock) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT)
-          .contentType(MediaType.APPLICATION_JSON)
-          .body(InventoryUpdateMapper.modelToResponse(
-            inventoryHandler.updateStock(InventoryUpdateMapper.requestToModel(updateStock))));
+    @PatchMapping("/update/{stockId}")
+    public ResponseEntity<UpdateStockResponseDTO> updateStock(@PathVariable Integer stockId,
+                                                              @RequestBody @Valid UpdateStockRequestDTO updateStock) {
+        inventoryHandler.updateStock(stockId, InventoryUpdateMapper.requestToModel(updateStock));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PostMapping("/supply")

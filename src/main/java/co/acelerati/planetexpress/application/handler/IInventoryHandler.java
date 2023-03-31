@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface IInventoryHandler {
 
-    Inventory updateStock(Inventory updateStock);
+    Inventory updateStock(Integer stockId, Inventory updateStock);
     void inventorySupply(List<Inventory> inventoryList);
 }

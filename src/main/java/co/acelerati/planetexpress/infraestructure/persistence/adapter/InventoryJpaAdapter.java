@@ -1,6 +1,6 @@
 package co.acelerati.planetexpress.infraestructure.persistence.adapter;
 
-import co.acelerati.planetexpress.application.mapper.InventoryUpdateMapper;
+import co.acelerati.planetexpress.infraestructure.mapper.InventoryUpdateMapper;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
 import co.acelerati.planetexpress.infraestructure.persistence.entity.InventoryEntity;

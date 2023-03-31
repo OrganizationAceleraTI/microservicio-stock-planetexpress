@@ -11,9 +11,6 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateStockRequestDTO {
-
-    @NotNull
-    private Integer inventoryId;
     @NotNull
     @Positive
     private Integer salePrice;

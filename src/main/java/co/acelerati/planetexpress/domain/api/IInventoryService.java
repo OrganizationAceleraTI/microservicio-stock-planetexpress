@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface IInventoryService {
 
-    Inventory updateStock(Inventory newStock);
-    Inventory getStockById(Integer stockId);
+    Inventory updateStock(Integer newSalePrice, Integer stockId);
+    Optional<Inventory> getStockById(Integer stockId);
     void inventorySupply(List<Inventory> inventoryList);
 
 

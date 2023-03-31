@@ -12,8 +12,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.util.Collections;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.logging.Logger;
 
 @ControllerAdvice
 @Slf4j
@@ -56,5 +56,10 @@ public class ControllerAdvisor {
             errorMessage = "ConstraintViolationException occured.";
         }
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity handleNoSuchElementException(NoSuchElementException noSuchElementException) {
+        return new ResponseEntity<>(noSuchElementException.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

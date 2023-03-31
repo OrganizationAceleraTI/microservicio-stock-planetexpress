@@ -1,4 +1,4 @@
-package co.acelerati.planetexpress.application.mapper;
+package co.acelerati.planetexpress.infraestructure.mapper;
 
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.UpdateStockResponseDTO;
@@ -37,7 +37,7 @@ public class InventoryUpdateMapper {
     }
 
     public static Inventory requestToModel(UpdateStockRequestDTO request) {
-        return new Inventory(request.getInventoryId(), request.getSalePrice());
+        return new Inventory(request.getSalePrice());
     }
 
     public static InventoryEntity modelToEntity(Inventory inventory) {

@@ -1,14 +1,17 @@
 package co.acelerati.planetexpress.domain.usecase;
 
-import co.acelerati.planetexpress.application.mapper.InventoryUpdateMapper;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
 public class InventoryUseCase implements IInventoryService {
+
+    private final Logger logger = LoggerFactory.getLogger(InventoryUseCase.class);
 
     private final IInventoryPersistence inventoryPersistence;
 
@@ -17,15 +20,14 @@ public class InventoryUseCase implements IInventoryService {
     }
 
     @Override
-    public Inventory updateStock(Inventory newStock) {
-        Inventory currentStock = this.getStockById(newStock.getInventoryId());
-        currentStock.setCurrentPrice(newStock.getCurrentPrice());
-        return inventoryPersistence.updateStock(currentStock);
+    public Inventory updateStock(Integer newSalePrice, Integer stockId) {
+        return inventoryPersistence.updateStock(this.getStockById(stockId).map(inventory ->
+            inventory.withCurrentPrice(newSalePrice)).orElseThrow());
     }
 
     @Override
-    public Inventory getStockById(Integer stockId) {
-        return InventoryUpdateMapper.optionalToModel(inventoryPersistence.getStockById(stockId));
+    public Optional<Inventory> getStockById(Integer stockId) {
+        return inventoryPersistence.getStockById(stockId);
     }
     
     public void inventorySupply(List<Inventory> inventoryList) {

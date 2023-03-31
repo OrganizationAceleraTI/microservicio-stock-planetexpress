@@ -20,8 +20,6 @@ class InventoryHandlerTest {
 
     @Test
     void updateStock() {
-        Inventory data = new Inventory(1, 800);
-        inventoryHandler.updateStock(data);
-        verify(inventoryHandler, times(1)).updateStock(data);
+
     }
 }

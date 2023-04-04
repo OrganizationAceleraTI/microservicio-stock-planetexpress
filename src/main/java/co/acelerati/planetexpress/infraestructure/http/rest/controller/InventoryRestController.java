@@ -12,7 +12,7 @@ import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.Provide
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IBrandFeignClient;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.ICategoryFeignClient;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IProductFeignClient;
-import co.acelerati.planetexpress.infraestructure.http.rest.feign.service.UserService;
+import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IUserFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,22 +40,22 @@ public class InventoryRestController {
      * feignclient user ->> pendiente terminar de implementar con token
      *
      */
-    private final UserService userService;
     private final IProductFeignClient productFeignClient;
     private final IBrandFeignClient brandFeignClient;
     private final ICategoryFeignClient categoryFeignClient;
+    private final IUserFeignClient userFeignClient;
 
     @PostMapping("/supply")
     public ResponseEntity<Void> inventorySupply(
       @RequestBody List<@Valid InventorySupplyRequestDTO> inventorySupplyRequestDTOList){
-        inventoryHandler.inventorySupply(inventorySupplyRequestDTOList);
+        inventoryHandler.inventorySupply(InventorySupplyRequestMapper.toInventoryModelList(inventorySupplyRequestDTOList));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/")
     public ResponseEntity<ProviderResponseDTO> getProviderFeignClient(@RequestParam Integer id) {
         // LLAMA FEIGN CLIENT END POINT MOCKUP
-        return ResponseEntity.ok(userService.getProvider(id));
+        return ResponseEntity.ok(userFeignClient.getProvider(id));
     }
 
     @GetMapping("/filtro")

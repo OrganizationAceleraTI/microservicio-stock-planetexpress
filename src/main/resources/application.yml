@@ -14,12 +14,15 @@ spring:
     show-sql: true
     database: postgresql
 
+jwt:
+  secret: ${SECRET_KEY}
+  expiration: ${EXPIRE_DAYS_SECURITY}
 
 feign-client:
   user:
     root:
       url: https://6406a9c0862956433e56a64c.mockapi.io/user/v1
-
+      
   brand:
     root:
       url: https://641b91e89b82ded29d547ed5.mockapi.io/dev

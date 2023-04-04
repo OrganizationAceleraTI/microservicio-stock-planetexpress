@@ -2,7 +2,7 @@ package co.acelerati.planetexpress.infraestructure.exception;
 
 public class NoDataFoundException extends RuntimeException{
 
-    public NoDataFoundException(){
-        super();
+    public NoDataFoundException(String message, Throwable cause){
+        super(message, cause);
     }
 }

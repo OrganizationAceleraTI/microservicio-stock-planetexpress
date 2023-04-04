@@ -5,7 +5,6 @@ import co.acelerati.planetexpress.domain.model.Category;
 import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
-import co.acelerati.planetexpress.application.mapper.InventorySupplyRequestMapper;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
 import co.acelerati.planetexpress.domain.model.Product;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
@@ -20,14 +19,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public
-class InventoryHandler implements IInventoryHandler {
+public class InventoryHandler implements IInventoryHandler {
 
     private final IInventoryService inventoryService;
 
     @Override
-    public void inventorySupply(List<InventorySupplyRequestDTO> inventorySupplyRequestDTO) {
-        inventoryService.inventorySupply(InventorySupplyRequestMapper.toInventoryModelList(inventorySupplyRequestDTO));
+    public void inventorySupply(List<Inventory> inventoryList) {
+        inventoryService.inventorySupply(inventoryList);
     }
 
     @Override

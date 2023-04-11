@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/xxreplacexx?currentSchema=xxreplacexx
-    username: postgres
-    password: xxreplacexx
+    url: jdbc:postgresql://localhost:5432/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PWD}
 
   jpa:
     hibernate:

@@ -1,7 +1,6 @@
 package co.acelerati.planetexpress.domain.repository;
 
 import co.acelerati.planetexpress.domain.model.Inventory;
-import org.springframework.aop.config.AbstractInterceptorDrivenBeanDefinitionDecorator;
 
 import java.util.List;
 import java.util.Optional;

@@ -7,9 +7,6 @@ import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
 import co.acelerati.planetexpress.domain.model.Product;
-import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
-import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProductResponseDTO;
-import co.acelerati.planetexpress.domain.model.Inventory;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +20,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class InventoryHandler implements IInventoryHandler {
-
+    
     private static final Logger logger = LoggerFactory.getLogger(InventoryHandler.class);
 
     private final IInventoryService inventoryService;

@@ -1,5 +1,6 @@
 package co.acelerati.planetexpress.infraestructure.persistence.adapter;
 
+import co.acelerati.planetexpress.infraestructure.mapper.InventoryUpdateMapper;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
 import co.acelerati.planetexpress.infraestructure.persistence.entity.InventoryEntity;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 public class InventoryJpaAdapter implements IInventoryPersistence {
 
@@ -20,6 +23,17 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
     private final IInventoryEntityMapper inventoryEntityMapper;
 
     private final int SIZE_PAGE = 25;
+
+    @Override
+    public Inventory updateStock(Inventory inventory) {
+        InventoryEntity inventoryEntity = InventoryUpdateMapper.modelToEntity(inventory);
+        return InventoryUpdateMapper.entityToModel(inventoryRepository.save(inventoryEntity));
+    }
+
+    @Override
+    public Optional<Inventory> getStockById(Integer stockId) {
+        return InventoryUpdateMapper.entityToModelOptional(inventoryRepository.findById(stockId));
+    }
 
     @Override
     public Integer saveInventory(Inventory inventory) {
@@ -34,8 +48,8 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
 
     @Override
     public Inventory getInventoryOfSupplier(Integer personSupplierId, Integer productId) {
-       InventoryEntity inventoryEntity = inventoryRepository.findByPersonSupplierIdAndProductId(personSupplierId, productId);
-       return inventoryEntityMapper.toInventoryModel(inventoryEntity);
+        InventoryEntity inventoryEntity = inventoryRepository.findByPersonSupplierIdAndProductId(personSupplierId, productId);
+        return inventoryEntityMapper.toInventoryModel(inventoryEntity);
     }
 
     @Override

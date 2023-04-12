@@ -5,29 +5,36 @@ import co.acelerati.planetexpress.domain.model.Category;
 import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
-import co.acelerati.planetexpress.application.mapper.InventorySupplyRequestMapper;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
 import co.acelerati.planetexpress.domain.model.Product;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProductResponseDTO;
+import co.acelerati.planetexpress.domain.model.Inventory;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Service
 @Transactional
-public
-class InventoryHandler implements IInventoryHandler {
+@RequiredArgsConstructor
+public class InventoryHandler implements IInventoryHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(InventoryHandler.class);
 
     private final IInventoryService inventoryService;
 
     @Override
-    public void inventorySupply(List<InventorySupplyRequestDTO> inventorySupplyRequestDTO) {
-        inventoryService.inventorySupply(InventorySupplyRequestMapper.toInventoryModelList(inventorySupplyRequestDTO));
+    public Inventory updateStock(Integer stockId, Inventory updateStock) {
+        return inventoryService.updateStock(updateStock.getCurrentPrice(), stockId);
+    }
+    
+    public void inventorySupply(List<Inventory> inventoryList) {
+        inventoryService.inventorySupply(inventoryList);
     }
 
     @Override

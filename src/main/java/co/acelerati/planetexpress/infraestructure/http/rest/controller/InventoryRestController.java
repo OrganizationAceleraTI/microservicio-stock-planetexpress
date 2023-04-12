@@ -2,15 +2,25 @@ package co.acelerati.planetexpress.infraestructure.http.rest.controller;
 
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import co.acelerati.planetexpress.application.mapper.InventorySupplyRequestMapper;
-import co.acelerati.planetexpress.infraestructure.mapper.InventoryUpdateMapper;
+import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
-import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.BrandResponseDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.CategoryResponseDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.DetailStockResponseDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProductResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProviderResponseDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IBrandFeignClient;
+import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.ICategoryFeignClient;
+import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IProductFeignClient;
+import co.acelerati.planetexpress.infraestructure.http.rest.feign.service.UserService;
+import co.acelerati.planetexpress.infraestructure.mapper.InventoryUpdateMapper;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.UpdateStockResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IUserFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -33,6 +43,10 @@ public class InventoryRestController {
     /**
      * feignclient user ->> pendiente terminar de implementar con token
      */
+    private final UserService userService;
+    private final IProductFeignClient productFeignClient;
+    private final IBrandFeignClient brandFeignClient;
+    private final ICategoryFeignClient categoryFeignClient;
     private final IUserFeignClient userFeignClient;
 
     private final IInventoryHandler inventoryHandler;
@@ -55,5 +69,17 @@ public class InventoryRestController {
     public ResponseEntity<ProviderResponseDTO> getProviderFeignClient(@RequestParam Integer id) {
         // LLAMA FEIGN CLIENT END POINT MOCKUP
         return ResponseEntity.ok(userFeignClient.getProvider(id));
+    }
+
+    @GetMapping("/filtro")
+    ResponseEntity<List<DetailStockResponseDTO>> getProductWithFilter(@RequestParam MultiValueMap<String, String> filters){
+        List<CategoryResponseDTO> categories = categoryFeignClient.getCategories(0, 1000);
+        List<BrandResponseDTO> brands = brandFeignClient.getBrands(0, 1000);
+        List<ProductResponseDTO> products = productFeignClient.getProducts(0, 1000);
+
+        return ResponseEntity.ok(InventorySupplyRequestMapper.toProductDTOList(inventoryHandler.allProducts(filters,
+          InventorySupplyRequestMapper.toProductList(products),
+          InventorySupplyRequestMapper.toCategoryList(categories),
+          InventorySupplyRequestMapper.toBrandList(brands))));
     }
 }

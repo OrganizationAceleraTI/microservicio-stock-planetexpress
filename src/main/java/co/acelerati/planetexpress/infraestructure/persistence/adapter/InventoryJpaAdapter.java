@@ -7,6 +7,11 @@ import co.acelerati.planetexpress.infraestructure.persistence.entity.InventoryEn
 import co.acelerati.planetexpress.infraestructure.persistence.mapper.IInventoryEntityMapper;
 import co.acelerati.planetexpress.infraestructure.persistence.repository.IInventoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
+import java.util.Optional;
 
 import java.util.Optional;
 
@@ -16,6 +21,8 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
     private final IInventoryRepository inventoryRepository;
 
     private final IInventoryEntityMapper inventoryEntityMapper;
+
+    private final int SIZE_PAGE = 25;
 
     @Override
     public Inventory updateStock(Inventory inventory) {
@@ -45,5 +52,33 @@ public class InventoryJpaAdapter implements IInventoryPersistence {
         return inventoryEntityMapper.toInventoryModel(inventoryEntity);
     }
 
+    @Override
+    public List<Inventory> getAllInventory(Integer page) {
+        return inventoryRepository.findAll(PageRequest.of(page, SIZE_PAGE))
+          .map(inventoryEntityMapper::toInventoryModel).toList();
+    }
 
+    @Override
+    public List<Inventory> getByCurrentPrice(Integer currentPrice, Integer page) {
+        return inventoryRepository.findByCurrentPrice(currentPrice, PageRequest.of(page, SIZE_PAGE))
+                .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
+    }
+
+    @Override
+    public List<Inventory> getByCurrentPriceBetween(Integer minPrice, Integer maxPrice, Integer page) {
+        return inventoryRepository.findByCurrentPriceBetween(minPrice, maxPrice, PageRequest.of(page, SIZE_PAGE))
+          .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
+    }
+
+    @Override
+    public List<Inventory> getByCurrentPriceGreaterThanEqual(Integer currentPrice, Integer page) {
+        return inventoryRepository.findByCurrentPriceGreaterThanEqual(currentPrice, PageRequest.of(page, SIZE_PAGE))
+          .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
+    }
+
+    @Override
+    public List<Inventory> getByCurrentPriceLessThanEqual(Integer currentPrice, Integer page) {
+        return inventoryRepository.findByCurrentPriceLessThanEqual(currentPrice, PageRequest.of(page, SIZE_PAGE))
+          .map(pages -> pages.map(inventoryEntityMapper::toInventoryModel)).get().toList();
+    }
 }

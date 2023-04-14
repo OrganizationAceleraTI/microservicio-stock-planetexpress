@@ -1,6 +1,6 @@
 package co.acelerati.planetexpress.domain.model;
 
-public class Inventory {
+public class Inventory { // TODO delete if it is not used
 
     private Integer inventoryId;
     private Integer personSupplierId;

@@ -1,4 +1,4 @@
-package co.acelerati.planetexpress.domain.model;
+package co.acelerati.planetexpress.domain.model.product;
 
 public class Product {
     private Long id;

@@ -1,10 +1,10 @@
 package co.acelerati.planetexpress.application.mapper;
 
-import co.acelerati.planetexpress.domain.model.Brand;
-import co.acelerati.planetexpress.domain.model.Category;
+import co.acelerati.planetexpress.domain.model.product.Brand;
+import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.Inventory;
-import co.acelerati.planetexpress.domain.model.Product;
+import co.acelerati.planetexpress.domain.model.product.Product;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.BrandResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.CategoryResponseDTO;

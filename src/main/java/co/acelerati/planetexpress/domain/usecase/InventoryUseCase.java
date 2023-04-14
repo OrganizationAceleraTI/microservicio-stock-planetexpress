@@ -1,11 +1,11 @@
 package co.acelerati.planetexpress.domain.usecase;
 
 import co.acelerati.planetexpress.domain.api.IInventoryService;
-import co.acelerati.planetexpress.domain.model.Brand;
-import co.acelerati.planetexpress.domain.model.Category;
+import co.acelerati.planetexpress.domain.model.product.Brand;
+import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.Inventory;
-import co.acelerati.planetexpress.domain.model.Product;
+import co.acelerati.planetexpress.domain.model.product.Product;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
 import org.springframework.util.MultiValueMap;
 import org.slf4j.Logger;

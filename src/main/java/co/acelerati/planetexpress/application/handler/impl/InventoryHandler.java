@@ -1,12 +1,12 @@
 package co.acelerati.planetexpress.application.handler.impl;
 
-import co.acelerati.planetexpress.domain.model.Brand;
-import co.acelerati.planetexpress.domain.model.Category;
+import co.acelerati.planetexpress.domain.model.product.Brand;
+import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import co.acelerati.planetexpress.domain.api.IInventoryService;
-import co.acelerati.planetexpress.domain.model.Product;
+import co.acelerati.planetexpress.domain.model.product.Product;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

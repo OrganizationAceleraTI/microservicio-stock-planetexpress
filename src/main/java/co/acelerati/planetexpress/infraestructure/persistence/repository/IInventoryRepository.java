@@ -12,7 +12,6 @@ import java.util.stream.DoubleStream;
 public interface IInventoryRepository extends PagingAndSortingRepository<InventoryEntity, Integer> {
 
     InventoryEntity findByPersonSupplierIdAndProductId(Integer personSupplierId, Integer productId);
-
     Optional<Page<InventoryEntity>> findByCurrentPrice(int currentPrice, Pageable page);
     Optional<Page<InventoryEntity>> findByCurrentPriceLessThanEqual(int currentPrice, Pageable page);
     Optional<Page<InventoryEntity>> findByCurrentPriceGreaterThanEqual(int currentPrice, Pageable page);

@@ -1,6 +1,6 @@
 package co.acelerati.planetexpress.domain.model;
 
-public class DetailStock {
+public class DetailStock { // TODO delete if it is not used
     private Long id;
     private String name;
     private String description;

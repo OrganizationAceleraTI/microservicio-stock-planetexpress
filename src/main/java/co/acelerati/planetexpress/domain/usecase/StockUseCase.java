@@ -10,6 +10,7 @@ import co.acelerati.planetexpress.domain.repository.ISupplyStockPersistence;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,7 +24,12 @@ public class StockUseCase implements IStockService {
     private final ISupplyStockPersistence supplyStockPersistence;
 
     @Override
-    public boolean supplyStock(Stock stock, int idSupplier) {
+    public boolean supplyStock(List<Stock> productList, int idSupplier) {
+        productList.forEach(product -> supplyStock(product, idSupplier));
+        return true;
+    }
+
+    private boolean supplyStock(Stock stock, int idSupplier) {
         return stockPersistence.getById(stock.getIdProduct())
           .map(stockOpt -> updateQuantity(stockOpt, stock.getQuantity(), idSupplier).isPresent())
           .orElseGet(() -> registerStock(stock, ZERO, idSupplier).isPresent());

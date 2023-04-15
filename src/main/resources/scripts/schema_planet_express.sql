@@ -15,7 +15,7 @@ CREATE TABLE public.stock (
 -- DROP TABLE public.supply;
 CREATE TABLE public.supply (
 	supply_id					UUID,
-	supplier_id					UUID NOT NULL,
+	supplier_id					NUMERIC(1000) NOT NULL,
 	date_supply					DATE NOT NULL,
 
 	CONSTRAINT supply_pk 		PRIMARY KEY(supply_id)
@@ -30,7 +30,7 @@ CREATE TABLE public.supply_stock (
 	supply_price 				NUMERIC(16, 2) NULL,
 
 	CONSTRAINT supply_stock_pk	PRIMARY KEY(supply_stock_id),
-	CONSTRAINT supply_fk 		FOREIGN KEY(supply_id) REFERENCES public.supply(id_supply),
+	CONSTRAINT supply_fk 		FOREIGN KEY(supply_id) REFERENCES public.supply(supply_id),
 	CONSTRAINT stock_fk 		FOREIGN KEY(stock_id) REFERENCES public.stock(product_id)
 );
 
@@ -70,7 +70,7 @@ CREATE TABLE public.sale (
 CREATE TABLE public.sale_stock (
 	sale_stock_id 				UUID,
 	sale_id 					UUID NOT NULL,
-	stock_id 					UUID NOT NULL,
+	stock_id 					NUMERIC(1000) NOT NULL,
 	quantity 					NUMERIC(16, 2) NOT NULL,
 	current_price				NUMERIC(16, 2) NOT NULL,
 

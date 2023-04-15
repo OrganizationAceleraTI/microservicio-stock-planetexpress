@@ -3,12 +3,13 @@ package co.acelerati.planetexpress.domain.repository;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IStockPersistence {
 
-    boolean insertStock(Stock stock);
+    Optional<Stock> insertStock(Stock stock);
 
-    Stock getById(int productId);
+    Optional<Stock> getById(int productId);
 
     boolean updateStockPrice(Stock stock);
 

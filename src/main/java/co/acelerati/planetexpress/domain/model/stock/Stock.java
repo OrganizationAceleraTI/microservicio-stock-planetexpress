@@ -2,7 +2,6 @@ package co.acelerati.planetexpress.domain.model.stock;
 
 public class Stock {
 
-    private String id;
     private int idProduct;
     private int quantity;
     private double currentPrice;
@@ -10,15 +9,10 @@ public class Stock {
     public Stock() {
     }
 
-    public Stock(String id, int idProduct, int quantity, double currentPrice) {
-        this.id = id;
+    public Stock(int idProduct, int quantity, double currentPrice) {
         this.idProduct = idProduct;
         this.quantity = quantity;
         this.currentPrice = currentPrice;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public int getIdProduct() {
@@ -31,6 +25,20 @@ public class Stock {
 
     public double getCurrentPrice() {
         return currentPrice;
+    }
+
+    public Stock addQuantity(int quantity) {
+        this.quantity += quantity;
+        return duplicate();
+    }
+
+    public Stock setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
+        return duplicate();
+    }
+
+    private Stock duplicate() {
+        return new Stock(idProduct, quantity, currentPrice);
     }
 
 }

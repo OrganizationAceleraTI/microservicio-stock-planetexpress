@@ -28,4 +28,14 @@ public class Supply {
     public LocalDateTime getDate() {
         return date;
     }
+
+    public Supply setDate(LocalDateTime date) {
+        this.date = date;
+        return duplicate();
+    }
+
+    private Supply duplicate() {
+        return new Supply(id, idSupplier, date);
+    }
+
 }

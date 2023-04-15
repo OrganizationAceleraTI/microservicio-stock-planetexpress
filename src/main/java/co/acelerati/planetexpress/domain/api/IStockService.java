@@ -8,4 +8,6 @@ public interface IStockService {
 
     boolean supplyStock(List<Stock> productList, int idSupplier);
 
+    boolean setCurrentPriceToStock(int productId, double currentPrice);
+
 }

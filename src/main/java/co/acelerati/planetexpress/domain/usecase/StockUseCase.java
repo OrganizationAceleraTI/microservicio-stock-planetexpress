@@ -1,6 +1,7 @@
 package co.acelerati.planetexpress.domain.usecase;
 
 import co.acelerati.planetexpress.domain.api.IStockService;
+import co.acelerati.planetexpress.domain.exception.NotFoundException;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.domain.model.stock.Supply;
 import co.acelerati.planetexpress.domain.model.stock.SupplyStock;
@@ -29,8 +30,17 @@ public class StockUseCase implements IStockService {
         return true;
     }
 
-    private boolean supplyStock(Stock stock, int idSupplier) {
-        return stockPersistence.getById(stock.getIdProduct())
+    @Override
+    public boolean setCurrentPriceToStock(int productId, double currentPrice) throws NotFoundException {
+        return stockPersistence.getById(productId).map(stockOpt -> {
+              stockOpt.setCurrentPrice(currentPrice);
+              return stockPersistence.insertStock(stockOpt).isPresent();
+          }
+        ).orElseThrow();
+    }
+
+    private void supplyStock(Stock stock, int idSupplier) {
+        stockPersistence.getById(stock.getIdProduct())
           .map(stockOpt -> updateQuantity(stockOpt, stock.getQuantity(), idSupplier).isPresent())
           .orElseGet(() -> registerStock(stock, ZERO, idSupplier).isPresent());
     }

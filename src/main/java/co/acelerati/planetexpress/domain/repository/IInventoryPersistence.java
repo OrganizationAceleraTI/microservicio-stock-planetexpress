@@ -5,6 +5,7 @@ import co.acelerati.planetexpress.domain.model.Inventory;
 import java.util.List;
 import java.util.Optional;
 
+@Deprecated
 public interface IInventoryPersistence {
 
     Inventory updateStock(Inventory inventory);

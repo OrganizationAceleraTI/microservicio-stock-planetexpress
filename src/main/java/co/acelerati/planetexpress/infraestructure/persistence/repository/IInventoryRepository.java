@@ -1,14 +1,12 @@
 package co.acelerati.planetexpress.infraestructure.persistence.repository;
 
+import co.acelerati.planetexpress.infraestructure.persistence.entity.InventoryEntity;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import co.acelerati.planetexpress.infraestructure.persistence.entity.InventoryEntity;
 
 import java.util.Optional;
-import java.util.stream.DoubleStream;
-
+@Deprecated
 public interface IInventoryRepository extends PagingAndSortingRepository<InventoryEntity, Integer> {
 
     InventoryEntity findByPersonSupplierIdAndProductId(Integer personSupplierId, Integer productId);

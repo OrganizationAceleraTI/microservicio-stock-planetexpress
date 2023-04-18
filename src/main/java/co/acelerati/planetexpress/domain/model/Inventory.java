@@ -1,5 +1,5 @@
 package co.acelerati.planetexpress.domain.model;
-
+@Deprecated
 public class Inventory { // TODO delete if it is not used
 
     private Integer inventoryId;

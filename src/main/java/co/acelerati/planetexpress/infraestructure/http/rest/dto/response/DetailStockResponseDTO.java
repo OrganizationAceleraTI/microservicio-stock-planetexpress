@@ -17,6 +17,5 @@ public class DetailStockResponseDTO {
     private String brand;
     private String category;
     private int quantity;
-    private int incomingPrice;
-    private int currentPrice;
+    private double currentPrice;
 }

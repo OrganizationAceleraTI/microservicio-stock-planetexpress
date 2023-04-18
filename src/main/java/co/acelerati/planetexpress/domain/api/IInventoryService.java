@@ -1,15 +1,16 @@
 package co.acelerati.planetexpress.domain.api;
 
-import co.acelerati.planetexpress.domain.model.product.Brand;
-import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.Inventory;
+import co.acelerati.planetexpress.domain.model.product.Brand;
+import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
 import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 import java.util.Optional;
 
+@Deprecated
 public interface IInventoryService {
 
     Inventory updateStock(Integer newSalePrice, Integer stockId);

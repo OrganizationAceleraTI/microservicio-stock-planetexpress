@@ -1,8 +1,6 @@
 package co.acelerati.planetexpress.infraestructure.http.rest.feign.client;
 
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.BrandResponseDTO;
-import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.CategoryResponseDTO;
-import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProductResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.configuration.FeignClientConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

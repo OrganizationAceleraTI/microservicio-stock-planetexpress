@@ -1,39 +1,20 @@
 package co.acelerati.planetexpress.application.mapper;
 
 import co.acelerati.planetexpress.domain.model.DetailStock;
-import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.model.product.Brand;
 import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
-import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.BrandResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.CategoryResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.DetailStockResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProductResponseDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Deprecated
-public class InventorySupplyRequestMapper {
+public class StockRequestMapper {
 
-    private InventorySupplyRequestMapper() {  }
-
-    public static Inventory toInventoryModel(InventorySupplyRequestDTO inventorySupplyRequestDTO) {
-        return new Inventory(inventorySupplyRequestDTO.getProductId(),
-                             inventorySupplyRequestDTO.getPersonSupplierId(),
-                             inventorySupplyRequestDTO.getIncomingPrice(),
-                             inventorySupplyRequestDTO.getCurrentPrice(),
-                             inventorySupplyRequestDTO.getQuantity());
-    }
-
-    public static List<Inventory> toInventoryModelList(List<InventorySupplyRequestDTO> inventorySupplyRequestDTO) {
-        return inventorySupplyRequestDTO.stream()
-              .map(InventorySupplyRequestMapper::toInventoryModel)
-              .collect(Collectors.toList());
-    }
-
+    private StockRequestMapper() {  }
     public static DetailStockResponseDTO toProductDTO(DetailStock detailStock) {
         return new DetailStockResponseDTO(
           detailStock.getId(),
@@ -53,26 +34,20 @@ public class InventorySupplyRequestMapper {
     }
 
     public static List<Brand> toBrandList(List<BrandResponseDTO> brandResponseDTOS){
-        List<Brand> brands = new ArrayList<>();
-        for (BrandResponseDTO brandResponseDTO: brandResponseDTOS) {
-            Brand brand = new Brand(brandResponseDTO.getId(), brandResponseDTO.getName());
-            brands.add(brand);
-        }
-        return brands;
+        return brandResponseDTOS.stream()
+          .map(StockRequestMapper::toBrand)
+          .collect(Collectors.toList());
     }
 
     public static List<Category> toCategoryList(List<CategoryResponseDTO> categoryResponseDTOS){
-        List<Category> categories = new ArrayList<>();
-        for (CategoryResponseDTO categoryResponseDTO: categoryResponseDTOS) {
-            Category category = new Category(categoryResponseDTO.getId(), categoryResponseDTO.getName());
-            categories.add(category);
-        }
-        return categories;
+        return categoryResponseDTOS.stream()
+          .map(StockRequestMapper::toCategory)
+          .collect(Collectors.toList());
     }
 
-    public static List<Product> toProductList(List<ProductResponseDTO> inventorySupplyRequestDTO) {
-        return inventorySupplyRequestDTO.stream()
-          .map(InventorySupplyRequestMapper::toProduct)
+    public static List<Product> toProductList(List<ProductResponseDTO> productResponseDTOs) {
+        return productResponseDTOs.stream()
+          .map(StockRequestMapper::toProduct)
           .collect(Collectors.toList());
     }
 
@@ -86,4 +61,11 @@ public class InventorySupplyRequestMapper {
           productResponseDTO.getIdCategory());
     }
 
+    public static Category toCategory(CategoryResponseDTO categoryResponseDTO) {
+        return new Category(categoryResponseDTO.getId(), categoryResponseDTO.getName());
+    }
+
+    public static Brand toBrand(BrandResponseDTO brandResponseDTO) {
+        return new Brand(brandResponseDTO.getId(), brandResponseDTO.getName());
+    }
 }

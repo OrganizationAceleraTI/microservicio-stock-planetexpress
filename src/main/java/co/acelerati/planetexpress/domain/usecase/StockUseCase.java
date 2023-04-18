@@ -2,6 +2,10 @@ package co.acelerati.planetexpress.domain.usecase;
 
 import co.acelerati.planetexpress.domain.api.IStockService;
 import co.acelerati.planetexpress.domain.exception.NotFoundException;
+import co.acelerati.planetexpress.domain.model.DetailStock;
+import co.acelerati.planetexpress.domain.model.product.Brand;
+import co.acelerati.planetexpress.domain.model.product.Category;
+import co.acelerati.planetexpress.domain.model.product.Product;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.domain.model.stock.Supply;
 import co.acelerati.planetexpress.domain.model.stock.SupplyStock;
@@ -9,11 +13,14 @@ import co.acelerati.planetexpress.domain.repository.IStockPersistence;
 import co.acelerati.planetexpress.domain.repository.ISupplyPersistence;
 import co.acelerati.planetexpress.domain.repository.ISupplyStockPersistence;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.MultiValueMap;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class StockUseCase implements IStockService {
@@ -37,6 +44,31 @@ public class StockUseCase implements IStockService {
               return stockPersistence.insertStock(stockOpt).isPresent();
           }
         ).orElseThrow();
+    }
+    //// TODO: 17/04/2023 revisar servicios si estan correctamente implementados los llamados a persistencia dependiendo del caso
+    @Override
+    public List<DetailStock> getAllProducts(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brands) {
+        List<Stock> stockList;
+        List<DetailStock> detailStockList = new ArrayList<>();
+        double minPrice = filters.containsKey("minPrice") ? Integer.parseInt(String.valueOf(filters.getFirst("minPrice"))) : -1;
+        double maxPrice = filters.containsKey("maxPrice") ? Integer.parseInt(filters.getFirst("maxPrice")) : -1;
+        int page = Integer.parseInt(filters.getFirst("page"));
+
+        if (minPrice >= 0 && maxPrice >= 0) {
+            stockList = stockPersistence.getByCurrentPriceBetween(minPrice, maxPrice, page);
+        }
+        else if (minPrice >= 0) {
+            stockList = stockPersistence.getByCurrentPriceLessThanEqual(minPrice, page);
+        }
+        else if (maxPrice >= 0) {
+            stockList = stockPersistence.getByCurrentPriceGreaterThanEqual(maxPrice, page);
+        } else {
+            stockList = stockPersistence.getAll(page);
+        }
+
+        return stockList.stream().map( stock -> buildDetailStock(stock,products, categories, brands))
+          .collect(Collectors.toCollection(ArrayList::new));
+
     }
 
     private void supplyStock(Stock stock, int idSupplier) {
@@ -67,6 +99,26 @@ public class StockUseCase implements IStockService {
               stock.getCurrentPrice()
             )))
           );
+    }
+
+    private DetailStock buildDetailStock(Stock stock, List<Product> products, List<Category> categories, List<Brand> brands){
+        Product product = products.stream()
+          .filter(prd -> stock.getIdProduct() == (prd.getId().intValue())).findFirst().get();
+        Category category = categories.stream()
+          .filter(cat -> product.getIdCategory().equals(cat.getId())).findFirst().get();
+        Brand brand = brands.stream()
+          .filter(bra -> product.getIdBrand().equals(bra.getId())).findFirst().get();
+
+        return new DetailStock(
+          product.getId(),
+          product.getName(),
+          product.getDescription(),
+          product.getModel(),
+          brand.getName(),
+          category.getName(),
+          stock.getQuantity(),
+          stock.getCurrentPrice()
+        );
     }
 
 }

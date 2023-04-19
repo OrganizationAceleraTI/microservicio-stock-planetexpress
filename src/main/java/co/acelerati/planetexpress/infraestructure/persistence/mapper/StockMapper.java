@@ -3,6 +3,8 @@ package co.acelerati.planetexpress.infraestructure.persistence.mapper;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.infraestructure.persistence.entity.StockEntity;
 
+import java.util.Optional;
+
 public final class StockMapper {
 
     private StockMapper() {
@@ -22,6 +24,13 @@ public final class StockMapper {
           stock.getQuantity(),
           stock.getCurrentPrice()
         );
+    }
+
+    public static Optional<Stock> toModelOptional(Optional<StockEntity> stockEntity) {
+        return stockEntity.map(stock ->
+          new Stock(stock.getProductId(),
+            stock.getQuantity(),
+            stock.getCurrentPrice()));
     }
 
 }

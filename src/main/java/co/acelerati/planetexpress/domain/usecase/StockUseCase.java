@@ -13,6 +13,7 @@ import co.acelerati.planetexpress.domain.repository.IStockPersistence;
 import co.acelerati.planetexpress.domain.repository.ISupplyPersistence;
 import co.acelerati.planetexpress.domain.repository.ISupplyStockPersistence;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Service
 @RequiredArgsConstructor
 public class StockUseCase implements IStockService {
 
@@ -69,6 +71,17 @@ public class StockUseCase implements IStockService {
         return stockList.stream().map( stock -> buildDetailStock(stock,products, categories, brands))
           .collect(Collectors.toCollection(ArrayList::new));
 
+    }
+
+    @Override
+    public Stock updateStock(Integer newSalePrice, Integer stockId) {
+        return stockPersistence.updateStock(this.getStockById(stockId).map(stock ->
+          stock.setCurrentPrice(newSalePrice)).orElseThrow());
+    }
+
+    @Override
+    public Optional<Stock> getStockById(Integer stockId) {
+        return stockPersistence.getStockById(stockId);
     }
 
     private void supplyStock(Stock stock, int idSupplier) {

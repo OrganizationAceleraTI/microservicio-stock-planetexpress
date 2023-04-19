@@ -29,7 +29,7 @@ public class BeanConfiguration {
     private final IInventoryEntityMapper inventoryEntityMapper;
 
     private final IStockRepository stockRepository;
-    private final ISupplyRepository SupplyRepository;
+    private final ISupplyRepository supplyRepository;
     private final ISupplyStockRepository supplyStockRepository;
 
     @Bean
@@ -49,7 +49,7 @@ public class BeanConfiguration {
 
     @Bean
     public ISupplyPersistence supplyPersistence(){
-        return new SupplyJpaAdapter(SupplyRepository);
+        return new SupplyJpaAdapter(supplyRepository);
     }
 
     @Bean

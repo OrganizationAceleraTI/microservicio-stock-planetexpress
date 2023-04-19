@@ -15,6 +15,10 @@ public class Stock {
         this.currentPrice = currentPrice;
     }
 
+    public Stock(int currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+
     public int getIdProduct() {
         return idProduct;
     }

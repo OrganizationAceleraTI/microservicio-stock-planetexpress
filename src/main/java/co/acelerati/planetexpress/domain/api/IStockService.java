@@ -8,6 +8,7 @@ import co.acelerati.planetexpress.domain.model.stock.Stock;
 import org.springframework.util.MultiValueMap;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IStockService {
 
@@ -16,5 +17,9 @@ public interface IStockService {
     boolean setCurrentPriceToStock(int productId, double currentPrice);
 
     List<DetailStock> getAllProducts(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brand);
+
+    Stock updateStock(Integer newSalePrice, Integer stockId);
+
+    Optional<Stock> getStockById(Integer stockId);
 
 }

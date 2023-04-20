@@ -1,20 +1,21 @@
 package co.acelerati.planetexpress.domain.usecase;
 
 import co.acelerati.planetexpress.domain.api.IInventoryService;
-import co.acelerati.planetexpress.domain.model.product.Brand;
-import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.Inventory;
+import co.acelerati.planetexpress.domain.model.product.Brand;
+import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
-import org.springframework.util.MultiValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Deprecated
 public class InventoryUseCase implements IInventoryService {
 
     private final Logger logger = LoggerFactory.getLogger(InventoryUseCase.class);
@@ -112,7 +113,6 @@ public class InventoryUseCase implements IInventoryService {
               brand.getName(),
               category.getName(),
               inventory.getQuantity(),
-              inventory.getIncomingPrice(),
               inventory.getCurrentPrice()
             );
             detailStocks.add(detailStock);

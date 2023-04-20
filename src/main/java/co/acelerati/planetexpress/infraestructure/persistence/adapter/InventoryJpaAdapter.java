@@ -1,20 +1,18 @@
 package co.acelerati.planetexpress.infraestructure.persistence.adapter;
 
-import co.acelerati.planetexpress.infraestructure.mapper.InventoryUpdateMapper;
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
+import co.acelerati.planetexpress.infraestructure.mapper.InventoryUpdateMapper;
 import co.acelerati.planetexpress.infraestructure.persistence.entity.InventoryEntity;
 import co.acelerati.planetexpress.infraestructure.persistence.mapper.IInventoryEntityMapper;
 import co.acelerati.planetexpress.infraestructure.persistence.repository.IInventoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
 
-import java.util.Optional;
-
+@Deprecated
 @RequiredArgsConstructor
 public class InventoryJpaAdapter implements IInventoryPersistence {
 

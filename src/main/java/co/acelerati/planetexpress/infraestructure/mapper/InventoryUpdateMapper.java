@@ -1,8 +1,8 @@
 package co.acelerati.planetexpress.infraestructure.mapper;
 
+import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.UpdateStockResponseDTO;
-import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.infraestructure.persistence.entity.InventoryEntity;
 
 import java.util.Optional;

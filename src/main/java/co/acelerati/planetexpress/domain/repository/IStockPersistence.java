@@ -13,14 +13,14 @@ public interface IStockPersistence {
 
     boolean updateStockPrice(Stock stock);
 
-    List<Stock> getAll(int page, int pageSize);
+    List<Stock> getAll(int page);
 
-    List<Stock> getByCurrentPrice(int currentPrice, int page, int pageSize);
+    List<Stock> getByCurrentPrice(double currentPrice, int page);
 
-    List<Stock> getByCurrentPriceLessThanEqual(int currentPrice, int page, int pageSize);
+    List<Stock> getByCurrentPriceLessThanEqual(double currentPrice, int page);
 
-    List<Stock> getByCurrentPriceGreaterThanEqual(int currentPrice, int page, int pageSize);
+    List<Stock> getByCurrentPriceGreaterThanEqual(double currentPrice, int page);
 
-    List<Stock> getByCurrentPriceBetween(int minPrice, int maxPrice, int page, int pageSize);
+    List<Stock> getByCurrentPriceBetween(double minPrice, double maxPrice, int page);
 
 }

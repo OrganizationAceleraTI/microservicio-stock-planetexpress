@@ -2,21 +2,19 @@ package co.acelerati.planetexpress.infraestructure.http.rest.controller;
 
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import co.acelerati.planetexpress.application.mapper.InventorySupplyRequestMapper;
-import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.BrandResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.CategoryResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.DetailStockResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProductResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProviderResponseDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.UpdateStockResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IBrandFeignClient;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.ICategoryFeignClient;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IProductFeignClient;
-import co.acelerati.planetexpress.infraestructure.http.rest.feign.service.UserService;
-import co.acelerati.planetexpress.infraestructure.mapper.InventoryUpdateMapper;
-import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;
-import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.UpdateStockResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IUserFeignClient;
+import co.acelerati.planetexpress.infraestructure.mapper.InventoryUpdateMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
-
+@Deprecated
 @Validated
 @RestController
 @RequestMapping("/inventory")
@@ -43,7 +41,7 @@ public class InventoryRestController {
     /**
      * feignclient user ->> pendiente terminar de implementar con token
      */
-    private final UserService userService;
+
     private final IProductFeignClient productFeignClient;
     private final IBrandFeignClient brandFeignClient;
     private final ICategoryFeignClient categoryFeignClient;

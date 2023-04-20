@@ -1,9 +1,11 @@
-package co.acelerati.planetexpress.application.mapper;
+package co.acelerati.planetexpress.infraestructure.http.rest.mapper;
 
 import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.product.Brand;
 import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
+import co.acelerati.planetexpress.domain.model.stock.Stock;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.SupplyStockRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.BrandResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.CategoryResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.DetailStockResponseDTO;
@@ -29,7 +31,7 @@ public class StockRequestMapper {
 
     public static List<DetailStockResponseDTO> toProductDTOList(List<DetailStock> detailStocks) {
         return detailStocks.stream()
-          .map(InventorySupplyRequestMapper::toProductDTO)
+          .map(StockRequestMapper::toProductDTO)
           .collect(Collectors.toList());
     }
 
@@ -67,5 +69,9 @@ public class StockRequestMapper {
 
     public static Brand toBrand(BrandResponseDTO brandResponseDTO) {
         return new Brand(brandResponseDTO.getId(), brandResponseDTO.getName());
+    }
+
+    public static Stock toModel(SupplyStockRequestDTO dto){
+        return new Stock(dto.getIdProduct(), dto.getQuantity(), dto.getCurrentPrice());
     }
 }

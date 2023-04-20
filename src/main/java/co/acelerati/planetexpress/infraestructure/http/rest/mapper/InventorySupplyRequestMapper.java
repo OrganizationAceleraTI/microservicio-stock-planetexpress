@@ -1,4 +1,4 @@
-package co.acelerati.planetexpress.application.mapper;
+package co.acelerati.planetexpress.infraestructure.http.rest.mapper;
 
 import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.Inventory;

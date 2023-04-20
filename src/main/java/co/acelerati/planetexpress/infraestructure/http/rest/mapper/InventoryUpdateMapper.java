@@ -1,4 +1,4 @@
-package co.acelerati.planetexpress.infraestructure.mapper;
+package co.acelerati.planetexpress.infraestructure.http.rest.mapper;
 
 import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;

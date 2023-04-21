@@ -2,15 +2,15 @@ package co.acelerati.planetexpress.domain.model.stock;
 
 public class Stock {
 
-    private int idProduct;
+    private int productId;
     private int quantity;
     private double currentPrice;
 
     public Stock() {
     }
 
-    public Stock(int idProduct, int quantity, double currentPrice) {
-        this.idProduct = idProduct;
+    public Stock(int productId, int quantity, double currentPrice) {
+        this.productId = productId;
         this.quantity = quantity;
         this.currentPrice = currentPrice;
     }
@@ -19,8 +19,8 @@ public class Stock {
         this.currentPrice = currentPrice;
     }
 
-    public int getIdProduct() {
-        return idProduct;
+    public int getProductId() {
+        return productId;
     }
 
     public int getQuantity() {
@@ -41,8 +41,17 @@ public class Stock {
         return duplicate();
     }
 
+    @Override
+    public String toString() {
+        return "Stock{" +
+          "productId=" + productId +
+          ", quantity=" + quantity +
+          ", currentPrice=" + currentPrice +
+          '}';
+    }
+
     private Stock duplicate() {
-        return new Stock(idProduct, quantity, currentPrice);
+        return new Stock(productId, quantity, currentPrice);
     }
 
 }

@@ -6,6 +6,7 @@ import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.SupplyStockRequestDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.BrandResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.CategoryResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.DetailStockResponseDTO;

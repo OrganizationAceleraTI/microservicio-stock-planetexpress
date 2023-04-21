@@ -13,6 +13,7 @@ import java.util.List;
 public interface IStockHandler {
 
     List<DetailStock> allProducts(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brands);
+    Stock updateStock(Integer stockId, Stock updateStock);
 
     boolean supplyStock(List<Stock> stockList, int idSupplier);
 }

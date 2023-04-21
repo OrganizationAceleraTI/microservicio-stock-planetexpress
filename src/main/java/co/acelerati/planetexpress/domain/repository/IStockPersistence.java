@@ -23,4 +23,8 @@ public interface IStockPersistence {
 
     List<Stock> getByCurrentPriceBetween(double minPrice, double maxPrice, int page);
 
+    Stock updateStock(Stock inventory);
+
+    Optional<Stock> getStockById(Integer stockId);
+
 }

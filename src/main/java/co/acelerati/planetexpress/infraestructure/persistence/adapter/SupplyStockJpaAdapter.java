@@ -6,10 +6,12 @@ import co.acelerati.planetexpress.domain.repository.ISupplyStockPersistence;
 import co.acelerati.planetexpress.infraestructure.persistence.mapper.SupplyStockMapper;
 import co.acelerati.planetexpress.infraestructure.persistence.repository.ISupplyStockRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 @RequiredArgsConstructor
 public class SupplyStockJpaAdapter implements ISupplyStockPersistence {
 

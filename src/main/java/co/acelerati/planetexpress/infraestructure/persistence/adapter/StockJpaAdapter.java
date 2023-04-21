@@ -3,14 +3,17 @@ package co.acelerati.planetexpress.infraestructure.persistence.adapter;
 import co.acelerati.planetexpress.domain.exception.NotFoundException;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.domain.repository.IStockPersistence;
+import co.acelerati.planetexpress.infraestructure.persistence.entity.StockEntity;
 import co.acelerati.planetexpress.infraestructure.persistence.mapper.StockMapper;
 import co.acelerati.planetexpress.infraestructure.persistence.repository.IStockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 @RequiredArgsConstructor
 public class StockJpaAdapter implements IStockPersistence {
 
@@ -62,6 +65,17 @@ public class StockJpaAdapter implements IStockPersistence {
     public List<Stock> getByCurrentPriceBetween(double minPrice, double maxPrice, int page) {
         return repository.findByCurrentPriceBetween(minPrice, maxPrice, PageRequest.of(page, SIZE_PAGE))
                      .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
+    }
+
+    @Override
+    public Stock updateStock(Stock stock) {
+        StockEntity stockEntity = StockMapper.toEntity(stock);
+        return StockMapper.toDomain(repository.save(stockEntity));
+    }
+
+    @Override
+    public Optional<Stock> getStockById(Integer stockId) {
+        return StockMapper.toModelOptional(repository.findById(stockId));
     }
 
 }

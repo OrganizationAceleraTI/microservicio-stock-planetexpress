@@ -11,13 +11,13 @@ import co.acelerati.planetexpress.domain.model.stock.Stock;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 
 import java.util.List;
 
-@Service
+@Component
 @Transactional
 @RequiredArgsConstructor
 public class StockHandler implements IStockHandler {
@@ -28,6 +28,11 @@ public class StockHandler implements IStockHandler {
     @Override
     public List<DetailStock> allProducts(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brands) {
         return stockService.getAllProducts(filters, products, categories, brands);
+    }
+
+    @Override
+    public Stock updateStock(Integer stockId, Stock updateStock) {
+        return stockService.updateStock((int) updateStock.getCurrentPrice(), stockId);
     }
 
     @Override

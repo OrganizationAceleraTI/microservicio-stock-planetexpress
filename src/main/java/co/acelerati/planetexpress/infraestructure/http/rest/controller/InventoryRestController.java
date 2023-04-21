@@ -1,7 +1,7 @@
 package co.acelerati.planetexpress.infraestructure.http.rest.controller;
 
 import co.acelerati.planetexpress.application.handler.IInventoryHandler;
-import co.acelerati.planetexpress.application.mapper.InventorySupplyRequestMapper;
+import co.acelerati.planetexpress.infraestructure.http.rest.mapper.InventorySupplyRequestMapper;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.InventorySupplyRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.BrandResponseDTO;
@@ -14,7 +14,7 @@ import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IBrandF
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.ICategoryFeignClient;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IProductFeignClient;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IUserFeignClient;
-import co.acelerati.planetexpress.infraestructure.mapper.InventoryUpdateMapper;
+import co.acelerati.planetexpress.infraestructure.http.rest.mapper.InventoryUpdateMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

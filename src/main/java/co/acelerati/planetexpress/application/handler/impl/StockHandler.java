@@ -3,6 +3,7 @@ package co.acelerati.planetexpress.application.handler.impl;
 import co.acelerati.planetexpress.application.handler.IStockHandler;
 import co.acelerati.planetexpress.domain.api.IStockService;
 import co.acelerati.planetexpress.domain.model.DetailStock;
+import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.model.product.Brand;
 import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
@@ -32,5 +33,10 @@ public class StockHandler implements IStockHandler {
     @Override
     public Stock updateStock(Integer stockId, Stock updateStock) {
         return stockService.updateStock((int) updateStock.getCurrentPrice(), stockId);
+    }
+
+    @Override
+    public boolean supplyStock(List<Stock> stockList, int idSupplier) {
+        return stockService.supplyStock(stockList, idSupplier);
     }
 }

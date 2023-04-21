@@ -1,6 +1,7 @@
 package co.acelerati.planetexpress.application.handler;
 
 import co.acelerati.planetexpress.domain.model.DetailStock;
+import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.model.product.Brand;
 import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
@@ -14,4 +15,5 @@ public interface IStockHandler {
     List<DetailStock> allProducts(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brands);
     Stock updateStock(Integer stockId, Stock updateStock);
 
+    boolean supplyStock(List<Stock> stockList, int idSupplier);
 }

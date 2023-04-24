@@ -48,13 +48,13 @@ public class StockUseCase implements IStockService {
           }
         ).orElseThrow();
     }
-    //// TODO: 17/04/2023 revisar servicios si estan correctamente implementados los llamados a persistencia dependiendo del caso
+
     @Override
     public List<DetailStock> getAllProducts(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brands) {
         List<Stock> stockList;
         List<DetailStock> detailStockList = new ArrayList<>();
-        double minPrice = filters.containsKey("minPrice") ? Integer.parseInt(String.valueOf(filters.getFirst("minPrice"))) : -1;
-        double maxPrice = filters.containsKey("maxPrice") ? Integer.parseInt(filters.getFirst("maxPrice")) : -1;
+        double minPrice = filters.containsKey("minPrice") ? Double.parseDouble(filters.getFirst("minPrice")): -1;
+        double maxPrice = filters.containsKey("maxPrice") ? Double.parseDouble(filters.getFirst("maxPrice")) : -1;
         int page = Integer.parseInt(filters.getFirst("page"));
 
         if (minPrice >= 0 && maxPrice >= 0) {

@@ -32,7 +32,7 @@ public class SupplyStockEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "supply_price")
+    @Column(name = "supply_price", columnDefinition = "NUMERIC(16, 2)")
     private Double supplyPrice;
 
 }

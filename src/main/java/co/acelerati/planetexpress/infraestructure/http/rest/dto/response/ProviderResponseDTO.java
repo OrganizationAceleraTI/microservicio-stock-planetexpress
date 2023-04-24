@@ -19,4 +19,5 @@ public class ProviderResponseDTO {
     private String idDniType;
     private String dniNumber;
     private String idPersonType;
+
 }

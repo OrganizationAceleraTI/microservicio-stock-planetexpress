@@ -38,4 +38,15 @@ public class SupplyStock {
     public double getSupplyPrice() {
         return supplyPrice;
     }
+
+    @Override
+    public String toString() {
+        return "SupplyStock{" +
+          "id='" + id + '\'' +
+          ", supplyId='" + supplyId + '\'' +
+          ", stockId=" + stockId +
+          ", quantity=" + quantity +
+          ", supplyPrice=" + supplyPrice +
+          '}';
+    }
 }

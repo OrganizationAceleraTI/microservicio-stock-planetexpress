@@ -1,7 +1,5 @@
 package co.acelerati.planetexpress.domain.model.product;
 
-import co.acelerati.planetexpress.domain.model.stock.StockFactory;
-
 public class BrandFactory {
 
     private Long id;

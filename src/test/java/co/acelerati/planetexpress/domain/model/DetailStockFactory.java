@@ -1,7 +1,6 @@
 package co.acelerati.planetexpress.domain.model;
 
-import co.acelerati.planetexpress.domain.model.stock.Stock;
-import co.acelerati.planetexpress.domain.model.stock.StockFactory;
+import co.acelerati.planetexpress.domain.model.stock.DetailStock;
 
 public class DetailStockFactory {
 

@@ -1,7 +1,5 @@
 package co.acelerati.planetexpress.domain.model.stock;
 
-import co.acelerati.planetexpress.domain.model.DetailStockFactory;
-
 public class StockFactory {
 
     private int idProduct;

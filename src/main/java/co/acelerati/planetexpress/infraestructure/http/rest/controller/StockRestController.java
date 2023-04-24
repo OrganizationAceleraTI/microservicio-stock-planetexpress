@@ -38,11 +38,11 @@ public class StockRestController {
     private final IStockHandler stockHandler;
 
     @GetMapping("/filtro")
-    ResponseEntity<List<DetailStockResponseDTO>> getProductWithFilter(@RequestParam MultiValueMap<String, String> filters){
+    ResponseEntity<List<DetailStockResponseDTO>> getProductWithFilter(@RequestParam MultiValueMap<String, String> filters) {
         return ResponseEntity.ok(stockHandler.allProducts(filters,
-          StockRequestMapper.toProductList(productFeignClient.getProducts(0, 1000)),
-          StockRequestMapper.toCategoryList(categoryFeignClient.getCategories(0, 1000)),
-          StockRequestMapper.toBrandList(brandFeignClient.getBrands(0, 1000)))
+            StockRequestMapper.toProductList(productFeignClient.getProducts(0, 1000)),
+            StockRequestMapper.toCategoryList(categoryFeignClient.getCategories(0, 1000)),
+            StockRequestMapper.toBrandList(brandFeignClient.getBrands(0, 1000)))
           .stream().map(StockRequestMapper::toProductDTO).collect(Collectors.toList()));
     }
 
@@ -55,7 +55,10 @@ public class StockRestController {
 
     @PostMapping("/supply/{supplierId}")
     public ResponseEntity<Void> inventorySupply(@PathVariable Integer supplierId,
-      @RequestBody List<@Valid SupplyStockRequestDTO> supplyStockRequestDTOList) {
+                                                @RequestBody List<@Valid SupplyStockRequestDTO> supplyStockRequestDTOList) {
+
+        System.out.println(supplyStockRequestDTOList.get(0).toString());
+
         stockHandler.supplyStock(supplyStockRequestDTOList.stream().map(StockRequestMapper::toModel).collect(Collectors.toList()), supplierId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

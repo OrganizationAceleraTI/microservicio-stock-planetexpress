@@ -1,6 +1,5 @@
 package co.acelerati.planetexpress.domain.usecase;
 
-import co.acelerati.planetexpress.domain.model.DetailStock;
 import co.acelerati.planetexpress.domain.model.DetailStockFactory;
 import co.acelerati.planetexpress.domain.model.product.Brand;
 import co.acelerati.planetexpress.domain.model.product.BrandFactory;
@@ -8,28 +7,24 @@ import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.CategoryFactory;
 import co.acelerati.planetexpress.domain.model.product.Product;
 import co.acelerati.planetexpress.domain.model.product.ProductFactory;
+import co.acelerati.planetexpress.domain.model.stock.DetailStock;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.domain.model.stock.StockFactory;
-import co.acelerati.planetexpress.domain.repository.IInventoryPersistence;
 import co.acelerati.planetexpress.domain.repository.IStockPersistence;
 import co.acelerati.planetexpress.domain.repository.ISupplyPersistence;
 import co.acelerati.planetexpress.domain.repository.ISupplyStockPersistence;
-import co.acelerati.planetexpress.domain.usecase.StockUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.MultiValueMapAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.util.AssertionErrors.assertTrue;

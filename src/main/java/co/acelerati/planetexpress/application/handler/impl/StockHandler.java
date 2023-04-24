@@ -2,11 +2,10 @@ package co.acelerati.planetexpress.application.handler.impl;
 
 import co.acelerati.planetexpress.application.handler.IStockHandler;
 import co.acelerati.planetexpress.domain.api.IStockService;
-import co.acelerati.planetexpress.domain.model.DetailStock;
-import co.acelerati.planetexpress.domain.model.Inventory;
 import co.acelerati.planetexpress.domain.model.product.Brand;
 import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
+import co.acelerati.planetexpress.domain.model.stock.DetailStock;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -23,7 +22,8 @@ import java.util.List;
 public class StockHandler implements IStockHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(StockHandler.class);
-    private IStockService stockService;
+
+    private final IStockService stockService;
 
     @Override
     public List<DetailStock> allProducts(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brands) {
@@ -37,6 +37,9 @@ public class StockHandler implements IStockHandler {
 
     @Override
     public boolean supplyStock(List<Stock> stockList, int idSupplier) {
+
+        System.out.println(stockList.get(0).toString());
+
         return stockService.supplyStock(stockList, idSupplier);
     }
 }

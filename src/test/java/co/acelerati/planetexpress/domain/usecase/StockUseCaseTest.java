@@ -87,7 +87,7 @@ public class StockUseCaseTest {
             result -> result.getCurrentPrice() <= Double.parseDouble(filters.getFirst("maxPrice")))
           .collect(Collectors.toList());
 
-        when(stockPersistence.getByCurrentPriceGreaterThanEqual(anyDouble(), anyInt())).thenReturn(
+        when(stockPersistence.getByCurrentPriceLessThanEqual(anyDouble(), anyInt())).thenReturn(
           getStocksTest().stream().filter(
               result -> result.getCurrentPrice() <= Double.parseDouble(filters.getFirst("maxPrice")))
             .collect(Collectors.toCollection(ArrayList::new)));
@@ -115,7 +115,7 @@ public class StockUseCaseTest {
             result -> result.getCurrentPrice() >= Double.parseDouble(filters.getFirst("minPrice")))
           .collect(Collectors.toList());
 
-        when(stockPersistence.getByCurrentPriceLessThanEqual(anyDouble(), anyInt())).thenReturn(
+        when(stockPersistence.getByCurrentPriceGreaterThanEqual(anyDouble(), anyInt())).thenReturn(
           getStocksTest().stream().filter(
               result -> result.getCurrentPrice() >= Double.parseDouble(filters.getFirst("minPrice")))
             .collect(Collectors.toCollection(ArrayList::new)));
@@ -136,7 +136,7 @@ public class StockUseCaseTest {
     @Test
     void whenGetAllProductsDefaultNotFilter_thenReturnAListStockDetail() {
         MultiValueMap<String, String> filters = new LinkedMultiValueMap<>();
-        filters.add("page","1");
+        filters.add("page","0");
 
         List<DetailStock> detailStockList = getDetailStocksTest();
 

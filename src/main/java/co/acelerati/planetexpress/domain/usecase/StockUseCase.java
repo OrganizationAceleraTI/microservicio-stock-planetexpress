@@ -53,14 +53,14 @@ public class StockUseCase implements IStockService {
         List<Stock> stockList;
         double minPrice = filters.containsKey("minPrice") ? Double.parseDouble(filters.getFirst("minPrice")): -1;
         double maxPrice = filters.containsKey("maxPrice") ? Double.parseDouble(filters.getFirst("maxPrice")) : -1;
-        int page = Integer.parseInt(filters.getFirst("page"));
+        int page = filters.containsKey("page") ? Integer.parseInt(filters.getFirst("page")) : 0;
 
         if (minPrice >= 0 && maxPrice >= 0) {
             stockList = stockPersistence.getByCurrentPriceBetween(minPrice, maxPrice, page);
         } else if (minPrice >= 0) {
-            stockList = stockPersistence.getByCurrentPriceLessThanEqual(minPrice, page);
+            stockList = stockPersistence.getByCurrentPriceGreaterThanEqual(minPrice, page);
         } else if (maxPrice >= 0) {
-            stockList = stockPersistence.getByCurrentPriceGreaterThanEqual(maxPrice, page);
+            stockList = stockPersistence.getByCurrentPriceLessThanEqual(maxPrice, page);
         } else {
             stockList = stockPersistence.getAll(page);
         }

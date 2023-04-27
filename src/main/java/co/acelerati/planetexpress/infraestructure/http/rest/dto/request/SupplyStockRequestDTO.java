@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SupplyStockRequestDTO {
 
-    private int idProduct;
+    private int productId;
     private int quantity;
     private double currentPrice;
+
 }

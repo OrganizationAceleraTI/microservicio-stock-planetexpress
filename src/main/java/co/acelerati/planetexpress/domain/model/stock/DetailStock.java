@@ -1,4 +1,4 @@
-package co.acelerati.planetexpress.domain.model;
+package co.acelerati.planetexpress.domain.model.stock;
 
 public class DetailStock {
     private Long id;

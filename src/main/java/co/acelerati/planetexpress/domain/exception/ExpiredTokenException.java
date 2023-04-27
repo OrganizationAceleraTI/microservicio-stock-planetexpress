@@ -1,4 +1,4 @@
-package co.acelerati.planetexpress.application.exception;
+package co.acelerati.planetexpress.domain.exception;
 
 public class ExpiredTokenException extends RuntimeException {
 

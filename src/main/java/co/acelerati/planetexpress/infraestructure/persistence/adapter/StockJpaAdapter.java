@@ -46,25 +46,25 @@ public class StockJpaAdapter implements IStockPersistence {
     @Override
     public List<Stock> getByCurrentPrice(double currentPrice, int page) {
         return repository.findByCurrentPrice(currentPrice, PageRequest.of(page, SIZE_PAGE))
-                .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
+          .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
     }
 
     @Override
     public List<Stock> getByCurrentPriceLessThanEqual(double currentPrice, int page) {
         return repository.findByCurrentPriceLessThanEqual(currentPrice, PageRequest.of(page, SIZE_PAGE))
-                     .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
+          .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
     }
 
     @Override
     public List<Stock> getByCurrentPriceGreaterThanEqual(double currentPrice, int page) {
         return repository.findByCurrentPriceGreaterThanEqual(currentPrice, PageRequest.of(page, SIZE_PAGE))
-                     .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
+          .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
     }
 
     @Override
     public List<Stock> getByCurrentPriceBetween(double minPrice, double maxPrice, int page) {
         return repository.findByCurrentPriceBetween(minPrice, maxPrice, PageRequest.of(page, SIZE_PAGE))
-                     .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
+          .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
     }
 
     @Override

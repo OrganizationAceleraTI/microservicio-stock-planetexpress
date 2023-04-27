@@ -1,7 +1,7 @@
 package co.acelerati.planetexpress.infraestructure.configuration.security;
 
-import co.acelerati.planetexpress.application.exception.ExpiredTokenException;
-import co.acelerati.planetexpress.application.exception.MalformedTokenException;
+import co.acelerati.planetexpress.domain.exception.ExpiredTokenException;
+import co.acelerati.planetexpress.domain.exception.MalformedTokenException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.Base64;
 
 @Component
 public class JwtProvider {
@@ -35,7 +36,7 @@ public class JwtProvider {
     }
 
     private Key getKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        byte[] keyBytes = Base64.getMimeDecoder().decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

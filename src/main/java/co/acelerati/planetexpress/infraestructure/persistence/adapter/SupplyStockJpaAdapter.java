@@ -19,6 +19,9 @@ public class SupplyStockJpaAdapter implements ISupplyStockPersistence {
 
     @Override
     public Optional<SupplyStock> insertSupplyStock(SupplyStock supplyStock) {
+
+
+
         return Optional.of(SupplyStockMapper.toDomain(
           repository.save(SupplyStockMapper.toEntity(supplyStock))
         ));

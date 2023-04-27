@@ -1,6 +1,6 @@
 package co.acelerati.planetexpress.infraestructure.http.rest.mapper;
 
-import co.acelerati.planetexpress.domain.model.DetailStock;
+import co.acelerati.planetexpress.domain.model.stock.DetailStock;
 import co.acelerati.planetexpress.domain.model.product.Brand;
 import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
@@ -17,7 +17,9 @@ import java.util.stream.Collectors;
 
 public class StockRequestMapper {
 
-    private StockRequestMapper() {  }
+    private StockRequestMapper() {
+    }
+
     public static DetailStockResponseDTO toProductDTO(DetailStock detailStock) {
         return new DetailStockResponseDTO(
           detailStock.getId(),
@@ -36,13 +38,13 @@ public class StockRequestMapper {
           .collect(Collectors.toList());
     }
 
-    public static List<Brand> toBrandList(List<BrandResponseDTO> brandResponseDTOS){
+    public static List<Brand> toBrandList(List<BrandResponseDTO> brandResponseDTOS) {
         return brandResponseDTOS.stream()
           .map(StockRequestMapper::toBrand)
           .collect(Collectors.toList());
     }
 
-    public static List<Category> toCategoryList(List<CategoryResponseDTO> categoryResponseDTOS){
+    public static List<Category> toCategoryList(List<CategoryResponseDTO> categoryResponseDTOS) {
         return categoryResponseDTOS.stream()
           .map(StockRequestMapper::toCategory)
           .collect(Collectors.toList());
@@ -75,8 +77,8 @@ public class StockRequestMapper {
     public static Stock toStock(UpdateStockRequestDTO request) {
         return new Stock(request.getSalePrice());
     }
-    
-    public static Stock toModel(SupplyStockRequestDTO dto){
-        return new Stock(dto.getIdProduct(), dto.getQuantity(), dto.getCurrentPrice());
+
+    public static Stock toModel(SupplyStockRequestDTO dto) {
+        return new Stock(dto.getProductId(), dto.getQuantity(), dto.getCurrentPrice());
     }
 }

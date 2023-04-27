@@ -38,11 +38,11 @@ public class StockRestController {
     private final IStockHandler stockHandler;
 
     @GetMapping("/filtro")
-    ResponseEntity<List<DetailStockResponseDTO>> getProductWithFilter(@RequestParam MultiValueMap<String, String> filters){
+    ResponseEntity<List<DetailStockResponseDTO>> getProductWithFilter(@RequestParam MultiValueMap<String, String> filters) {
         return ResponseEntity.ok(stockHandler.allProducts(filters,
-          StockRequestMapper.toProductList(productFeignClient.getProducts(0, 1000)),
-          StockRequestMapper.toCategoryList(categoryFeignClient.getCategories(0, 1000)),
-          StockRequestMapper.toBrandList(brandFeignClient.getBrands(0, 1000)))
+            StockRequestMapper.toProductList(productFeignClient.getProducts(0, 1000)),
+            StockRequestMapper.toCategoryList(categoryFeignClient.getCategories(0, 1000)),
+            StockRequestMapper.toBrandList(brandFeignClient.getBrands(0, 1000)))
           .stream().map(StockRequestMapper::toProductDTO).collect(Collectors.toList()));
     }
 

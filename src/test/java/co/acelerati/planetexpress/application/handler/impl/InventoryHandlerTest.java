@@ -1,6 +1,5 @@
 package co.acelerati.planetexpress.application.handler.impl;
 
-import co.acelerati.planetexpress.application.handler.IInventoryHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

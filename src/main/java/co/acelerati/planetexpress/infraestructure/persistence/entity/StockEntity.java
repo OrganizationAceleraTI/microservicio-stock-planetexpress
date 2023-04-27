@@ -25,7 +25,7 @@ public class StockEntity {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "current_price")
+    @Column(name = "current_price", columnDefinition = "NUMERIC(16, 2)")
     private Double currentPrice;
 
 }

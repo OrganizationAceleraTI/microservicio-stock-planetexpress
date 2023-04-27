@@ -20,7 +20,7 @@ public final class StockMapper {
 
     public static StockEntity toEntity(Stock stock) {
         return new StockEntity(
-          stock.getIdProduct(),
+          stock.getProductId(),
           stock.getQuantity(),
           stock.getCurrentPrice()
         );

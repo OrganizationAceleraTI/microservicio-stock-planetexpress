@@ -5,6 +5,7 @@ import co.acelerati.planetexpress.domain.exception.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -61,5 +62,10 @@ public class ControllerAdvisor {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity handleNoSuchElementException(NoSuchElementException noSuchElementException) {
         return new ResponseEntity<>(noSuchElementException.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity handleArgumentNotValidException(MethodArgumentNotValidException argumentNotValidException) {
+        return new ResponseEntity<>(ExceptionResponse.BAD_REQUEST.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

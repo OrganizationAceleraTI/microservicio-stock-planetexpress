@@ -1,5 +1,8 @@
 package co.acelerati.planetexpress.domain.model.stock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StockFactory {
 
     private int idProduct;
@@ -8,19 +11,28 @@ public class StockFactory {
 
     public StockFactory() {
         idProduct = 1;
-        quantity = 1;
-        currentPrice = 1500.25;
+        quantity = 52;
+        currentPrice = 2859000.99;
     }
 
-    public Stock build(){
+    public Stock build() {
         return new Stock(idProduct, quantity, currentPrice);
     }
 
-    public StockFactory withAllArguments(int idProduct, int quantity, double currentPrice){
-        this.idProduct = idProduct;
-        this.quantity = quantity;
-        this.currentPrice = currentPrice;
-        return this;
+    public List<Stock> buildList() {
+        List<Stock> stocks = new ArrayList<>();
+        stocks.add(new StockFactory().build());
+        stocks.add(new StockFactory()
+          .withIdProduct(2)
+          .withQuantity(28)
+          .withCurrentPrice(1087000.99)
+          .build());
+        stocks.add(new StockFactory()
+          .withIdProduct(3)
+          .withQuantity(251)
+          .withCurrentPrice(69900.99)
+          .build());
+        return stocks;
     }
 
     public StockFactory withIdProduct(int idProduct) {

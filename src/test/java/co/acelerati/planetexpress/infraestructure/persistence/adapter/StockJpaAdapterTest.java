@@ -37,6 +37,7 @@ class StockJpaAdapterTest {
         final double minPrice = 50000.98;
         final double maxPrice = 1159000.98;
         final int page = 0;
+        final int sizePage = 10;
 
         Optional<Page<StockEntity>> stockEntityPage = Optional.of(new PageImpl<>(new StockEntityFactory().buildList().stream()
           .filter(se -> se.getCurrentPrice() >= minPrice && se.getCurrentPrice() <= maxPrice)
@@ -44,7 +45,7 @@ class StockJpaAdapterTest {
         when(stockRepository.findByCurrentPriceBetween(anyDouble(), anyDouble(), any())).thenReturn(stockEntityPage);
 
         List<StockEntity> stockEntityList = stockEntityPage.get().get().collect(Collectors.toList());
-        List<Stock> stockListResponse = stockJpaAdapter.getByCurrentPriceBetween(minPrice, maxPrice, page);
+        List<Stock> stockListResponse = stockJpaAdapter.getByCurrentPriceBetween(minPrice, maxPrice, page, sizePage);
 
         assertEquals(stockEntityList.get(0).getProductId(), stockListResponse.get(0).getProductId());
         assertEquals(stockEntityList.get(0).getQuantity(), stockListResponse.get(0).getQuantity());
@@ -56,13 +57,14 @@ class StockJpaAdapterTest {
     void whenCallGetByCurrentPriceGreaterThanEqual_thenReturnAListStock() {
         final double minPrice = 89999.98;
         final int page = 0;
+        final int sizePage = 10;
 
         Optional<Page<StockEntity>> stockEntityPage = Optional.of(new PageImpl<>(new StockEntityFactory().buildList().stream()
           .filter(se -> se.getCurrentPrice() >= minPrice).collect(Collectors.toList())));
         when(stockRepository.findByCurrentPriceGreaterThanEqual(anyDouble(), any())).thenReturn(stockEntityPage);
 
         List<StockEntity> stockEntityList = stockEntityPage.get().get().collect(Collectors.toList());
-        List<Stock> stockListResponse = stockJpaAdapter.getByCurrentPriceGreaterThanEqual(minPrice, page);
+        List<Stock> stockListResponse = stockJpaAdapter.getByCurrentPriceGreaterThanEqual(minPrice, page, sizePage);
 
         assertEquals(stockEntityList.get(1).getProductId(), stockListResponse.get(1).getProductId());
         assertEquals(stockEntityList.get(1).getQuantity(), stockListResponse.get(1).getQuantity());
@@ -73,13 +75,14 @@ class StockJpaAdapterTest {
     void whenCallGetByCurrentPriceLessThanEqual_thenReturnAListStock() {
         final double maxPrice = 1899000.98;
         final int page = 0;
+        final int sizePage = 10;
 
         Optional<Page<StockEntity>> stockEntityPage = Optional.of(new PageImpl<>(new StockEntityFactory().buildList().stream()
           .filter(se -> se.getCurrentPrice() <= maxPrice).collect(Collectors.toList())));
         when(stockRepository.findByCurrentPriceLessThanEqual(anyDouble(), any())).thenReturn(stockEntityPage);
 
         List<StockEntity> stockEntityList = stockEntityPage.get().get().collect(Collectors.toList());
-        List<Stock> stockListResponse = stockJpaAdapter.getByCurrentPriceLessThanEqual(maxPrice, page);
+        List<Stock> stockListResponse = stockJpaAdapter.getByCurrentPriceLessThanEqual(maxPrice, page, sizePage);
 
         assertEquals(stockEntityList.get(0).getProductId(), stockListResponse.get(0).getProductId());
         assertEquals(stockEntityList.get(0).getQuantity(), stockListResponse.get(0).getQuantity());
@@ -89,12 +92,13 @@ class StockJpaAdapterTest {
     @Test
     void whenCallGetAll_thenReturnAListStock() {
         final int page = 0;
+        final int sizePage = 10;
 
         Page<StockEntity> stockEntityPage = new PageImpl<>(new StockEntityFactory().buildList());
         doReturn(stockEntityPage).when(stockRepository).findAll(any(Pageable.class));
 
         List<StockEntity> stockEntityList = stockEntityPage.get().collect(Collectors.toList());
-        List<Stock> stockListResponse = stockJpaAdapter.getAll(page);
+        List<Stock> stockListResponse = stockJpaAdapter.getAll(page, sizePage);
 
         assertEquals(stockEntityList.get(0).getProductId(), stockListResponse.get(0).getProductId());
         assertEquals(stockEntityList.get(0).getQuantity(), stockListResponse.get(0).getQuantity());

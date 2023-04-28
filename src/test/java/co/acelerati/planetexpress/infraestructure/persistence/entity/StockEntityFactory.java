@@ -12,6 +12,9 @@ public class StockEntityFactory {
     private Double currentPrice;
 
     public StockEntityFactory() {
+        productId = 1;
+        quantity = 80;
+        currentPrice = 500.0;
     }
 
     public StockEntity build() {
@@ -55,4 +58,3 @@ public class StockEntityFactory {
         return this;
     }
 }
-

@@ -48,21 +48,19 @@ public class StockUseCase implements IStockService {
         ).orElseThrow();
     }
 
-    //// TODO: 17/04/2023 revisar servicios si estan correctamente implementados los llamados a persistencia dependiendo del caso
     @Override
     public List<DetailStock> getAllProducts(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brands) {
         List<Stock> stockList;
-        List<DetailStock> detailStockList = new ArrayList<>();
-        double minPrice = filters.containsKey("minPrice") ? Integer.parseInt(String.valueOf(filters.getFirst("minPrice"))) : -1;
-        double maxPrice = filters.containsKey("maxPrice") ? Integer.parseInt(filters.getFirst("maxPrice")) : -1;
-        int page = Integer.parseInt(filters.getFirst("page"));
+        double minPrice = filters.containsKey("minPrice") ? Double.parseDouble(filters.getFirst("minPrice")): -1;
+        double maxPrice = filters.containsKey("maxPrice") ? Double.parseDouble(filters.getFirst("maxPrice")) : -1;
+        int page = filters.containsKey("page") ? Integer.parseInt(filters.getFirst("page")) : 0;
 
         if (minPrice >= 0 && maxPrice >= 0) {
             stockList = stockPersistence.getByCurrentPriceBetween(minPrice, maxPrice, page);
         } else if (minPrice >= 0) {
-            stockList = stockPersistence.getByCurrentPriceLessThanEqual(minPrice, page);
+            stockList = stockPersistence.getByCurrentPriceGreaterThanEqual(minPrice, page);
         } else if (maxPrice >= 0) {
-            stockList = stockPersistence.getByCurrentPriceGreaterThanEqual(maxPrice, page);
+            stockList = stockPersistence.getByCurrentPriceLessThanEqual(maxPrice, page);
         } else {
             stockList = stockPersistence.getAll(page);
         }
@@ -113,7 +111,7 @@ public class StockUseCase implements IStockService {
           );
     }
 
-    private DetailStock buildDetailStock(Stock stock, List<Product> products, List<Category> categories, List<Brand> brands) {
+    private DetailStock buildDetailStock(Stock stock, List<Product> products, List<Category> categories, List<Brand> brands){
         Product product = products.stream()
           .filter(prd -> stock.getProductId() == (prd.getId().intValue())).findFirst().get();
         Category category = categories.stream()

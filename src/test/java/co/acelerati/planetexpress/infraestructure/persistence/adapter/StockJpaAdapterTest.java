@@ -1,7 +1,6 @@
 package co.acelerati.planetexpress.infraestructure.persistence.adapter;
 
 import co.acelerati.planetexpress.domain.model.stock.Stock;
-import co.acelerati.planetexpress.domain.model.stock.StockFactory;
 import co.acelerati.planetexpress.infraestructure.persistence.entity.StockEntity;
 import co.acelerati.planetexpress.infraestructure.persistence.entity.StockEntityFactory;
 import co.acelerati.planetexpress.infraestructure.persistence.repository.IStockRepository;

@@ -31,8 +31,6 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 public class StockUseCaseTest {
 
-    private static final double ZERO = 0;
-
     private IStockPersistence stockPersistence;
     private ISupplyPersistence supplyPersistence;
     private ISupplyStockPersistence supplyStockPersistence;
@@ -48,7 +46,7 @@ public class StockUseCaseTest {
 
     @Test
     void whenGetAllProductsFilterBetweenMinPriceMaxPrice_thenReturnAListStockDetail() {
-        when(stockPersistence.getByCurrentPriceBetween(anyDouble(), anyDouble(), anyInt())).thenReturn(getStocksTest());
+        when(stockPersistence.getByCurrentPriceBetween(anyDouble(), anyDouble(), anyInt(), anyInt())).thenReturn(getStocksTest());
 
         List<DetailStock> detailStockList = getDetailStocksTest();
 
@@ -87,7 +85,7 @@ public class StockUseCaseTest {
             result -> result.getCurrentPrice() <= Double.parseDouble(filters.getFirst("maxPrice")))
           .collect(Collectors.toList());
 
-        when(stockPersistence.getByCurrentPriceLessThanEqual(anyDouble(), anyInt())).thenReturn(
+        when(stockPersistence.getByCurrentPriceLessThanEqual(anyDouble(), anyInt(), anyInt())).thenReturn(
           getStocksTest().stream().filter(
               result -> result.getCurrentPrice() <= Double.parseDouble(filters.getFirst("maxPrice")))
             .collect(Collectors.toCollection(ArrayList::new)));
@@ -115,7 +113,7 @@ public class StockUseCaseTest {
             result -> result.getCurrentPrice() >= Double.parseDouble(filters.getFirst("minPrice")))
           .collect(Collectors.toList());
 
-        when(stockPersistence.getByCurrentPriceGreaterThanEqual(anyDouble(), anyInt())).thenReturn(
+        when(stockPersistence.getByCurrentPriceGreaterThanEqual(anyDouble(), anyInt(), anyInt())).thenReturn(
           getStocksTest().stream().filter(
               result -> result.getCurrentPrice() >= Double.parseDouble(filters.getFirst("minPrice")))
             .collect(Collectors.toCollection(ArrayList::new)));
@@ -140,7 +138,7 @@ public class StockUseCaseTest {
 
         List<DetailStock> detailStockList = getDetailStocksTest();
 
-        when(stockPersistence.getAll(anyInt())).thenReturn(getStocksTest());
+        when(stockPersistence.getAll(anyInt(), anyInt())).thenReturn(getStocksTest());
 
         List<DetailStock> detailStockListResponse = stockUseCase.getAllProducts(filters, getProductsTest()
           , getCategoriesTest(), getBrandsTest());
@@ -176,7 +174,6 @@ public class StockUseCaseTest {
           ,"WT19BSB"
           ,Long.parseLong("11")
           ,Long.parseLong("21")).build());
-        List<Category> categories = new ArrayList<>();
 
         products.add(new ProductFactory().withAllArguments(
           Long.parseLong("3")

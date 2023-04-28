@@ -1,5 +1,8 @@
 package co.acelerati.planetexpress.infraestructure.persistence.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StockEntityFactory {
 
     private Integer productId;
@@ -8,15 +11,33 @@ public class StockEntityFactory {
 
     private Double currentPrice;
 
-    public StockEntityFactory(){ }
+    public StockEntityFactory() {
+    }
 
-    public StockEntity build(){ return new StockEntity(productId, quantity, currentPrice); }
+    public StockEntity build() {
+        return new StockEntity(productId, quantity, currentPrice);
+    }
 
-    public StockEntityFactory withAllArguments(Integer productId, Integer quantity, double currentPrice){
-        this.productId = productId;
-        this.quantity = quantity;
-        this.currentPrice = currentPrice;
-        return this;
+    public List<StockEntity> buildList() {
+        List<StockEntity> stocksEntities = new ArrayList<>();
+
+        stocksEntities.add(new StockEntityFactory()
+          .withProductId(1)
+          .withQuantity(52)
+          .withCurrentPrice(2859000.99)
+          .build());
+        stocksEntities.add(new StockEntityFactory()
+          .withProductId(2)
+          .withQuantity(28)
+          .withCurrentPrice(1087000.99)
+          .build());
+        stocksEntities.add(new StockEntityFactory()
+          .withProductId(3)
+          .withQuantity(251)
+          .withCurrentPrice(69900.99)
+          .build());
+
+        return stocksEntities;
     }
 
     public StockEntityFactory withProductId(Integer productId) {

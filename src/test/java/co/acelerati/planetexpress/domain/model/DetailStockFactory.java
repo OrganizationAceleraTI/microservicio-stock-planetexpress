@@ -2,6 +2,9 @@ package co.acelerati.planetexpress.domain.model;
 
 import co.acelerati.planetexpress.domain.model.stock.DetailStock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DetailStockFactory {
 
     private Long id;
@@ -14,7 +17,7 @@ public class DetailStockFactory {
     private double currentPrice;
 
     public DetailStockFactory() {
-        id = Long.getLong("1");
+        id = 0L;
         name = "Televisor";
         description = "Televisor pantalla plana de 52 pulgadas 4K";
         model = "2023";
@@ -24,21 +27,47 @@ public class DetailStockFactory {
         currentPrice = 1800000.00;
     }
 
-    public DetailStock build(){
+    public DetailStock build() {
         return new DetailStock(id, name, description, model, brand, category, quantity, currentPrice);
     }
 
-    public DetailStockFactory withAllArguments(Long id, String name, String description, String model, String brand,
-                                               String category, int quantity, double currentPrice){
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.model = model;
-        this.brand = brand;
-        this.category = category;
-        this.quantity = quantity;
-        this.currentPrice = currentPrice;
-        return this;
+    public List<DetailStock> buildList() {
+        List<DetailStock> detailStockList = new ArrayList<>();
+        detailStockList.add(new DetailStockFactory()
+          .withId(1L)
+          .withName("Iphone 14 Pro Max")
+          .withDescription("Teléfono célular apple")
+          .withModel("PHOMX198974")
+          .withBrand("Apple")
+          .withCategory("Electronica")
+          .withQuantity(52)
+          .withCurrentPrice(2859000.99)
+          .build());
+        detailStockList.add(new DetailStockFactory()
+          .withId(2L)
+          .withName("Lavadora LG Carga Superior 19kg Negro")
+          .withDescription("Lavadora LG Smart Inverter con 10 años de garantía en su motor, tiene un rendimiento de " +
+            "lavado superior, más limpio, más higiénico, El Motor Smart Inverter es confiable, silencioso y duradero")
+          .withModel("WT19BSB")
+          .withBrand("Lg")
+          .withCategory("Electrodomesticos")
+          .withQuantity(28)
+          .withCurrentPrice(1087000.99)
+          .build());
+        detailStockList.add(new DetailStockFactory()
+          .withId(3L)
+          .withName("Cargador Pared SAMSUNG USB-C 25W Carga Rápida")
+          .withDescription("Samsung llego con el nuevo cargador rápido de pared que permite cargar todos tus " +
+            "dispositivos a una velocidad increible para que puedas disfrutar de todo tu contenido con la mayor " +
+            "energia.")
+          .withModel("CP013681")
+          .withBrand("Samsung")
+          .withCategory("Accesorios")
+          .withQuantity(251)
+          .withCurrentPrice(69900.99)
+          .build());
+
+        return detailStockList;
     }
 
     public DetailStockFactory withId(Long id) {

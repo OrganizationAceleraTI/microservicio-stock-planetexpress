@@ -1,9 +1,9 @@
 package co.acelerati.planetexpress.infraestructure.http.rest.mapper;
 
-import co.acelerati.planetexpress.domain.model.stock.DetailStock;
 import co.acelerati.planetexpress.domain.model.product.Brand;
 import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
+import co.acelerati.planetexpress.domain.model.stock.DetailStock;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.SupplyStockRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;

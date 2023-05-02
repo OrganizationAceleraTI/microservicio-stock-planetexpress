@@ -86,7 +86,7 @@ public class StockUseCase implements IStockService {
     private void supplyStock(Stock stock, int idSupplier) {
         stockPersistence.getById(stock.getProductId())
           .map(stockOpt -> updateQuantity(stockOpt, stock.getQuantity(), idSupplier).isPresent())
-          .orElseGet(() -> registerStock(stock, ZERO, idSupplier).isPresent());
+          .orElseGet(() -> registerStock(stock, stock.getCurrentPrice(), idSupplier).isPresent());
     }
 
     private Optional<SupplyStock> updateQuantity(Stock stock, int quantity, int idSupplier) {

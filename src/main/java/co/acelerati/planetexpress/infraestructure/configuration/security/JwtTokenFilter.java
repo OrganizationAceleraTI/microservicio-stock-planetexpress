@@ -1,6 +1,6 @@
 package co.acelerati.planetexpress.infraestructure.configuration.security;
 
-import co.acelerati.planetexpress.application.exception.EmptyHeaderAutorizationException;
+import co.acelerati.planetexpress.domain.exception.EmptyHeaderAutorizationException;
 import co.acelerati.planetexpress.infraestructure.configuration.security.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

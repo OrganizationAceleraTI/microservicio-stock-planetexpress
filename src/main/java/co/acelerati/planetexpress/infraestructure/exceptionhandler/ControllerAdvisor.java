@@ -1,10 +1,11 @@
 package co.acelerati.planetexpress.infraestructure.exceptionhandler;
 
-import co.acelerati.planetexpress.infraestructure.exception.NoDataFoundException;
-import co.acelerati.planetexpress.infraestructure.exception.UnauthorizedException;
+import co.acelerati.planetexpress.domain.exception.NotFoundException;
+import co.acelerati.planetexpress.domain.exception.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -22,9 +23,9 @@ public class ControllerAdvisor {
     private static final String MESSAGE = "message";
     private static final String WARNING = "warning";
 
-    @ExceptionHandler(NoDataFoundException.class)
+    @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNoDataFoundException(
-      NoDataFoundException ignoredNoDataFoundException) {
+      NotFoundException ignoredNoDataFoundException) {
         log.info(ignoredNoDataFoundException.getMessage(), ignoredNoDataFoundException.getCause());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(MESSAGE,
           ExceptionResponse.NO_DATA_FOUND.getMessage()));
@@ -61,5 +62,10 @@ public class ControllerAdvisor {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity handleNoSuchElementException(NoSuchElementException noSuchElementException) {
         return new ResponseEntity<>(noSuchElementException.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity handleArgumentNotValidException(MethodArgumentNotValidException argumentNotValidException) {
+        return new ResponseEntity<>(ExceptionResponse.BAD_REQUEST.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

@@ -57,11 +57,8 @@ public class StockRestController {
     }
 
     @PostMapping("/supply/{supplierId}")
-    public ResponseEntity<Void> inventorySupply(@PathVariable Integer supplierId,
-                                                @RequestBody List<@Valid SupplyStockRequestDTO> supplyStockRequestDTOList) {
-
-        System.out.println(supplyStockRequestDTOList.get(0).toString());
-
+    public ResponseEntity<Void> supplyStock(@PathVariable Integer supplierId,
+      @RequestBody List<@Valid SupplyStockRequestDTO> supplyStockRequestDTOList) {
         stockHandler.supplyStock(supplyStockRequestDTOList.stream().map(StockRequestMapper::toModel).collect(Collectors.toList()), supplierId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

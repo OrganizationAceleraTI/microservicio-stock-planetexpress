@@ -3,6 +3,7 @@ package co.acelerati.planetexpress.infraestructure.persistence.adapter;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.infraestructure.persistence.entity.StockEntity;
 import co.acelerati.planetexpress.infraestructure.persistence.entity.StockEntityFactory;
+import co.acelerati.planetexpress.infraestructure.persistence.mapper.StockMapper;
 import co.acelerati.planetexpress.infraestructure.persistence.repository.IStockRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -111,6 +112,16 @@ class StockJpaAdapterTest {
         assertEquals(stockEntityList.get(2).getProductId(), stockListResponse.get(2).getProductId());
         assertEquals(stockEntityList.get(2).getQuantity(), stockListResponse.get(2).getQuantity());
         assertEquals(stockEntityList.get(2).getCurrentPrice(), stockListResponse.get(2).getCurrentPrice());
+    }
+
+    @Test
+    void whenInsertStock_thenReturnStockEntity() {
+        Stock stock = new Stock(1, 10, 10000);
+
+        when(stockRepository.save(any(StockEntity.class))).thenReturn(StockMapper.toEntity(stock));
+
+        Stock stockActual = stockJpaAdapter.insertStock(stock).get();
+        assertEquals(stockActual.getCurrentPrice(), stock.getCurrentPrice());
     }
 
 }

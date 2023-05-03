@@ -1,15 +1,14 @@
 package co.acelerati.planetexpress.domain.usecase;
 
 import co.acelerati.planetexpress.domain.model.DetailStockFactory;
-import co.acelerati.planetexpress.domain.model.product.Brand;
 import co.acelerati.planetexpress.domain.model.product.BrandFactory;
-import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.CategoryFactory;
-import co.acelerati.planetexpress.domain.model.product.Product;
 import co.acelerati.planetexpress.domain.model.product.ProductFactory;
 import co.acelerati.planetexpress.domain.model.stock.DetailStock;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.domain.model.stock.StockFactory;
+import co.acelerati.planetexpress.domain.model.stock.Supply;
+import co.acelerati.planetexpress.domain.model.stock.SupplyStock;
 import co.acelerati.planetexpress.domain.repository.IStockPersistence;
 import co.acelerati.planetexpress.domain.repository.ISupplyPersistence;
 import co.acelerati.planetexpress.domain.repository.ISupplyStockPersistence;
@@ -18,31 +17,39 @@ import org.junit.jupiter.api.Test;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 class StockUseCaseTest {
 
     private IStockPersistence stockPersistence;
+    private ISupplyPersistence supplyPersistence;
+    private ISupplyStockPersistence supplyStockPersistence;
     private StockUseCase stockUseCase;
+
 
     @BeforeEach
     void setUp() {
         stockPersistence = mock(IStockPersistence.class);
-        ISupplyPersistence supplyPersistence = mock(ISupplyPersistence.class);
-        ISupplyStockPersistence supplyStockPersistence = mock(ISupplyStockPersistence.class);
+        supplyPersistence = mock(ISupplyPersistence.class);
+        supplyStockPersistence = mock(ISupplyStockPersistence.class);
         stockUseCase = new StockUseCase(stockPersistence, supplyPersistence, supplyStockPersistence);
     }
+
 
     @Test
     void whenGetAllProductsFilterBetweenMinPriceMaxPrice_thenReturnAListStockDetail() {
@@ -59,13 +66,11 @@ class StockUseCaseTest {
         List<DetailStock> detailStockListResponse = stockUseCase.getAllProducts(filters, new ProductFactory().buildList()
           , new CategoryFactory().buildList(), new BrandFactory().buildList());
 
-        assertTrue("Actual: Current price NOT between " + filters.getFirst("minPrice") + " and " + filters.getFirst("maxPrice")
-          , detailStockList.get(0).getCurrentPrice() >= Double.parseDouble(Objects.requireNonNull(filters.getFirst("minPrice")))
-            && detailStockList.get(0).getCurrentPrice() <= Double.parseDouble(Objects.requireNonNull(filters.getFirst("maxPrice"))));
+        assertTrue(detailStockList.get(0).getCurrentPrice() >= Double.parseDouble(Objects.requireNonNull(filters.getFirst("minPrice")))
+          && detailStockList.get(0).getCurrentPrice() <= Double.parseDouble(Objects.requireNonNull(filters.getFirst("maxPrice"))));
 
-        assertTrue("Response: Current price NOT between " + filters.getFirst("minPrice") + " and " + filters.getFirst("maxPrice")
-          , detailStockListResponse.get(0).getCurrentPrice() >= Double.parseDouble(Objects.requireNonNull(filters.getFirst("minPrice")))
-            && detailStockListResponse.get(0).getCurrentPrice() <= Double.parseDouble(Objects.requireNonNull(filters.getFirst("maxPrice"))));
+        assertTrue(detailStockListResponse.get(0).getCurrentPrice() >= Double.parseDouble(Objects.requireNonNull(filters.getFirst("minPrice")))
+          && detailStockListResponse.get(0).getCurrentPrice() <= Double.parseDouble(Objects.requireNonNull(filters.getFirst("maxPrice"))));
 
         assertEquals(detailStockList.get(0).getBrand(), detailStockListResponse.get(0).getBrand());
         assertEquals(detailStockList.get(0).getCategory(), detailStockListResponse.get(0).getCategory());
@@ -100,11 +105,9 @@ class StockUseCaseTest {
         List<DetailStock> detailStockListResponse = stockUseCase.getAllProducts(filters, new ProductFactory().buildList()
           , new CategoryFactory().buildList(), new BrandFactory().buildList());
 
-        assertTrue("Actual: Current price NOT expect Max price " + filters.getFirst("maxPrice")
-          , detailStockList.get(0).getCurrentPrice() <= Double.parseDouble(Objects.requireNonNull(filters.getFirst("maxPrice"))));
+        assertTrue(detailStockList.get(0).getCurrentPrice() <= Double.parseDouble(Objects.requireNonNull(filters.getFirst("maxPrice"))));
 
-        assertTrue("Response: Current price NOT expect Max price " + filters.getFirst("maxPrice")
-          , detailStockListResponse.get(0).getCurrentPrice() <= Double.parseDouble(Objects.requireNonNull(filters.getFirst("maxPrice"))));
+        assertTrue(detailStockListResponse.get(0).getCurrentPrice() <= Double.parseDouble(Objects.requireNonNull(filters.getFirst("maxPrice"))));
 
         assertEquals(detailStockList.get(1).getBrand(), detailStockListResponse.get(1).getBrand());
         assertEquals(detailStockList.get(1).getCategory(), detailStockListResponse.get(1).getCategory());
@@ -134,11 +137,9 @@ class StockUseCaseTest {
         List<DetailStock> detailStockListResponse = stockUseCase.getAllProducts(filters, new ProductFactory().buildList()
           , new CategoryFactory().buildList(), new BrandFactory().buildList());
 
-        assertTrue("Actual: Current price NOT expect min price " + filters.getFirst("minPrice")
-          , detailStockList.get(0).getCurrentPrice() >= Double.parseDouble(Objects.requireNonNull(filters.getFirst("minPrice"))));
+        assertTrue(detailStockList.get(0).getCurrentPrice() >= Double.parseDouble(Objects.requireNonNull(filters.getFirst("minPrice"))));
 
-        assertTrue("Response: Current price NOT expect min price " + filters.getFirst("maxPrice")
-          , detailStockListResponse.get(0).getCurrentPrice() >= Double.parseDouble(Objects.requireNonNull(filters.getFirst("minPrice"))));
+        assertTrue(detailStockListResponse.get(0).getCurrentPrice() >= Double.parseDouble(Objects.requireNonNull(filters.getFirst("minPrice"))));
 
         assertEquals(detailStockList.get(1).getBrand(), detailStockListResponse.get(1).getBrand());
         assertEquals(detailStockList.get(1).getCategory(), detailStockListResponse.get(1).getCategory());
@@ -196,6 +197,44 @@ class StockUseCaseTest {
         assertEquals(detailStockList.get(0).getDescription(), detailStockListResponse.get(0).getDescription());
         assertEquals(detailStockList.get(0).getCurrentPrice(), detailStockListResponse.get(0).getCurrentPrice());
 
+    }
+
+    @Test
+    void whenInsertStock_thenReturnInsertValueConfirmation() {
+        List<Stock> stockList = new ArrayList<>();
+        Stock stock = new Stock(1, 10, 10000);
+        stockList.add(stock);
+
+        when(stockPersistence.insertStock(any(Stock.class))).thenReturn(Optional.of(stock));
+
+        boolean insertedValue = stockUseCase.supplyStock(stockList, 1203);
+        assertTrue(insertedValue);
+    }
+
+    @Test
+    void whenInsertSupplyStock_thenReturnInsertValueConfirmation() {
+        List<Stock> stockList = new ArrayList<>();
+        Stock stock = new Stock(1, 10, 10000);
+        stockList.add(stock);
+        SupplyStock supplyStock = new SupplyStock("1", "213", 12, 1500, 10500.5);
+
+        when(supplyStockPersistence.insertSupplyStock(any(SupplyStock.class))).thenReturn(Optional.of(supplyStock));
+
+        boolean insertedValue = stockUseCase.supplyStock(stockList, 1203);
+        assertTrue(insertedValue);
+    }
+
+    @Test
+    void whenInsertSupply_thenReturnInsertValueConfirmation() {
+        List<Stock> stockList = new ArrayList<>();
+        Stock stock = new Stock(1, 10, 10000);
+        stockList.add(stock);
+        Supply supply = new Supply(UUID.randomUUID().toString(), 1203, LocalDateTime.now());
+
+        when(supplyPersistence.insertSupply(any(Supply.class))).thenReturn(Optional.of(supply));
+
+        boolean insertedValue = stockUseCase.supplyStock(stockList, 1203);
+        assertTrue(insertedValue);
     }
 
 }

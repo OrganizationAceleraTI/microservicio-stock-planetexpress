@@ -15,11 +15,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -32,7 +34,7 @@ class StockHandlerTest {
     private IStockService stockService;
 
     private IStockPersistence stockPersistence;
-    
+
     private IStockHandler stockHandler;
 
     @BeforeEach
@@ -40,6 +42,18 @@ class StockHandlerTest {
         stockService = mock(IStockService.class);
         stockPersistence = mock(IStockPersistence.class);
         stockHandler = new StockHandler(stockService);
+    }
+
+    @Test
+    void whenPostSupplyStock_thenReturnInsertValueConfirmation() {
+        List<Stock> stockList = new ArrayList<>();
+        Stock stock = new Stock(1, 10, 10000);
+        stockList.add(stock);
+
+        when(stockService.supplyStock(anyList(), anyInt())).thenReturn(true);
+
+        boolean insertedValue = stockHandler.supplyStock(stockList, 1203);
+        assertTrue(insertedValue);
     }
 
     @Test

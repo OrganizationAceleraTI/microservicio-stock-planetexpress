@@ -38,32 +38,64 @@ public class StockJpaAdapter implements IStockPersistence {
     }
 
     @Override
-    public List<Stock> getAll(int page) {
-        return repository.findAll(PageRequest.of(page, SIZE_PAGE))
+    public List<Stock> getAll(int page, int pageSize) {
+        return repository.findAll(PageRequest.of(page, pageSize > 0 ? pageSize : SIZE_PAGE))
           .map(StockMapper::toDomain).toList();
     }
 
     @Override
-    public List<Stock> getByCurrentPrice(double currentPrice, int page) {
-        return repository.findByCurrentPrice(currentPrice, PageRequest.of(page, SIZE_PAGE))
+    public List<Stock> getByCurrentPrice(double currentPrice, int page, int pageSize) {
+        return repository.findByCurrentPrice(currentPrice,
+            PageRequest.of(page, pageSize > 0 ? pageSize : SIZE_PAGE))
           .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
     }
 
     @Override
-    public List<Stock> getByCurrentPriceLessThanEqual(double currentPrice, int page) {
-        return repository.findByCurrentPriceLessThanEqual(currentPrice, PageRequest.of(page, SIZE_PAGE))
+    public List<Stock> getByCurrentPriceLessThanEqual(double currentPrice, int page, int pageSize) {
+        return repository.findByCurrentPriceLessThanEqual(currentPrice,
+            PageRequest.of(page, pageSize > 0 ? pageSize : SIZE_PAGE))
           .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
     }
 
     @Override
-    public List<Stock> getByCurrentPriceGreaterThanEqual(double currentPrice, int page) {
-        return repository.findByCurrentPriceGreaterThanEqual(currentPrice, PageRequest.of(page, SIZE_PAGE))
+    public List<Stock> getByCurrentPriceGreaterThanEqual(double currentPrice, int page, int pageSize) {
+        return repository.findByCurrentPriceGreaterThanEqual(currentPrice,
+            PageRequest.of(page, pageSize > 0 ? pageSize : SIZE_PAGE))
           .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
     }
 
     @Override
-    public List<Stock> getByCurrentPriceBetween(double minPrice, double maxPrice, int page) {
-        return repository.findByCurrentPriceBetween(minPrice, maxPrice, PageRequest.of(page, SIZE_PAGE))
+    public List<Stock> getByCurrentPriceBetween(double minPrice, double maxPrice, int page, int pageSize) {
+        return repository.findByCurrentPriceBetween(minPrice, maxPrice,
+            PageRequest.of(page, pageSize > 0 ? pageSize : SIZE_PAGE))
+          .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
+    }
+
+    @Override
+    public List<Stock> getByProductIdInAndCurrentPrice(List<Integer> productId, double currentPrice, int page, int pageSize) {
+        return repository.findByProductIdInAndCurrentPrice(productId, currentPrice,
+            PageRequest.of(page, pageSize > 0 ? pageSize : SIZE_PAGE))
+          .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
+    }
+
+    @Override
+    public List<Stock> getByProductIdInAndCurrentPriceLessThanEqual(List<Integer> productId, double currentPrice, int page, int pageSize) {
+        return repository.findByProductIdInAndCurrentPriceLessThanEqual(productId, currentPrice,
+            PageRequest.of(page, pageSize > 0 ? pageSize : SIZE_PAGE))
+          .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
+    }
+
+    @Override
+    public List<Stock> getByProductIdInAndCurrentPriceGreaterThanEqual(List<Integer> productId, double currentPrice, int page, int pageSize) {
+        return repository.findByProductIdInAndCurrentPriceGreaterThanEqual(productId, currentPrice,
+            PageRequest.of(page, pageSize > 0 ? pageSize : SIZE_PAGE))
+          .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
+    }
+
+    @Override
+    public List<Stock> getByProductIdInAndCurrentPriceBetween(List<Integer> productId, double minPrice, double maxPrice, int page, int pageSize) {
+        return repository.findByProductIdInAndCurrentPriceBetween(productId, minPrice, maxPrice,
+            PageRequest.of(page, pageSize > 0 ? pageSize : SIZE_PAGE))
           .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
     }
 

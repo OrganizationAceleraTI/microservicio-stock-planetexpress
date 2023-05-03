@@ -39,11 +39,14 @@ public class StockRestController {
 
     @GetMapping("/filtro")
     ResponseEntity<List<DetailStockResponseDTO>> getProductWithFilter(@RequestParam MultiValueMap<String, String> filters) {
-        return ResponseEntity.ok(stockHandler.allProducts(filters,
+        List<DetailStockResponseDTO> detailStockResponseDTOS =stockHandler.allProducts(filters,
             StockRequestMapper.toProductList(productFeignClient.getProducts(0, 1000)),
             StockRequestMapper.toCategoryList(categoryFeignClient.getCategories(0, 1000)),
             StockRequestMapper.toBrandList(brandFeignClient.getBrands(0, 1000)))
-          .stream().map(StockRequestMapper::toProductDTO).collect(Collectors.toList()));
+          .stream().map(StockRequestMapper::toProductDTO).collect(Collectors.toList());
+        return (!detailStockResponseDTOS.isEmpty())
+                    ? ResponseEntity.ok(detailStockResponseDTOS)
+                    : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PatchMapping("/{stockId}")

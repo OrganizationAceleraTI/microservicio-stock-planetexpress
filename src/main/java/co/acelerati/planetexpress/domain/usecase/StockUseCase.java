@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -48,26 +49,65 @@ public class StockUseCase implements IStockService {
         ).orElseThrow();
     }
 
-    //// TODO: 17/04/2023 revisar servicios si estan correctamente implementados los llamados a persistencia dependiendo del caso
     @Override
-    public List<DetailStock> getAllProducts(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brands) {
-        List<Stock> stockList;
-        List<DetailStock> detailStockList = new ArrayList<>();
-        double minPrice = filters.containsKey("minPrice") ? Integer.parseInt(String.valueOf(filters.getFirst("minPrice"))) : -1;
-        double maxPrice = filters.containsKey("maxPrice") ? Integer.parseInt(filters.getFirst("maxPrice")) : -1;
-        int page = Integer.parseInt(filters.getFirst("page"));
+    public List<DetailStock> getAllProducts(MultiValueMap<String, String> filters, List<Product> products
+      ,List<Category> categories, List<Brand> brands) {
 
-        if (minPrice >= 0 && maxPrice >= 0) {
-            stockList = stockPersistence.getByCurrentPriceBetween(minPrice, maxPrice, page);
-        } else if (minPrice >= 0) {
-            stockList = stockPersistence.getByCurrentPriceLessThanEqual(minPrice, page);
-        } else if (maxPrice >= 0) {
-            stockList = stockPersistence.getByCurrentPriceGreaterThanEqual(maxPrice, page);
-        } else {
-            stockList = stockPersistence.getAll(page);
+        final double minPrice = filters.containsKey("minPrice") ? Double.parseDouble(filters.getFirst("minPrice")): -1;
+        final double maxPrice = filters.containsKey("maxPrice") ? Double.parseDouble(filters.getFirst("maxPrice")) : -1;
+        final double price = filters.containsKey("price") ? Double.parseDouble(filters.getFirst("price")) : -1;
+        final Long categoryId = filters.containsKey("category") ? Long.parseLong(filters.getFirst("category")) : 0L;
+        final Long brandId = filters.containsKey("brand") ? Long.parseLong(filters.getFirst("brand")) : 0L;
+        final int sizePage = filters.containsKey("sizePage") ? Integer.parseInt(filters.getFirst("sizePage")) : 0;
+        final int page = filters.containsKey("page") ? Integer.parseInt(filters.getFirst("page")) : 0;
+        final boolean filterComplement = categoryId > 0L || brandId > 0L;
+        final Stream<Product> productStream = products.stream();
+        List<Stock> stockList;
+        List<Product> productsFilter;
+
+        if(categoryId > 0L && brandId > 0L){
+            productsFilter = productStream.filter(productFilter -> productFilter.getIdCategory() == categoryId
+              && productFilter.getIdBrand() == brandId).collect(Collectors.toList());
+        }else if(categoryId > 0L){
+            productsFilter = productStream.filter(productFilter -> productFilter.getIdCategory() == categoryId)
+              .collect(Collectors.toList());
+        }else if(brandId > 0L){
+            productsFilter = productStream.filter(productFilter -> productFilter.getIdBrand() == brandId)
+              .collect(Collectors.toList());
+        }else{
+            productsFilter = productStream.collect(Collectors.toList());
         }
 
-        return stockList.stream().map(stock -> buildDetailStock(stock, products, categories, brands))
+        List<Integer> porductIdFilterList = new ArrayList<>();
+
+        if(filterComplement){
+            porductIdFilterList = productsFilter.stream()
+              .map(stock -> Integer.valueOf(stock.getId().intValue()))
+              .collect(Collectors.toList());
+        }
+
+        if (price >= 0) {
+            stockList = !filterComplement
+              ? stockPersistence.getByCurrentPrice(price, page, sizePage)
+              : stockPersistence.getByProductIdInAndCurrentPrice(porductIdFilterList, price, page, sizePage);
+        } else if (minPrice >= 0 && maxPrice >= 0) {
+            stockList = !filterComplement
+              ? stockPersistence.getByCurrentPriceBetween(minPrice, maxPrice, page, sizePage)
+              : stockPersistence.getByProductIdInAndCurrentPriceBetween(porductIdFilterList, minPrice, maxPrice, page, sizePage);
+        } else if (minPrice >= 0) {
+            stockList = !filterComplement
+              ? stockPersistence.getByCurrentPriceGreaterThanEqual(minPrice, page, sizePage)
+              : stockPersistence.getByProductIdInAndCurrentPriceGreaterThanEqual(porductIdFilterList, minPrice, page, sizePage);
+        } else if (maxPrice >= 0) {
+            stockList = !filterComplement
+              ? stockPersistence.getByCurrentPriceLessThanEqual(maxPrice, page, sizePage)
+              : stockPersistence.getByProductIdInAndCurrentPriceLessThanEqual(porductIdFilterList, maxPrice, page, sizePage);
+        } else {
+            stockList = stockPersistence.getAll(page, sizePage);
+        }
+
+        return stockList.stream()
+          .map(stock -> buildDetailStock(stock, productsFilter, categories, brands))
           .collect(Collectors.toCollection(ArrayList::new));
 
     }
@@ -113,7 +153,7 @@ public class StockUseCase implements IStockService {
           );
     }
 
-    private DetailStock buildDetailStock(Stock stock, List<Product> products, List<Category> categories, List<Brand> brands) {
+    private DetailStock buildDetailStock(Stock stock, List<Product> products, List<Category> categories, List<Brand> brands){
         Product product = products.stream()
           .filter(prd -> stock.getProductId() == (prd.getId().intValue())).findFirst().get();
         Category category = categories.stream()

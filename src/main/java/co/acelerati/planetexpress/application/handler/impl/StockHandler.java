@@ -6,6 +6,7 @@ import co.acelerati.planetexpress.domain.model.product.Brand;
 import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
 import co.acelerati.planetexpress.domain.model.stock.DetailStock;
+import co.acelerati.planetexpress.domain.model.stock.ProductSale;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -41,5 +42,10 @@ public class StockHandler implements IStockHandler {
         System.out.println(stockList.get(0).toString());
 
         return stockService.supplyStock(stockList, idSupplier);
+    }
+
+    @Override
+    public List<ProductSale> productsSale(MultiValueMap<String, String> filters, List<Product> products, List<Category> categories, List<Brand> brands) {
+        return stockService.getProductsSale(filters, products, categories, brands);
     }
 }

@@ -21,7 +21,7 @@ public class SecurityConfiguration {
         httpSecurity
           .csrf().disable()
           .authorizeHttpRequests()
-          .antMatchers("/stock/**").permitAll()
+          .antMatchers("/stock/**", "/shopping-cart/**").permitAll()
           .anyRequest()
           .authenticated()
           .and()

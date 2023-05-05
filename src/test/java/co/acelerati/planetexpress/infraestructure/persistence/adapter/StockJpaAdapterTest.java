@@ -16,8 +16,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -122,6 +125,29 @@ class StockJpaAdapterTest {
 
         Stock stockActual = stockJpaAdapter.insertStock(stock).get();
         assertEquals(stockActual.getCurrentPrice(), stock.getCurrentPrice());
+    }
+
+    @Test
+    void whenCallGetByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan_thenReturnAListStock() {
+        final int page = 0;
+        final int sizePage = 10;
+
+        Optional<Page<StockEntity>> stockEntityPage = Optional.of(new PageImpl<>(new StockEntityFactory().buildList()
+          .stream().filter(se -> se.getCurrentPrice() > 0 && se.getQuantity() > 0).collect(Collectors.toList())));
+        when(stockRepository
+          .findByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan(anyList(), anyDouble(), anyInt(), any()))
+          .thenReturn(stockEntityPage);
+
+        List<StockEntity> stockEntityList = stockEntityPage.get().get().collect(Collectors.toList());
+        List<Integer> productIds = stockEntityList.stream().map(se -> se.getProductId()).collect(Collectors.toList());
+        List<Stock> stockListResponse =
+          stockJpaAdapter.getByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan(
+            productIds,0,0, page, sizePage);
+
+        assertEquals(stockEntityList.get(0).getProductId(), stockListResponse.get(0).getProductId());
+        assertTrue(stockListResponse.get(0).getQuantity() > 0);
+        assertTrue(stockListResponse.get(0).getCurrentPrice() > 0);
+        assertEquals(stockEntityList.size(), stockListResponse.size());
     }
 
 }

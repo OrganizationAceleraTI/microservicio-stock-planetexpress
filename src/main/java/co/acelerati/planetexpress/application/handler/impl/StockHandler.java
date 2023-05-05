@@ -38,9 +38,6 @@ public class StockHandler implements IStockHandler {
 
     @Override
     public boolean supplyStock(List<Stock> stockList, int idSupplier) {
-
-        System.out.println(stockList.get(0).toString());
-
         return stockService.supplyStock(stockList, idSupplier);
     }
 

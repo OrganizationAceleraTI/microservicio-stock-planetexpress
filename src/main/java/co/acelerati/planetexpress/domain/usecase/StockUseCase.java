@@ -126,14 +126,16 @@ public class StockUseCase implements IStockService {
     public List<ProductSale> getProductsSale(MultiValueMap<String, String> filters, List<Product> products,
                                              List<Category> categories, List<Brand> brands) {
 
-        final String nameProduct = filters.containsKey("name") ? filters.getFirst("name"): "";
+        final String nameProduct = filters.containsKey("productName") ? filters.getFirst("productName"): "";
         final String nameBrand = filters.containsKey("brandName") ? filters.getFirst("brandName"): "";
         final String nameCategory = filters.containsKey("categoryName") ? filters.getFirst("categoryName"): "";
         final int sizePage = filters.containsKey("sizePage") ? Integer.parseInt(filters.getFirst("sizePage")) : 0;
         final int page = filters.containsKey("page") ? Integer.parseInt(filters.getFirst("page")) : 0;
-        List<ProductSale> productSaleList = buildProductSaleList(products, categories, brands);
-        List<ProductSale> productSaleListFilter = new ArrayList<>();
         List<Stock> stockList;
+        List<ProductSale> productSaleList = buildProductSaleList(products, categories, brands);
+        List<ProductSale> productSaleListFilter = (nameProduct.isBlank() && nameBrand.isBlank() && nameCategory.isBlank())
+                                                  ? new ArrayList<>(productSaleList)
+                                                  : new ArrayList<>();
 
         if(!nameProduct.isBlank()){
             productSaleListFilter =
@@ -249,7 +251,6 @@ public class StockUseCase implements IStockService {
           categories.stream()
             .filter(cat -> product.getIdCategory().equals(cat.getId())).findFirst().get().getName()
         )).collect(Collectors.toList());
-
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IShoppingCartPersistence {
 
-    ShoppingCartEntity createCart(ShoppingCart shoppingCart);
+    Optional<ShoppingCart> createCart(ShoppingCart shoppingCart);
 
     Optional<ShoppingCart> getCartByUser(Integer userId);
 }

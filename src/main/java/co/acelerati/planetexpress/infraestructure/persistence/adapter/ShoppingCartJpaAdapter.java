@@ -16,8 +16,9 @@ public class ShoppingCartJpaAdapter implements IShoppingCartPersistence {
     private final IShoppingCartRepository shoppingCartRepository;
 
     @Override
-    public ShoppingCartEntity createCart(ShoppingCart shoppingCart) {
-        return shoppingCartRepository.save(ShoppingCartMapper.toEntity(shoppingCart));
+    public Optional<ShoppingCart> createCart(ShoppingCart shoppingCart) {
+        return Optional.of
+          (ShoppingCartMapper.toModel(shoppingCartRepository.save(ShoppingCartMapper.toEntity(shoppingCart))));
     }
 
     @Override

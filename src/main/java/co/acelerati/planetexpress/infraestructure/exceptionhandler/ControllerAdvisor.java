@@ -1,5 +1,6 @@
 package co.acelerati.planetexpress.infraestructure.exceptionhandler;
 
+import co.acelerati.planetexpress.domain.exception.BadRequestException;
 import co.acelerati.planetexpress.domain.exception.NotFoundException;
 import co.acelerati.planetexpress.domain.exception.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
@@ -66,6 +67,11 @@ public class ControllerAdvisor {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity handleArgumentNotValidException(MethodArgumentNotValidException argumentNotValidException) {
+        return new ResponseEntity<>(ExceptionResponse.BAD_REQUEST.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<String> handreBadRequestException(BadRequestException badRequestException) {
         return new ResponseEntity<>(ExceptionResponse.BAD_REQUEST.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

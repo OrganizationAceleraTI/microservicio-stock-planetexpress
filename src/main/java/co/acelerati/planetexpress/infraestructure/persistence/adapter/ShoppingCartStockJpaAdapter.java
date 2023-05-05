@@ -6,6 +6,9 @@ import co.acelerati.planetexpress.infraestructure.persistence.mapper.ShoppingCar
 import co.acelerati.planetexpress.infraestructure.persistence.repository.IShoppingCartStockRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @RequiredArgsConstructor
 public class ShoppingCartStockJpaAdapter implements IShoppingCartStockPersistence {
 
@@ -15,5 +18,12 @@ public class ShoppingCartStockJpaAdapter implements IShoppingCartStockPersistenc
     public ShoppingCartStock addItemToCart(ShoppingCartStock shoppingCartStock) {
         return ShoppingCartStockMapper.toModel
           (cartStockRepository.save(ShoppingCartStockMapper.toEntity(shoppingCartStock)));
+    }
+
+    @Override
+    public Optional<ShoppingCartStock> findByStockIdAndCart(int stockId, UUID shoppingCartId) {
+        return cartStockRepository
+          .findByStockIdAndShoppingCartId(stockId, shoppingCartId)
+          .map(ShoppingCartStockMapper::toModel);
     }
 }

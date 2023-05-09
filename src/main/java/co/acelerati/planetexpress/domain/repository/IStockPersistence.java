@@ -35,4 +35,5 @@ public interface IStockPersistence {
 
     Optional<Stock> getStockById(Integer stockId);
 
+    List<Stock> getByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan(List<Integer> productId, double minCurrentPrice, int minQuantity, int page, int pageSize);
 }

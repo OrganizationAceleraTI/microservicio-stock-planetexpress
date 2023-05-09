@@ -5,6 +5,8 @@ import co.acelerati.planetexpress.domain.model.product.BrandFactory;
 import co.acelerati.planetexpress.domain.model.product.CategoryFactory;
 import co.acelerati.planetexpress.domain.model.product.ProductFactory;
 import co.acelerati.planetexpress.domain.model.stock.DetailStock;
+import co.acelerati.planetexpress.domain.model.stock.ProductSale;
+import co.acelerati.planetexpress.domain.model.stock.ProductSaleFactory;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.domain.model.stock.StockFactory;
 import co.acelerati.planetexpress.domain.model.stock.Supply;
@@ -235,6 +237,124 @@ class StockUseCaseTest {
 
         boolean insertedValue = stockUseCase.supplyStock(stockList, 1203);
         assertTrue(insertedValue);
+    }
+
+    @Test
+    void whenGetProductsSaleWithNameProduct_thenReturnListProductsSale() {
+        MultiValueMap<String, String> filters = new LinkedMultiValueMap<>();
+        filters.add("productName", "Iphone 14 Pro Max");
+        filters.add("page", "0");
+        List<ProductSale> productSaleList = new ProductSaleFactory()
+          .buildList()
+          .stream()
+          .filter(productSale -> productSale.getName().toUpperCase()
+            .equals(Objects.requireNonNull(filters.getFirst("productName").toUpperCase())))
+          .collect(Collectors.toList());
+
+        when(stockPersistence
+          .getByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan(anyList()
+            , anyDouble()
+            , anyInt()
+            , anyInt()
+            , anyInt()))
+          .thenReturn(new StockFactory().buildList());
+
+        List<ProductSale> productSaleListResponse = stockUseCase.getProductsSale(filters, new ProductFactory().buildList()
+          , new CategoryFactory().buildList(), new BrandFactory().buildList());
+
+        assertEquals(productSaleList.get(0).getId(), productSaleListResponse.get(0).getId());
+        assertEquals(productSaleList.get(0).getName(), productSaleListResponse.get(0).getName());
+        assertTrue(productSaleList.get(0).getCurrentPrice() > 0);
+        assertTrue(productSaleListResponse.get(0).getQuantity() > 0);
+        assertEquals(productSaleList.size(), productSaleListResponse.size());
+
+    }
+
+    @Test
+    void whenGetProductsSaleWithNameBrand_thenReturnListProductsSale() {
+        MultiValueMap<String, String> filters = new LinkedMultiValueMap<>();
+        filters.add("brandName", "Lg");
+        filters.add("page", "0");
+        List<ProductSale> productSaleList = new ProductSaleFactory()
+          .buildList()
+          .stream()
+          .filter(productSale -> productSale.getBrandName().toUpperCase()
+            .equals(Objects.requireNonNull(filters.getFirst("brandName").toUpperCase())))
+          .collect(Collectors.toList());
+
+        when(stockPersistence
+          .getByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan(anyList()
+            , anyDouble()
+            , anyInt()
+            , anyInt()
+            , anyInt()))
+          .thenReturn(new StockFactory().buildList());
+
+        List<ProductSale> productSaleListResponse = stockUseCase.getProductsSale(filters, new ProductFactory().buildList()
+          , new CategoryFactory().buildList(), new BrandFactory().buildList());
+
+        assertEquals(productSaleList.get(0).getId(), productSaleListResponse.get(0).getId());
+        assertEquals(productSaleList.get(0).getBrandName(), productSaleListResponse.get(0).getBrandName());
+        assertTrue(productSaleList.get(0).getCurrentPrice() > 0);
+        assertTrue(productSaleListResponse.get(0).getQuantity() > 0);
+        assertEquals(productSaleList.size(), productSaleListResponse.size());
+
+    }
+
+    @Test
+    void whenGetProductsSaleWithNameCategory_thenReturnListProductsSale() {
+        MultiValueMap<String, String> filters = new LinkedMultiValueMap<>();
+        filters.add("categoryName", "Accesorios");
+        filters.add("page", "0");
+        List<ProductSale> productSaleList = new ProductSaleFactory()
+          .buildList()
+          .stream()
+          .filter(productSale -> productSale.getCategoryName().toUpperCase()
+            .equals(Objects.requireNonNull(filters.getFirst("categoryName").toUpperCase())))
+          .collect(Collectors.toList());
+
+        when(stockPersistence
+          .getByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan(anyList()
+            , anyDouble()
+            , anyInt()
+            , anyInt()
+            , anyInt()))
+          .thenReturn(new StockFactory().buildList());
+
+        List<ProductSale> productSaleListResponse = stockUseCase.getProductsSale(filters, new ProductFactory().buildList()
+          , new CategoryFactory().buildList(), new BrandFactory().buildList());
+
+        assertEquals(productSaleList.get(0).getId(), productSaleListResponse.get(0).getId());
+        assertEquals(productSaleList.get(0).getCategoryName(), productSaleListResponse.get(0).getCategoryName());
+        assertTrue(productSaleList.get(0).getCurrentPrice() > 0);
+        assertTrue(productSaleListResponse.get(0).getQuantity() > 0);
+        assertEquals(productSaleList.size(), productSaleListResponse.size());
+
+    }
+
+    @Test
+    void whenGetProductsSaleWithOutFilters_thenReturnListProductsSale() {
+        MultiValueMap<String, String> filters = new LinkedMultiValueMap<>();
+        filters.add("page", "0");
+        List<ProductSale> productSaleList = new ProductSaleFactory().buildList();
+
+        when(stockPersistence
+          .getByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan(anyList()
+            , anyDouble()
+            , anyInt()
+            , anyInt()
+            , anyInt()))
+          .thenReturn(new StockFactory().buildList());
+
+        List<ProductSale> productSaleListResponse = stockUseCase.getProductsSale(filters, new ProductFactory().buildList()
+          , new CategoryFactory().buildList(), new BrandFactory().buildList());
+
+        assertEquals(productSaleList.get(0).getId(), productSaleListResponse.get(0).getId());
+        assertEquals(productSaleList.get(0).getCategoryName(), productSaleListResponse.get(0).getCategoryName());
+        assertTrue(productSaleList.get(0).getCurrentPrice() > 0);
+        assertTrue(productSaleListResponse.get(0).getQuantity() > 0);
+        assertEquals(productSaleList.size(), productSaleListResponse.size());
+
     }
 
 }

@@ -6,6 +6,7 @@ import co.acelerati.planetexpress.domain.model.product.Brand;
 import co.acelerati.planetexpress.domain.model.product.Category;
 import co.acelerati.planetexpress.domain.model.product.Product;
 import co.acelerati.planetexpress.domain.model.stock.DetailStock;
+import co.acelerati.planetexpress.domain.model.stock.ProductSale;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.domain.model.stock.Supply;
 import co.acelerati.planetexpress.domain.model.stock.SupplyStock;
@@ -27,8 +28,6 @@ import java.util.stream.Stream;
 @Service
 @RequiredArgsConstructor
 public class StockUseCase implements IStockService {
-
-    private static final double ZERO = 0;
 
     private final IStockPersistence stockPersistence;
     private final ISupplyPersistence supplyPersistence;
@@ -123,6 +122,71 @@ public class StockUseCase implements IStockService {
         return stockPersistence.getStockById(stockId);
     }
 
+    @Override
+    public List<ProductSale> getProductsSale(MultiValueMap<String, String> filters, List<Product> products,
+                                             List<Category> categories, List<Brand> brands) {
+
+        final String nameProduct = filters.containsKey("productName") ? filters.getFirst("productName"): "";
+        final String nameBrand = filters.containsKey("brandName") ? filters.getFirst("brandName"): "";
+        final String nameCategory = filters.containsKey("categoryName") ? filters.getFirst("categoryName"): "";
+        final int sizePage = filters.containsKey("sizePage") ? Integer.parseInt(filters.getFirst("sizePage")) : 0;
+        final int page = filters.containsKey("page") ? Integer.parseInt(filters.getFirst("page")) : 0;
+        List<Stock> stockList;
+        List<ProductSale> productSaleList = buildProductSaleList(products, categories, brands);
+        List<ProductSale> productSaleListFilter = (nameProduct.isBlank() && nameBrand.isBlank() && nameCategory.isBlank())
+                                                  ? new ArrayList<>(productSaleList)
+                                                  : new ArrayList<>();
+
+        if(!nameProduct.isBlank()){
+            productSaleListFilter =
+              Stream.of(productSaleList.stream()).findAny().get()
+                .filter(nameFilter -> nameFilter.getName().toUpperCase().equals(nameProduct.toUpperCase()))
+                .collect(Collectors.toList());
+            productSaleList = new ArrayList<>(productSaleListFilter);
+
+        }
+
+        if(!nameBrand.isBlank()){
+            productSaleListFilter =
+              Stream.of(productSaleList.stream()).findAny().get()
+                .filter(brandFilter -> brandFilter.getBrandName().toUpperCase().equals(nameBrand.toUpperCase()))
+                .collect(Collectors.toList());
+            productSaleList = new ArrayList<>(productSaleListFilter);
+        }
+
+        if(!nameCategory.isBlank()){
+            productSaleListFilter =
+              Stream.of(productSaleList.stream()).findAny().get()
+                .filter(categoryFilter -> categoryFilter.getCategoryName().toUpperCase().equals(nameCategory.toUpperCase()))
+                .collect(Collectors.toList());
+        }
+
+        List<Integer> idProducts = productSaleListFilter.stream()
+          .map(stock -> Integer.valueOf(stock.getId().intValue()))
+          .collect(Collectors.toList());
+
+        stockList = stockPersistence
+          .getByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan(
+            idProducts,
+            0,
+            0,
+            page,
+            sizePage);
+
+       return productSaleListFilter.stream()
+          .filter(
+            stockIsPresent -> stockList.stream()
+            .filter(value -> value.getProductId() == stockIsPresent.getId().intValue()).findFirst().isPresent())
+          .map(productSale -> {
+            Stock stock = stockList.stream()
+              .filter(value -> value.getProductId() == productSale.getId().intValue()).findFirst().get();
+            productSale.setCurrentPrice(stock.getCurrentPrice());
+            productSale.setQuantity(stock.getQuantity());
+              return productSale;
+          }).collect(Collectors.toList());
+
+    }
+
     private void supplyStock(Stock stock, int idSupplier) {
         stockPersistence.getById(stock.getProductId())
           .map(stockOpt -> updateQuantity(stockOpt, stock.getQuantity(), idSupplier).isPresent())
@@ -171,6 +235,22 @@ public class StockUseCase implements IStockService {
           stock.getQuantity(),
           stock.getCurrentPrice()
         );
+    }
+
+    private List<ProductSale> buildProductSaleList(List<Product> products,
+                                                   List<Category> categories,
+                                                   List<Brand> brands){
+        return products.stream().map(product -> new ProductSale(
+          product.getId(),
+          product.getName(),
+          product.getDescription(),
+          0.0,
+          0,
+          brands.stream()
+            .filter(bra -> product.getIdBrand().equals(bra.getId())).findFirst().get().getName(),
+          categories.stream()
+            .filter(cat -> product.getIdCategory().equals(cat.getId())).findFirst().get().getName()
+        )).collect(Collectors.toList());
     }
 
 }

@@ -4,6 +4,7 @@ import co.acelerati.planetexpress.application.handler.IStockHandler;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.SupplyStockRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.UpdateStockRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.DetailStockResponseDTO;
+import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.ProductSaleResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.response.UpdateStockResponseDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.IBrandFeignClient;
 import co.acelerati.planetexpress.infraestructure.http.rest.feign.client.ICategoryFeignClient;
@@ -61,5 +62,17 @@ public class StockRestController {
       @RequestBody List<@Valid SupplyStockRequestDTO> supplyStockRequestDTOList) {
         stockHandler.supplyStock(supplyStockRequestDTOList.stream().map(StockRequestMapper::toModel).collect(Collectors.toList()), supplierId);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/sales")
+    public ResponseEntity<List<ProductSaleResponseDTO>> getProductsSale(@RequestParam MultiValueMap<String, String> filters){
+        List<ProductSaleResponseDTO> productSaleResponseDTOS = stockHandler.productsSale(filters,
+          StockRequestMapper.toProductList(productFeignClient.getProducts(0, 1000)),
+          StockRequestMapper.toCategoryList(categoryFeignClient.getCategories(0, 1000)),
+          StockRequestMapper.toBrandList(brandFeignClient.getBrands(0, 1000)))
+          .stream().map(StockRequestMapper::toProductSaleDTO).collect(Collectors.toList());
+        return (!productSaleResponseDTOS.isEmpty())
+          ? ResponseEntity.ok(productSaleResponseDTOS)
+          : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

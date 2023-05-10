@@ -24,7 +24,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.postgresql:postgresql'
+	//runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation "org.mapstruct:mapstruct:${mapstrucVersion}"
 	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstrucVersion}"
 	annotationProcessor 'org.projectlombok:lombok'

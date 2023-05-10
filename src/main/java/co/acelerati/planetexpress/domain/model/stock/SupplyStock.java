@@ -2,8 +2,8 @@ package co.acelerati.planetexpress.domain.model.stock;
 
 public class SupplyStock {
 
-    private String id;
-    private String supplyId;
+    private int id;
+    private int supplyId;
     private int stockId;
     private int quantity;
     private double supplyPrice;
@@ -11,7 +11,13 @@ public class SupplyStock {
     public SupplyStock() {
     }
 
-    public SupplyStock(String id, String supplyId, int stockId, int quantity, double supplyPrice) {
+    public SupplyStock(int supplyId, int stockId, int quantity, double supplyPrice) {
+        this.supplyId = supplyId;
+        this.stockId = stockId;
+        this.quantity = quantity;
+        this.supplyPrice = supplyPrice;
+    }
+    public SupplyStock(int id, int supplyId, int stockId, int quantity, double supplyPrice) {
         this.id = id;
         this.supplyId = supplyId;
         this.stockId = stockId;
@@ -19,11 +25,11 @@ public class SupplyStock {
         this.supplyPrice = supplyPrice;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public String getSupplyId() {
+    public int getSupplyId() {
         return supplyId;
     }
 

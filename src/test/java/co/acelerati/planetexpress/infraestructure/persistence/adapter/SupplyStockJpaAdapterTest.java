@@ -27,7 +27,7 @@ public class SupplyStockJpaAdapterTest {
 
     @Test
     void whenInsertSupplyStock_thenReturnSupplyStockEntity(){
-        SupplyStock supplyStock = new SupplyStock(UUID.randomUUID().toString(), UUID.randomUUID().toString(), 1, 1500, 10500.65);
+        SupplyStock supplyStock = new SupplyStock(1, 123, 1, 1500, 10500.65);
 
         when(supplyStockRepository.save(any(SupplyStockEntity.class))).thenReturn(SupplyStockMapper.toEntity(supplyStock));
 

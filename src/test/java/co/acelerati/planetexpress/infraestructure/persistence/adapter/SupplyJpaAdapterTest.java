@@ -29,7 +29,7 @@ public class SupplyJpaAdapterTest {
 
     @Test
     void whenInsertSupply_thenReturnSupplyEntity(){
-        Supply supply = new Supply(UUID.randomUUID().toString(), 2013, LocalDateTime.now());
+        Supply supply = new Supply(1, 2013, LocalDateTime.now());
 
         when(supplyRepository.save(any(SupplyEntity.class))).thenReturn(SupplyMapper.toEntity(supply));
 

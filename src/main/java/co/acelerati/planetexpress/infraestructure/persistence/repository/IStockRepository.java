@@ -20,6 +20,5 @@ public interface IStockRepository extends PagingAndSortingRepository<StockEntity
     Optional<Page<StockEntity>> findByProductIdInAndCurrentPriceGreaterThanEqual(List<Integer> productId, double currentPrice, Pageable page);
     Optional<Page<StockEntity>> findByProductIdInAndCurrentPriceBetween(List<Integer> productId, double minPrice, double maxPrice, Pageable page);
     Page<StockEntity> findAll(Pageable page);
-
-
+    Optional<Page<StockEntity>> findByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan(List<Integer> productId, double minCurrentPrice, int minQuantity, Pageable page);
 }

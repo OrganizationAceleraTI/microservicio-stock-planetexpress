@@ -110,4 +110,11 @@ public class StockJpaAdapter implements IStockPersistence {
         return StockMapper.toModelOptional(repository.findById(stockId));
     }
 
+    @Override
+    public List<Stock> getByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan(List<Integer> productId, double minCurrentPrice, int minQuantity, int page, int pageSize) {
+        return repository.findByProductIdInAndCurrentPriceGreaterThanAndQuantityGreaterThan(productId, minCurrentPrice, minQuantity,
+          PageRequest.of(page, pageSize > 0 ? pageSize : SIZE_PAGE))
+          .map(pages -> pages.map(StockMapper::toDomain)).get().toList();
+    }
+
 }

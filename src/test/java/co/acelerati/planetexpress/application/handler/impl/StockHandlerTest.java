@@ -8,6 +8,8 @@ import co.acelerati.planetexpress.domain.model.product.BrandFactory;
 import co.acelerati.planetexpress.domain.model.product.CategoryFactory;
 import co.acelerati.planetexpress.domain.model.product.ProductFactory;
 import co.acelerati.planetexpress.domain.model.stock.DetailStock;
+import co.acelerati.planetexpress.domain.model.stock.ProductSale;
+import co.acelerati.planetexpress.domain.model.stock.ProductSaleFactory;
 import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.domain.repository.IStockPersistence;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -105,6 +108,25 @@ class StockHandlerTest {
         assertEquals(detailStockList.get(2).getModel(), detailStockListResponse.get(2).getModel());
         assertEquals(detailStockList.get(2).getBrand(), detailStockListResponse.get(2).getBrand());
         assertEquals(detailStockList.get(2).getCategory(), detailStockListResponse.get(2).getCategory());
+    }
+
+    @Test
+    void whenCallProductsSale_thenReturnAListProductSale() {
+        MultiValueMap<String, String> filters = new LinkedMultiValueMap<>();
+        filters.add("page", "0");
+        List<ProductSale> productSaleList = new ProductSaleFactory().buildList();
+
+        when(stockService.getProductsSale(any(),anyList(), anyList(), anyList())).thenReturn(productSaleList);
+
+        List<ProductSale> productSaleListResponse = stockHandler.productsSale(filters, new ProductFactory().buildList(),
+          new CategoryFactory().buildList(), new BrandFactory().buildList());
+
+        assertEquals(productSaleList.get(0).getName(), productSaleListResponse.get(0).getName());
+        assertEquals(productSaleList.get(0).getBrandName(), productSaleListResponse.get(0).getBrandName());
+        assertEquals(productSaleList.get(0).getCategoryName(), productSaleListResponse.get(0).getCategoryName());
+        assertTrue(productSaleListResponse.get(0).getQuantity() > 0);
+        assertTrue(productSaleListResponse.get(0).getCurrentPrice() > 0);
+        assertEquals(productSaleList.size(), productSaleListResponse.size());
     }
 
 }

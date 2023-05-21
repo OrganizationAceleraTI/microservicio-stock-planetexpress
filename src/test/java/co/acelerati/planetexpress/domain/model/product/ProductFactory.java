@@ -28,7 +28,6 @@ public class ProductFactory {
     public List<Product> buildList() {
         List<Product> products = new ArrayList<>();
         products.add(new ProductFactory().build());
-
         products.add(new ProductFactory().
           withId(2L)
           .withName("Lavadora LG Carga Superior 19kg Negro")
@@ -70,8 +69,8 @@ public class ProductFactory {
         return this;
     }
 
-    public ProductFactory withModel(String name) {
-        this.name = name;
+    public ProductFactory withModel(String model) {
+        this.model = model;
         return this;
     }
 

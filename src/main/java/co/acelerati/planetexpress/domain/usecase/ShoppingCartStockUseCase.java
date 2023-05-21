@@ -2,13 +2,13 @@ package co.acelerati.planetexpress.domain.usecase;
 
 import co.acelerati.planetexpress.domain.api.IShoppingCartStockService;
 import co.acelerati.planetexpress.domain.exception.BadRequestException;
+import co.acelerati.planetexpress.domain.exception.NotFoundException;
 import co.acelerati.planetexpress.domain.model.stock.ShoppingCart;
 import co.acelerati.planetexpress.domain.model.stock.ShoppingCartStock;
+import co.acelerati.planetexpress.domain.model.stock.Stock;
 import co.acelerati.planetexpress.domain.repository.IShoppingCartPersistence;
 import co.acelerati.planetexpress.domain.repository.IShoppingCartStockPersistence;
-import co.acelerati.planetexpress.infraestructure.persistence.entity.StockEntity;
-import co.acelerati.planetexpress.infraestructure.persistence.mapper.ShoppingCartMapper;
-import co.acelerati.planetexpress.infraestructure.persistence.repository.IStockRepository;
+import co.acelerati.planetexpress.domain.repository.IStockPersistence;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,52 +21,58 @@ import java.util.UUID;
 public class ShoppingCartStockUseCase implements IShoppingCartStockService {
 
     private final IShoppingCartPersistence shoppingCartPersistence;
-
     private final IShoppingCartStockPersistence cartStockPersistence;
-
-    private final IStockRepository stockRepository;
+    private final IStockPersistence stockPersistence;
 
     @Override
-    public void addItemToCart(int userId, ShoppingCartStock itemToAdd) throws BadRequestException {
-
+    public void addItemToCart(Integer userId, ShoppingCartStock itemToAdd) throws BadRequestException {
         this.validateExistingProduct(itemToAdd.getStockId()).map(product -> {
             if (product.getQuantity() < itemToAdd.getQuantity()) {
                 throw new BadRequestException("The requested quantity is out of stock.");
             }
 
-            return this.validateShoppingCartByUser(userId, itemToAdd);
-        });
-
-
+            this.getShoppingCartByUserOrCreate(userId, itemToAdd);
+            return Optional.empty();
+        }).orElseThrow(() -> new NotFoundException("The product doesn't exists."));
     }
 
-    private Optional<ShoppingCartStock> validateShoppingCartByUser(int userId, ShoppingCartStock itemToAdd) {
-         return shoppingCartPersistence.getCartByUser(userId).map(shoppingCart ->
-            this.getProductByCart(itemToAdd.getStockId(), itemToAdd.getShoppingCartId())
-              .map(product -> this.updateQuantityToProduct(product, itemToAdd.getQuantity())
-              )//.orElse(cartStockPersistence.addItemToCart(itemToAdd))
-           ).orElse(
-            this.createShoppingCart(new ShoppingCart(UUID.randomUUID(),
-              userId, LocalDateTime.now())).map(newCart -> {
-                itemToAdd.setShoppingCartId(newCart.getShoppingCartId());
-                return cartStockPersistence.addItemToCart(itemToAdd);
-            }));
+    private void getShoppingCartByUserOrCreate(int userId, ShoppingCartStock itemToAdd) {
+        shoppingCartPersistence.getCartByUser(userId).ifPresentOrElse(
+          shoppingCart -> {
+              itemToAdd.setShoppingCartId(shoppingCart.getShoppingCartId());
+              this.getProductByCartOrCreate(itemToAdd);},
+          () -> this.createShoppingCart(new ShoppingCart(UUID.randomUUID(), userId,
+            LocalDateTime.now())).map(newCart -> {
+              itemToAdd.setShoppingCartStockId(UUID.randomUUID());
+              itemToAdd.setShoppingCartId(newCart.getShoppingCartId());
+              return cartStockPersistence.addItemToCart(itemToAdd);
+          })
+        );
     }
+
 
     private Optional<ShoppingCart> createShoppingCart(ShoppingCart newCart) {
         return shoppingCartPersistence.createCart(newCart);
     }
 
-    private Optional<ShoppingCartStock> getProductByCart(int stockId, UUID cartId) {
-        return cartStockPersistence.findByStockIdAndCart(stockId, cartId);
+    private void getProductByCartOrCreate(ShoppingCartStock itemToAdd) {
+            cartStockPersistence.findByStockIdAndCart(itemToAdd.getStockId(), itemToAdd.getShoppingCartId())
+          .ifPresentOrElse(
+            product -> this.updateQuantityToProduct(product, itemToAdd.getQuantity()),
+            () -> cartStockPersistence.addItemToCart(new ShoppingCartStock(
+            UUID.randomUUID(),
+            itemToAdd.getStockId(),
+            itemToAdd.getShoppingCartId(),
+            itemToAdd.getQuantity()
+          )));
     }
 
-    private ShoppingCartStock updateQuantityToProduct(ShoppingCartStock currentProduct, int newQuantity) {
+    private void updateQuantityToProduct(ShoppingCartStock currentProduct, int newQuantity) {
         currentProduct.setQuantity(currentProduct.getQuantity() + newQuantity);
-        return cartStockPersistence.addItemToCart(currentProduct);
+        cartStockPersistence.addItemToCart(currentProduct);
     }
 
-    private Optional<StockEntity> validateExistingProduct(Integer productId) {
-        return stockRepository.findByProductId(productId);
+    private Optional<Stock> validateExistingProduct(Integer productId) {
+        return stockPersistence.getStockById(productId);
     }
 }

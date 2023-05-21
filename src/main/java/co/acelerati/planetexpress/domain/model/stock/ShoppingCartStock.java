@@ -12,6 +12,11 @@ public class ShoppingCartStock {
     public ShoppingCartStock() {
     }
 
+    public ShoppingCartStock(int stockId, int quantity) {
+        this.stockId = stockId;
+        this.quantity = quantity;
+    }
+
     public ShoppingCartStock(UUID shoppingCartStockId, int stockId, UUID shoppingCartId, int quantity) {
         this.shoppingCartStockId = shoppingCartStockId;
         this.stockId = stockId;

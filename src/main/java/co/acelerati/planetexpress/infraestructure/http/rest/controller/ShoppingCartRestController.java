@@ -1,8 +1,6 @@
 package co.acelerati.planetexpress.infraestructure.http.rest.controller;
 
-import co.acelerati.planetexpress.application.handler.IShoppingCartHandler;
 import co.acelerati.planetexpress.application.handler.IShoppingCartStockHandler;
-import co.acelerati.planetexpress.domain.model.stock.ShoppingCartStock;
 import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.NewCartRequestDTO;
 import co.acelerati.planetexpress.infraestructure.http.rest.mapper.ShoppingCartRequestMapper;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -28,7 +25,7 @@ public class ShoppingCartRestController {
 
     @PostMapping("/{userId}")
     public ResponseEntity<Void> createShoppingCart(@PathVariable Integer userId,
-                                             @RequestBody @Valid NewCartRequestDTO newCart) {
+                                                   @RequestBody @Valid NewCartRequestDTO newCart) {
         shoppingCartHandler.addItemsToCart(userId, ShoppingCartRequestMapper.toModel(newCart));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

@@ -3,6 +3,8 @@ package co.acelerati.planetexpress.infraestructure.persistence.mapper;
 import co.acelerati.planetexpress.domain.model.stock.ShoppingCartStock;
 import co.acelerati.planetexpress.infraestructure.persistence.entity.ShoppingCartStockEntity;
 
+import java.util.Optional;
+
 public final class ShoppingCartStockMapper {
 
     private ShoppingCartStockMapper() {

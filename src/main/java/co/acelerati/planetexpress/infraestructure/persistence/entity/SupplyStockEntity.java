@@ -21,10 +21,10 @@ public class SupplyStockEntity {
 
     @Id
     @Column(name = "supply_stock_id")
-    private UUID id;
+    private Integer id;
 
     @Column(name = "supply_id")
-    private UUID supplyId;
+    private Integer supplyId;
 
     @Column(name = "stock_id")
     private Integer stockId;

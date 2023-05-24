@@ -218,7 +218,7 @@ class StockUseCaseTest {
         List<Stock> stockList = new ArrayList<>();
         Stock stock = new Stock(1, 10, 10000);
         stockList.add(stock);
-        SupplyStock supplyStock = new SupplyStock("1", "213", 12, 1500, 10500.5);
+        SupplyStock supplyStock = new SupplyStock(1, 213, 12, 1500, 10500.5);
 
         when(supplyStockPersistence.insertSupplyStock(any(SupplyStock.class))).thenReturn(Optional.of(supplyStock));
 
@@ -231,7 +231,7 @@ class StockUseCaseTest {
         List<Stock> stockList = new ArrayList<>();
         Stock stock = new Stock(1, 10, 10000);
         stockList.add(stock);
-        Supply supply = new Supply(UUID.randomUUID().toString(), 1203, LocalDateTime.now());
+        Supply supply = new Supply(1, 1203, LocalDateTime.now());
 
         when(supplyPersistence.insertSupply(any(Supply.class))).thenReturn(Optional.of(supply));
 

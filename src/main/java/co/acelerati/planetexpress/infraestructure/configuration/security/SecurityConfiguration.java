@@ -23,6 +23,7 @@ public class SecurityConfiguration {
           .authorizeHttpRequests()
           .antMatchers("/stock/**", "/shopping-cart/**").permitAll()
           .antMatchers("/stock/sales**").hasAnyRole("CLIENT")
+          .antMatchers("/actuator/health").permitAll()
           .anyRequest()
           .authenticated()
           .and()

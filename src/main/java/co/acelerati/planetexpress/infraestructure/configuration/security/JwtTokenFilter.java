@@ -5,12 +5,14 @@ import co.acelerati.planetexpress.infraestructure.configuration.security.entity.
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -18,15 +20,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
-    private final static Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
 
-    private List<String> excludedPrefixes = Arrays.asList("/auth/**", "/swagger-ui/**");
-    private AntPathMatcher pathMatcher = new AntPathMatcher();
+    private final RequestMatcher uriMatcher = new AntPathRequestMatcher("/actuator/health", HttpMethod.GET.name());
     @Autowired
     private JwtProvider jwtProvider;
 
@@ -48,6 +47,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             res.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
         }
         filterChain.doFilter(req, res);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return uriMatcher.matches(request);
     }
 
     private UserDetails getUserDetails(String token) {

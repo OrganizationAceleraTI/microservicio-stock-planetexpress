@@ -1,22 +1,21 @@
 server:
-  port: 8081
+  port: ${PORT}
 
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/${DB_NAME}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
     username: ${DB_USER}
-    password: ${DB_PWD}
+    password: ${DB_PASS}
 
   jpa:
     hibernate:
       ddl-auto: none
     show-sql: true
-    database: postgresql
 
 jwt:
   secret: ${SECRET_KEY}
-  expiration: ${EXPIRE_DAYS_SECURITY}
+  expiration: 43200
 
 feign-client:
   user:

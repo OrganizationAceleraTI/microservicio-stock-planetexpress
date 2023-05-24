@@ -4,20 +4,25 @@ import java.time.LocalDateTime;
 
 public class Supply {
 
-    private String id;
+    private int id;
     private int idSupplier;
     private LocalDateTime date;
 
     public Supply() {
     }
 
-    public Supply(String id, int idSupplier, LocalDateTime date) {
+    public Supply(int idSupplier, LocalDateTime date) {
+        this.idSupplier = idSupplier;
+        this.date = date;
+    }
+
+    public Supply(int id, int idSupplier, LocalDateTime date) {
         this.id = id;
         this.idSupplier = idSupplier;
         this.date = date;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

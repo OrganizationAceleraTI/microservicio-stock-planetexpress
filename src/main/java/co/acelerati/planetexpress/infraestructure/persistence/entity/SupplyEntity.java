@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -22,7 +21,7 @@ public class SupplyEntity {
 
     @Id
     @Column(name = "supply_id")
-    private UUID id;
+    private Integer id;
 
     @Column(name = "supplier_id")
     private Integer idSupplier;

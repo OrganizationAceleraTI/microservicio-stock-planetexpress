@@ -23,8 +23,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.postgresql:postgresql'
+	//runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation "org.mapstruct:mapstruct:${mapstrucVersion}"
 	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstrucVersion}"
 	annotationProcessor 'org.projectlombok:lombok'
@@ -33,7 +35,6 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-
 }
 
 dependencyManagement {

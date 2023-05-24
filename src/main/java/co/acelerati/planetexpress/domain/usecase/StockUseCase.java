@@ -203,12 +203,10 @@ public class StockUseCase implements IStockService {
         return stockPersistence.insertStock(stock)
           .flatMap(stockUpdated -> supplyPersistence.insertSupply(
             new Supply(
-              UUID.randomUUID().toString(),
               idSupplier,
               LocalDateTime.now()
             )).flatMap(supplyOpt -> supplyStockPersistence.insertSupplyStock(
             new SupplyStock(
-              UUID.randomUUID().toString(),
               supplyOpt.getId(),
               stockUpdated.getProductId(),
               stock.getQuantity(), // TODO Validate

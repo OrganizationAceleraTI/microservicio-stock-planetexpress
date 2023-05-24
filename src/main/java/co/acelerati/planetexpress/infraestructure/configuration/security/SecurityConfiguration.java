@@ -23,6 +23,7 @@ public class SecurityConfiguration {
           .authorizeHttpRequests()
           .antMatchers("/stock/**").permitAll() // TODO Eliminar cuando se configuren los endpoint con su respectivo rol
           .antMatchers("/stock/sales**").hasAnyRole("CLIENT")
+          .antMatchers("/actuator/health").permitAll()
           .anyRequest()
           .authenticated()
           .and()

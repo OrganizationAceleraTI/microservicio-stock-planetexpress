@@ -6,9 +6,8 @@ import co.acelerati.planetexpress.infraestructure.http.rest.dto.request.NewCartR
 public class ShoppingCartRequestMapper {
 
     public static ShoppingCartStock toModel(NewCartRequestDTO request) {
-        return new ShoppingCartStock(null,
+        return new ShoppingCartStock(
           request.getStockId(),
-          null,
           request.getQuantity());
     }
 }

@@ -5,24 +5,29 @@ import java.util.UUID;
 
 public class ShoppingCart {
 
-    private UUID shoppingCartId;
+    private int shoppingCartId;
     private int userId;
     private LocalDateTime lastUpdate;
 
     public ShoppingCart() {
     }
 
-    public ShoppingCart(UUID shoppingCartId, int userId, LocalDateTime lastUpdate) {
+    public ShoppingCart(int shoppingCartId, int userId, LocalDateTime lastUpdate) {
         this.shoppingCartId = shoppingCartId;
         this.userId = userId;
         this.lastUpdate = lastUpdate;
     }
 
-    public UUID getShoppingCartId() {
+    public ShoppingCart(int userId, LocalDateTime lastUpdate) {
+        this.userId = userId;
+        this.lastUpdate = lastUpdate;
+    }
+
+    public int getShoppingCartId() {
         return shoppingCartId;
     }
 
-    public void setShoppingCartId(UUID shoppingCartId) {
+    public void setShoppingCartId(int shoppingCartId) {
         this.shoppingCartId = shoppingCartId;
     }
 

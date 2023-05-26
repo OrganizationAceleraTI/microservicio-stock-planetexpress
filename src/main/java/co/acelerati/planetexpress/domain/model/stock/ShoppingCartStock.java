@@ -4,9 +4,9 @@ import java.util.UUID;
 
 public class ShoppingCartStock {
 
-    private UUID shoppingCartStockId;
+    private int shoppingCartStockId;
     private int stockId;
-    private UUID shoppingCartId;
+    private int shoppingCartId;
     private int quantity;
 
     public ShoppingCartStock() {
@@ -17,18 +17,24 @@ public class ShoppingCartStock {
         this.quantity = quantity;
     }
 
-    public ShoppingCartStock(UUID shoppingCartStockId, int stockId, UUID shoppingCartId, int quantity) {
+    public ShoppingCartStock(int shoppingCartStockId, int stockId, int shoppingCartId, int quantity) {
         this.shoppingCartStockId = shoppingCartStockId;
         this.stockId = stockId;
         this.shoppingCartId = shoppingCartId;
         this.quantity = quantity;
     }
 
-    public UUID getShoppingCartStockId() {
+    public ShoppingCartStock(int stockId, int shoppingCartId, int quantity) {
+        this.stockId = stockId;
+        this.shoppingCartId = shoppingCartId;
+        this.quantity = quantity;
+    }
+
+    public int getShoppingCartStockId() {
         return shoppingCartStockId;
     }
 
-    public void setShoppingCartStockId(UUID shoppingCartStockId) {
+    public void setShoppingCartStockId(int shoppingCartStockId) {
         this.shoppingCartStockId = shoppingCartStockId;
     }
 
@@ -40,11 +46,11 @@ public class ShoppingCartStock {
         this.stockId = stockId;
     }
 
-    public UUID getShoppingCartId() {
+    public int getShoppingCartId() {
         return shoppingCartId;
     }
 
-    public void setShoppingCartId(UUID shoppingCartId) {
+    public void setShoppingCartId(int shoppingCartId) {
         this.shoppingCartId = shoppingCartId;
     }
 

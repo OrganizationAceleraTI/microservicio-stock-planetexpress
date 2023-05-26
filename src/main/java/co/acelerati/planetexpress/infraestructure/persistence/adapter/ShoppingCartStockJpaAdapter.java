@@ -21,7 +21,7 @@ public class ShoppingCartStockJpaAdapter implements IShoppingCartStockPersistenc
     }
 
     @Override
-    public Optional<ShoppingCartStock> findByStockIdAndCart(int stockId, UUID shoppingCartId) {
+    public Optional<ShoppingCartStock> findByStockIdAndCart(int stockId, int shoppingCartId) {
         return cartStockRepository
           .findByStockIdAndShoppingCartId(stockId, shoppingCartId)
           .map(ShoppingCartStockMapper::toModel);

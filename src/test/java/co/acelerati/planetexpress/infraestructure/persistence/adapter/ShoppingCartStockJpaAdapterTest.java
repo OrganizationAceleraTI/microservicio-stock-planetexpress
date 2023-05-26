@@ -33,8 +33,8 @@ class ShoppingCartStockJpaAdapterTest {
     @Test
     @DisplayName("Testing saving a new Shopping Cart Stock")
     void whenSaveShoppingCart_ThenReturnTheSavedItem() {
-        ShoppingCartStock shoppingCartStock = new ShoppingCartStock(UUID.randomUUID(),
-          1, UUID.randomUUID(), 20);
+        ShoppingCartStock shoppingCartStock = new ShoppingCartStock(1,
+          1, 1, 20);
 
         when(cartStockRepository.save(any(ShoppingCartStockEntity.class))).thenReturn(
           ShoppingCartStockMapper.toEntity(shoppingCartStock));
@@ -46,10 +46,10 @@ class ShoppingCartStockJpaAdapterTest {
     @Test
     @DisplayName("Testing the search by Stock Id and Cart Id")
     void whenSearchingForStockIdAndCartId_returnAnOptionalWithTheValue() {
-        UUID cartId = UUID.randomUUID();
-        Optional<ShoppingCartStock> shoppingCartStock = Optional.of(new ShoppingCartStock(UUID.randomUUID(),
+        int cartId = 1;
+        Optional<ShoppingCartStock> shoppingCartStock = Optional.of(new ShoppingCartStock(1,
           1, cartId, 20));
-        Optional<ShoppingCartStockEntity> entity = Optional.of(new ShoppingCartStockEntity(UUID.randomUUID(),
+        Optional<ShoppingCartStockEntity> entity = Optional.of(new ShoppingCartStockEntity(1,
           1, cartId, 20));
 
         when(cartStockRepository.findByStockIdAndShoppingCartId(1, cartId)).thenReturn(entity);

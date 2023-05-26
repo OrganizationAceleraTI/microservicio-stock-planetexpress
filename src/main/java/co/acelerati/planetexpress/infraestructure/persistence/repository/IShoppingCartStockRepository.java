@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface IShoppingCartStockRepository extends PagingAndSortingRepository<ShoppingCartStockEntity, String> {
 
-    Optional<ShoppingCartStockEntity> findByStockIdAndShoppingCartId(Integer stockId, UUID shoppingCartId);
+    Optional<ShoppingCartStockEntity> findByStockIdAndShoppingCartId(Integer stockId, int shoppingCartId);
 }

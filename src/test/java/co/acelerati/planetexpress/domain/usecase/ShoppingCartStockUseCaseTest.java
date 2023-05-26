@@ -71,8 +71,8 @@ class ShoppingCartStockUseCaseTest {
     @Test
     @DisplayName("Testing the addition of quantity when the stock exists in the cart")
     void whenTheProductExistsInTheCart_addTheQuantity() {
-        UUID cartId = UUID.randomUUID();
-        UUID cartStockId = UUID.randomUUID();
+        int cartId = 10;
+        int cartStockId = 2;
         ShoppingCartStock itemToAdd = new ShoppingCartStock(1, 20);
         Optional<Stock> stock = Optional.of(new Stock(5 , 100, 100));
         Optional<ShoppingCart> cart = Optional.of(new ShoppingCart(cartId, 1, LocalDateTime.now()));
@@ -93,7 +93,7 @@ class ShoppingCartStockUseCaseTest {
     @Test
     @DisplayName("Testing the creation of the new product in the cart")
     void whenTheProductDoesNotExistsInTheCart_ThenSaveANewOne() {
-        UUID cartId = UUID.randomUUID();
+        int cartId = 2;
         ShoppingCartStock itemToAdd = new ShoppingCartStock(1, 20);
         Optional<Stock> stock = Optional.of(new Stock(5 , 100, 100));
         Optional<ShoppingCart> cart = Optional.of(new ShoppingCart(cartId, 1, LocalDateTime.now()));

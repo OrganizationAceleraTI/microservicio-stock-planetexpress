@@ -41,9 +41,8 @@ public class ShoppingCartStockUseCase implements IShoppingCartStockService {
           shoppingCart -> {
               itemToAdd.setShoppingCartId(shoppingCart.getShoppingCartId());
               this.getProductByCartOrCreate(itemToAdd);},
-          () -> this.createShoppingCart(new ShoppingCart(UUID.randomUUID(), userId,
-            LocalDateTime.now())).map(newCart -> {
-              itemToAdd.setShoppingCartStockId(UUID.randomUUID());
+          () -> this.createShoppingCart(new ShoppingCart(userId, LocalDateTime.now()))
+                  .map(newCart -> {
               itemToAdd.setShoppingCartId(newCart.getShoppingCartId());
               return cartStockPersistence.addItemToCart(itemToAdd);
           })
@@ -60,7 +59,6 @@ public class ShoppingCartStockUseCase implements IShoppingCartStockService {
           .ifPresentOrElse(
             product -> this.updateQuantityToProduct(product, itemToAdd.getQuantity()),
             () -> cartStockPersistence.addItemToCart(new ShoppingCartStock(
-            UUID.randomUUID(),
             itemToAdd.getStockId(),
             itemToAdd.getShoppingCartId(),
             itemToAdd.getQuantity()

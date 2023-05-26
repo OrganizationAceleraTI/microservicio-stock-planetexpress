@@ -27,7 +27,7 @@ class ShoppingCartHandlerTest {
     @Test
     @DisplayName("Testing the call to the Shopping Cart service method")
     void whenRequestANewShoppingCart_ThenCallServiceMethod() {
-        UUID cartId = UUID.randomUUID();
+        int cartId = 1;
         ShoppingCart cart = new ShoppingCart(cartId, 1, LocalDateTime.now());
         shoppingCartHandler.createShoppingCart(cart, 1);
         verify(shoppingCartService).createShoppingCart(cart, 1);

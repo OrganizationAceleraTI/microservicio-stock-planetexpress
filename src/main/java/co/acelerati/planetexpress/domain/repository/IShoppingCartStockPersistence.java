@@ -9,5 +9,5 @@ public interface IShoppingCartStockPersistence {
 
     ShoppingCartStock addItemToCart(ShoppingCartStock shoppingCartStock);
 
-    Optional<ShoppingCartStock> findByStockIdAndCart(int stockId, UUID shoppingCartId);
+    Optional<ShoppingCartStock> findByStockIdAndCart(int stockId, int shoppingCartId);
 }

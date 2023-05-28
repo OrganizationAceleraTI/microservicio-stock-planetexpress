@@ -21,7 +21,7 @@ public class SecurityConfiguration {
         httpSecurity
           .csrf().disable()
           .authorizeHttpRequests()
-          .antMatchers("/stock/**").permitAll() // TODO Eliminar cuando se configuren los endpoint con su respectivo rol
+          .antMatchers("/stock/**", "/shopping-cart/**").permitAll()
           .antMatchers("/stock/sales**").hasAnyRole("CLIENT")
           .antMatchers("/actuator/health").permitAll()
           .anyRequest()

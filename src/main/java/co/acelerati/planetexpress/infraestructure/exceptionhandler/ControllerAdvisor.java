@@ -1,5 +1,6 @@
 package co.acelerati.planetexpress.infraestructure.exceptionhandler;
 
+import co.acelerati.planetexpress.domain.exception.BadRequestException;
 import co.acelerati.planetexpress.domain.exception.NotFoundException;
 import co.acelerati.planetexpress.domain.exception.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
@@ -60,12 +61,17 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity handleNoSuchElementException(NoSuchElementException noSuchElementException) {
+    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException noSuchElementException) {
         return new ResponseEntity<>(noSuchElementException.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity handleArgumentNotValidException(MethodArgumentNotValidException argumentNotValidException) {
+    public ResponseEntity<String> handleArgumentNotValidException(MethodArgumentNotValidException argumentNotValidException) {
         return new ResponseEntity<>(ExceptionResponse.BAD_REQUEST.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<String> handreBadRequestException(BadRequestException badRequestException) {
+        return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
